@@ -7,10 +7,11 @@ import dev from '../images/dev.png';
 
 const Hero = () => {
     return (
-        <div className='hero-container relative'>
+        <div className='hero-container relative flex flex-row items-center justify-between p-4'>
             <div className='relative z-10 flex flex-col gap-4'>
-                <div className='main pl-28 pt-14 pb-14'>
-                    <h1 className='text-8xl font-bold'>Hi, I'm <br /> 
+                <div className='pl-16 pt-14'>
+                    <h1 className='text-8xl font-bold'>
+                        Hi, I'm <br /> 
                         <span className='text-blue-600'>Kevin.</span>
                     </h1>
 
@@ -19,9 +20,9 @@ const Hero = () => {
                             My Resume
                         </button>
                         
-                        <div className='social-links flex flex-row gap-4'>
+                        <div className='social-links flex gap-4 flex-shrink-0'>
                             <a href='https://linkedin.com/in/sijunkevinhu' className='hover:scale-110 transition-transfrom'>
-                                <img src={linkedInLogo} alt="LinkedIn" className='w-12 h-12'/>
+                                <img src={linkedInLogo} alt="LinkedIn" className='w-12 h-12' />
                             </a>
                             <a href='https://github.com/sijun-kevin-hu' className='hover:scale-110 transition-transfrom'>
                                 <img src={githubLogo} alt="GitHub" className='w-12 h-12' />
@@ -35,11 +36,10 @@ const Hero = () => {
                     <p className='text-xl mt-4 font-bold'>
                         I am a <span className='text-blue-600'>Software Engineer</span>
                     </p>
-
-                    <div className='dev-img absolute right-0 top-1/2 transform -translate-y-1/2 w-1/2'>
-                        <img src={dev} alt="Dev Image" className='w-full h-auto' />
-                    </div>
                 </div>
+            </div>
+            <div className='dev-img w-full lg:w-1/2 max-w-md flex-shrink-0'>
+                <img src={dev} alt="Dev Image" className='w-full h-auto object-contain' />
             </div>
         </div>
     );
