@@ -1,8 +1,12 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import './index.css';
 
 function App() {
   return (
     <div className="App">
-      <h1>My Portfolio</h1>
+      <Navbar />
+      <Hero />
     </div>
   );
 }
