@@ -7,16 +7,16 @@ import dev from '../images/dev.png';
 
 const Hero = () => {
     return (
-        <div className='hero-container relative flex flex-row items-center justify-between p-4'>
-            <div className='relative z-10 flex flex-col gap-4'>
-                <div className='pl-16 pt-14'>
+        <div className='hero-container relative flex flex-col h-screen lg:-mt-24 lg:flex-row items-center justify-between px-6 lg:px-24 mt-8'>
+            <div className='flex'>
+                <div className='pl-8 lg:pl-18'>
                     <h1 className='text-8xl font-bold'>
                         Hi, I'm <br /> 
                         <span className='text-blue-600'>Kevin.</span>
                     </h1>
 
                     <div className='links flex items-center gap-4 mt-4'>
-                        <button className='px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800'>
+                        <button className='px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 flex-shrink-0'>
                             My Resume
                         </button>
                         
@@ -38,7 +38,7 @@ const Hero = () => {
                     </p>
                 </div>
             </div>
-            <div className='dev-img w-full lg:w-1/2 max-w-md flex-shrink-0'>
+            <div className='dev-img w-full lg:w-1/2 max-w-md flex-shrink-0 -mt-32 lg:mt-0'>
                 <img src={dev} alt="Dev Image" className='w-full h-auto object-contain' />
             </div>
         </div>
