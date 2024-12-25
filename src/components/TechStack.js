@@ -36,7 +36,7 @@ const SkillSet = ({title, skills}) => {
     return (
         <div className='flex flex-col mb-8 p-4'>
             <h3 className='text-gray-500 uppercase font-bold text-sm tracking-wide mb-4'>{title}</h3>
-            <div className='grid grid-cols-3 lg:grid-cols-6 justify-items-center gap-8 mb-4'>
+            <div className='flex gap-8'>
                 {skills.map((skill) => (
                     <div key={skill.name} className='flex flex-col items-center'>
                         <div className='w-20 h-20 rounded-full bg-gray-200 shadow-lg flex items-center justify-center'>
@@ -51,7 +51,7 @@ const SkillSet = ({title, skills}) => {
 }
 const TechStack = () => {
     return (
-        <div className='flex flex-col bg-white py-16 px-6 lg:px-24' id='skills'>
+        <div className='flex flex-col bg-white px-6 lg:px-24' id='skills'>
             <h2 className='text-gray-500 uppercase font-bold text-sm tracking-wide'>My Skills</h2>
             <h1 className='text-5xl lg:text-6xl font-extrabold text-gray-900 mt-2 mb-6'>Tech Stack.</h1>
             <SkillSet title="Technical Languages" skills={technicalLanguages} />
