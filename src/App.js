@@ -9,10 +9,18 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="fixed top-0 w-full z-50"><Navbar /></div>
-      <div className="w-full h-full pt-14 lg:pt-32"><Hero /></div>
-      <div className="w-full h-full"><Introduction /></div>
-      <div className="w-full h-full"><TechStack /></div>
-      <div className="w-full h-full"><Projects /></div>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-full pt-20 lg:pt-18"><Hero /></div>
+      </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full"><Introduction /></div>
+      </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full"><TechStack /></div>
+      </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full"><Projects /></div>
+      </div>
       <p className="text-center">@ 2024 - All Rights Reserved</p>
     </div>
   );

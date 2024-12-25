@@ -36,7 +36,7 @@ const SkillSet = ({title, skills}) => {
     return (
         <div className='flex flex-col mb-8 p-4'>
             <h3 className='text-gray-500 uppercase font-bold text-sm tracking-wide mb-4'>{title}</h3>
-            <div className='flex gap-8'>
+            <div className='flex justify-center gap-8 lg:gap-14'>
                 {skills.map((skill) => (
                     <div key={skill.name} className='flex flex-col items-center'>
                         <div className='w-20 h-20 rounded-full bg-gray-200 shadow-lg flex items-center justify-center'>
