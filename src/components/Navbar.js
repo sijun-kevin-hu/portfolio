@@ -4,7 +4,7 @@ import codeLogo from '../images/code-icon.png';
 
 const Navbar = () => {
     return (
-        <div className='navbar-container flex items-center justify-between px-8 py-4 bg-gray-50'>
+        <div className='flex items-center justify-between px-8 py-4 bg-white/50 backdrop-blur-md'>
             <div className='text-xl font-extrabold p-3'>
                 <a href='#' className='hover:text-blue-600 flex flex-row gap-2 items-center'>
                     <img src={codeLogo} alt='code-logo' />

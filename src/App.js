@@ -7,8 +7,8 @@ import TechStack from "./components/TechStack";
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <div className="w-full h-screen"><Hero /></div>
+      <div className="fixed top-0 w-full z-50"><Navbar /></div>
+      <div className="w-full h-screen mt-32 lg:mt-40"><Hero /></div>
       <div className="w-full h-screen"><Introduction /></div>
       <div className="w-full h-screen"><TechStack /></div>
     </div>
