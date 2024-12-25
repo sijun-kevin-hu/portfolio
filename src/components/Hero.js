@@ -7,7 +7,7 @@ import dev from '../images/dev.png';
 
 const Hero = () => {
     return (
-        <div className='hero-container relative flex flex-col h-screen lg:-mt-24 lg:flex-row items-center justify-between px-6 lg:px-24 mt-8'>
+        <div className='hero-container relative flex flex-col lg:-mt-24 lg:flex-row items-center justify-between px-6 lg:px-24 mt-8'>
             <div className='flex'>
                 <div className='pl-8 lg:pl-18'>
                     <h1 className='text-8xl font-bold'>
@@ -38,7 +38,7 @@ const Hero = () => {
                     </p>
                 </div>
             </div>
-            <div className='dev-img w-full lg:w-1/2 max-w-md flex-shrink-0 -mt-32 lg:mt-0'>
+            <div className='w-full lg:w-1/2 max-w-md flex-shrink-0 -mt-32 lg:mt-0'>
                 <img src={dev} alt="Dev Image" className='w-full h-auto object-contain' />
             </div>
         </div>

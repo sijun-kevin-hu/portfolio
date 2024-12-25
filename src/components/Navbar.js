@@ -13,7 +13,7 @@ const Navbar = () => {
             </div>
             <ul className='nav-links flex items-center gap-8 mr-8'>
                 <li><a href='#about' className='text-gray-800 hover:text-blue-600 transition-colors font-bold text-lg'>About</a></li>
-                <li><a href='skills' className='text-gray-800 hover:text-blue-600 transition-colors font-bold text-lg'>Skills</a></li>
+                <li><a href='#skills' className='text-gray-800 hover:text-blue-600 transition-colors font-bold text-lg'>Skills</a></li>
                 <li><a href='#projects' className='text-gray-800 hover:text-blue-600 transition-colors font-bold text-lg'>Projects</a></li>
             </ul>
         </div>
