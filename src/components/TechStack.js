@@ -1,7 +1,7 @@
 import React from 'react';
-import pythongif from '../images/python.gif';
-import javagif from '../images/java.gif';
-import reactgif from '../images/react.gif';
+import pythonimg from '../images/python.png';
+import javaimg from '../images/java.png';
+import reactimg from '../images/react.png';
 import javascript_img from '../images/javascript.png';
 import c_img from '../images/c.png';
 import cc_img from '../images/c++.png';
@@ -14,8 +14,8 @@ import git_img from '../images/git.png';
 import flask_img from '../images/flask.png'
 
 const technicalLanguages = [
-    { name: "Python", img: pythongif},
-    { name: "Java", img: javagif},
+    { name: "Python", img: pythonimg},
+    { name: "Java", img: javaimg},
     { name: "JavaScript", img: javascript_img},
     { name: "C", img: c_img},
     { name: "C++", img: cc_img},
@@ -25,7 +25,7 @@ const technicalLanguages = [
 ];
 
 const technicalFrameworks = [
-    { name: "React", img: reactgif},
+    { name: "React", img: reactimg},
     { name: "TailwindCSS", img: tailwindcss_img},
     { name: "Flask", img: flask_img},
     { name: "Django", img: django_img},

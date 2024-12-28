@@ -17,7 +17,7 @@ const Hero = () => {
 
                     <div className='links flex items-center gap-4 mt-4'>
                         <button className='px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 flex-shrink-0'>
-                            <a href='/resume1.pdf' download='kevin-hu-resume.pdf'>
+                            <a href='/resume.pdf' download='kevin-hu-resume.pdf'>
                                 My Resume
                             </a>
                         </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import java_img from '../images/java.gif';
+import java_img from '../images/java.png';
 
 const projects = [
     { title: "Spotify Wrapped Clone", link: null, description: "Test.", tech_img: [java_img]}
