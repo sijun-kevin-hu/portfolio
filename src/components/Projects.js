@@ -43,8 +43,8 @@ const Projects = () => {
             {projects.map((project, index) => (
                 <div key={index} className='border-2 border-black rounded-lg overflow-hidden shadow-md p-4 mb-4'>
                     <div className='cursor-pointer p-4 font-semibold hover:bg-gray-100 flex justify-between' onClick={() => toggleActive(index)}>
-                        <h3 className=''>{project.title}</h3>
-                        <span className={'transform transition-transform ${active === index ? "rotate-180" : ""}'}>
+                        <h3>{project.title}</h3>
+                        <span className={`transform transition-transform ${active === index ? "rotate-180" : ""}`}>
                             <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
                             </svg>

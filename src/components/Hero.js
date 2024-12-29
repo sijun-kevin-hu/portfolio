@@ -6,13 +6,15 @@ import gmailLogo from '../images/gmail-logo.png';
 import dev from '../images/dev.png';
 
 const Hero = () => {
-    const words = ['Web Developer.', 'Software Developer.', 'Computer Science Student.'];
     const [displayedText, setDisplayedText] = useState('');
     const [wordIndex, setWordIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [typingSpeed, setTypingSpeed] = useState(100); // Adjust typing speed (in ms)
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
+        const words = ['Web Developer.', 'Software Developer.', 'Computer Science Student.'];
+
         const handleTyping = () => {
             const currentWord = words[wordIndex];
             const nextText = isDeleting
@@ -39,7 +41,7 @@ const Hero = () => {
         const timer = setTimeout(handleTyping, typingSpeed);
 
         return () => clearTimeout(timer); // Cleanup timeout
-    }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
+    }, [displayedText, isDeleting, typingSpeed, wordIndex]);
 
 
     return (
@@ -81,7 +83,7 @@ const Hero = () => {
                 </div>
             </div>
             <div className='w-full lg:w-1/2 max-w-md flex-shrink-0 -mt-32 lg:mt-0'>
-                <img src={dev} alt="Dev Image" className='w-full h-auto object-contain' />
+                <img src={dev} alt="Dev" className='w-full h-auto object-contain' />
             </div>
         </div>
     );
