@@ -54,7 +54,7 @@ const Projects = () => {
                         <div className='p-2 bg-white'>
                             <p className='text-gray-700 ml-4'>{project.description}</p>
                             <div className='mt-6 flex space-x-4 justify-between items-center'>
-                                <div className='flex gap-4'>
+                                <div className='flex flex-wrap gap-4'>
                                     {project.tech_img.map((tech, index) => (
                                         <img key={index} src={tech} alt='tech' className='h-8 w-8' />
                                     ))}
