@@ -47,7 +47,7 @@ const Hero = () => {
     return (
         <div className='hero-container relative flex flex-col md:-mt-24 md:flex-row md:justify-between items-center px-6 lg:px-24 mt-8'>
             <div className='flex'>
-                <div className='pl-8 lg:pl-18'>
+                <div className='pl-8 md:pl-18'>
                     <h1 className='text-8xl font-bold'>
                         Hi, I'm <br /> 
                         <span className='text-blue-600'>Kevin.</span>
