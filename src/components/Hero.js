@@ -53,14 +53,14 @@ const Hero = () => {
                         <span className='text-blue-600'>Kevin.</span>
                     </h1>
 
-                    <div className='links flex items-center gap-4 mt-4'>
+                    <div className='links flex items-center gap-2 md:gap-4 mt-4'>
                         <button className='px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 flex-shrink-0'>
                             <a href='/resume.pdf' download='kevin-hu-resume.pdf'>
                                 My Resume
                             </a>
                         </button>
                         
-                        <div className='social-links flex gap-4 flex-shrink-0'>
+                        <div className='social-links flex gap-2 md:gap-4 flex-shrink-0'>
                             <a href='https://linkedin.com/in/sijunkevinhu' className='hover:scale-110 transition-transfrom'>
                                 <img src={linkedInLogo} alt="LinkedIn" className='w-12 h-12' />
                             </a>
