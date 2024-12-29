@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../index.css';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
@@ -6,6 +6,42 @@ import gmailLogo from '../images/gmail-logo.png';
 import dev from '../images/dev.png';
 
 const Hero = () => {
+    const words = ['Web Developer.', 'Software Developer.', 'Computer Science Student.'];
+    const [displayedText, setDisplayedText] = useState('');
+    const [wordIndex, setWordIndex] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [typingSpeed, setTypingSpeed] = useState(100); // Adjust typing speed (in ms)
+
+    useEffect(() => {
+        const handleTyping = () => {
+            const currentWord = words[wordIndex];
+            const nextText = isDeleting
+                ? currentWord.slice(0, displayedText.length - 1) // Remove one letter
+                : currentWord.slice(0, displayedText.length + 1); // Add one letter
+
+            setDisplayedText(nextText);
+
+            if (!isDeleting && nextText === currentWord) {
+                // Pause at the full word
+                setIsDeleting(true);
+                setTypingSpeed(2000); // Pause time (ms)
+            } else if (isDeleting && nextText === '') {
+                // Move to the next word when fully deleted
+                setIsDeleting(false);
+                setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+                setTypingSpeed(200); // Adjust speed for the next word typing
+            } else {
+                // Normal typing/deleting speed
+                setTypingSpeed(100);
+            }
+        };
+
+        const timer = setTimeout(handleTyping, typingSpeed);
+
+        return () => clearTimeout(timer); // Cleanup timeout
+    }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
+
+
     return (
         <div className='hero-container relative flex flex-col lg:-mt-24 lg:flex-row items-center justify-between px-6 lg:px-24 mt-8'>
             <div className='flex'>
@@ -36,7 +72,11 @@ const Hero = () => {
                     </div>
 
                     <p className='text-xl mt-4 font-bold'>
-                        I am a <span className='text-blue-600'>Software Engineer</span>
+                        I am a {' '}
+                        <span className='text-blue-600'>
+                            {displayedText}
+                            <span className='blink-cursor'></span>
+                        </span>
                     </p>
                 </div>
             </div>

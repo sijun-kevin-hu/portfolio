@@ -1,7 +1,7 @@
 import React from 'react';
 import pythonimg from '../images/python.png';
 import javaimg from '../images/java.png';
-import reactimg from '../images/react.png';
+import react_img from '../images/react.png';
 import javascript_img from '../images/javascript.png';
 import c_img from '../images/c.png';
 import cc_img from '../images/c++.png';
@@ -25,7 +25,7 @@ const technicalLanguages = [
 ];
 
 const technicalFrameworks = [
-    { name: "React", img: reactimg},
+    { name: "React", img: react_img},
     { name: "TailwindCSS", img: tailwindcss_img},
     { name: "Flask", img: flask_img},
     { name: "Django", img: django_img},
@@ -36,11 +36,11 @@ const SkillSet = ({title, skills}) => {
     return (
         <div className='flex flex-col mb-8 p-4'>
             <h3 className='text-gray-500 uppercase font-bold text-sm tracking-wide mb-4'>{title}</h3>
-            <div className='flex justify-center gap-8 lg:gap-14'>
+            <div className='flex justify-center gap-8 lg:gap-14 w-full flex-wrap'>
                 {skills.map((skill) => (
                     <div key={skill.name} className='flex flex-col items-center'>
                         <div className='w-20 h-20 rounded-full bg-gray-200 shadow-lg flex items-center justify-center'>
-                            <img src={skill.img} alt={skill.name} className='w-12 h-12 object-contain' />
+                            <img src={skill.img} alt={skill.name} className='w-12 h-12 object-contain transition-transform duration-250 ease-in-out hover:scale-125' />
                         </div>
                         <p className='text-sm mt-2 text-gray-600'>{skill.name}</p>
                     </div>
