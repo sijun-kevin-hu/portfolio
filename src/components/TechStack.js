@@ -11,7 +11,9 @@ import sql_img from '../images/sql.png';
 import tailwindcss_img from '../images/tailwindcss.png';
 import django_img from '../images/django.png';
 import git_img from '../images/git.png';
-import flask_img from '../images/flask.png'
+import flask_img from '../images/flask.png';
+import firebase_img from '../images/firebase.png';
+import android_img from '../images/android.png';
 
 const technicalLanguages = [
     { name: "Python", img: pythonimg},
@@ -29,6 +31,8 @@ const technicalFrameworks = [
     { name: "TailwindCSS", img: tailwindcss_img},
     { name: "Flask", img: flask_img},
     { name: "Django", img: django_img},
+    { name: "Firebase", img: firebase_img},
+    { name: "Android Studio", img: android_img},
     { name: "Git", img: git_img}
 ];
 
