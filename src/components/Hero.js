@@ -45,7 +45,7 @@ const Hero = () => {
 
 
     return (
-        <div className='hero-container relative flex flex-col lg:-mt-24 lg:flex-row items-center justify-between px-6 lg:px-24 mt-8'>
+        <div className='hero-container relative flex flex-col md:-mt-24 md:flex-row md:justify-between items-center px-6 lg:px-24 mt-8'>
             <div className='flex'>
                 <div className='pl-8 lg:pl-18'>
                     <h1 className='text-8xl font-bold'>
@@ -82,8 +82,8 @@ const Hero = () => {
                     </p>
                 </div>
             </div>
-            <div className='w-full lg:w-1/2 max-w-md flex-shrink-0 -mt-32 lg:mt-0'>
-                <img src={dev} alt="Dev" className='w-full h-auto object-contain' />
+            <div className='w-full lg:w-1/2 max-w-md flex justify-center flex-shrink-0 -mt-16 lg:mt-0'>
+                <img src={dev} alt="Dev" className='w-full h-auto object-contain max-w-xs sm:max-w-md lg:max-w-lg' />
             </div>
         </div>
     );
