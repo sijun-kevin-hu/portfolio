@@ -13,7 +13,7 @@ import javascript_img from '../images/javascript.png';
 import tailwind_img from '../images/tailwindcss.png';
 
 const projects = [
-    { title: "Spotify Wrapped Clone", description: "A Spotify Wrapped clone application developed with Android Studio, Firebase Authentication, Firebase Realtime Database, and Java, allowing users to view their top artists/songs year-round. It includes real-time data synchronization for accurate user stats. Key features include Firebase Authentication, the ability to add friends, and top songs and artist visualizations for an enhanced user experience."
+    { title: "Spotistats", description: "Spotistats developed with Android Studio, Firebase Authentication, Firebase Realtime Database, and Java, allowing users to view their top artists/songs year-round. It includes real-time data synchronization for accurate user stats. Key features include Firebase Authentication, the ability to add friends, and top songs and artist visualizations for an enhanced user experience."
         , tech_img: [java_img, firebase_img, android_img], github: 'https://github.com/sijun-kevin-hu/SpotifyWrapped/tree/main'},
     { title: "Book Club", description: "A full-stack web application developed with Flask, React, and Flask-SQLAlchemy, designed to connect book enthusiasts. The app includes features such as user authentication, the ability to log books, and manage book collections. The backend, powered by Flask and Flask-SQLAlchemy, handles user credential verification and database management.", 
         tech_img: [python_img, flask_img, javascript_img, react_img, html_img, css_img], github: "https://github.com/sijun-kevin-hu/BookClub"},
