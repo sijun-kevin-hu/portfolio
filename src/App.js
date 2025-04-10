@@ -21,9 +21,11 @@ function App() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-full"><Projects /></div>
       </div>
-      <p className="text-center">@ 2024 - All Rights Reserved</p>
-      <p className="text-center">Designed and Developed by Sijun Kevin Hu</p>
-      <p className="text-center">Icons by <a href="https://icons8.com" className="underline">Icons8</a></p>
+      <div className="flex flex-col items-center justify-center pb-4">
+        <p className="text-center">@ 2025 - All Rights Reserved</p>
+        <p className="text-center">Designed and Developed by Sijun Kevin Hu</p>
+        <p className="text-center">Icons by <a href="https://icons8.com" className="underline">Icons8</a></p>
+      </div>
     </div>
   );
 }
