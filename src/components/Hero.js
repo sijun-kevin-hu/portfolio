@@ -17,7 +17,7 @@ const Hero = () => {
     }, []);
 
     useEffect(() => {
-        const words = ['Web Developer.', 'Software Developer.', 'Computer Science Student.'];
+        const words = ['Web Developer.', 'Software Developer.', 'Full Stack Developer.', 'AI/ML Enthusiast.', 'Tech Innovator.', 'Clean Code Advocate.'];
 
         const handleTyping = () => {
             const currentWord = words[wordIndex];

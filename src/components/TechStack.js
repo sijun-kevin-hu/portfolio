@@ -17,6 +17,7 @@ import android_img from '../images/android.png';
 import typescript_img from '../images/typescript.png';
 import csharp_img from '../images/csharp.png';
 import angular_img from '../images/angular.png';
+import nextjs_img from '../images/next.png';
 
 const technicalLanguages = [
     { name: "Python", img: pythonimg, color: "from-blue-500 to-blue-600"},
@@ -34,6 +35,7 @@ const technicalLanguages = [
 const technicalFrameworks = [
     { name: "React", img: react_img, color: "from-blue-400 to-blue-500"},
     { name: "Angular", img: angular_img, color: "from-red-500 to-red-600"},
+    { name: "Next.js", img: nextjs_img, color: "from-gray-500 to-gray-600"},
     { name: "TailwindCSS", img: tailwindcss_img, color: "from-cyan-400 to-cyan-500"},
     { name: "Flask", img: flask_img, color: "from-gray-400 to-gray-500"},
     { name: "Django", img: django_img, color: "from-green-600 to-green-700"},

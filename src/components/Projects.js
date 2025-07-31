@@ -12,14 +12,24 @@ import sql_img from '../images/sql.png';
 import javascript_img from '../images/javascript.png';
 import tailwind_img from '../images/tailwindcss.png';
 import typescript_img from '../images/typescript.png';
+import nextjs_img from '../images/next.png';
 
 const projects = [
     { 
         title: "AdaLens", 
         description: "An innovative AI-driven browser extension designed to enhance web accessibility for visually impaired users. The application dynamically generates and injects descriptive 'alt' text for images lacking proper accessibility attributes, making the web more inclusive for everyone. Built with TypeScript for the browser extension, Flask (Python) backend for secure API handling, and integrated Google Gemini API for advanced image analysis capabilities. The project demonstrates cutting-edge AI implementation in accessibility technology, creating a seamless bridge between modern AI capabilities and real-world accessibility needs.",
-        tech_img: [typescript_img, flask_img, python_img, javascript_img], 
+        tech_img: [typescript_img, flask_img, python_img], 
         github: 'https://github.com/sijun-kevin-hu/AdaLens',
         category: "AI/ML",
+        featured: true
+    },
+    { 
+        title: "TAP Detail App", 
+        description: "A comprehensive full-stack business management application designed specifically for mobile auto detailers. Features include a professional booking system for clients to schedule appointments, advanced appointment management with calendar integration, comprehensive client management system with customer profiles and history, automated email reminder system for appointments, and a complete business dashboard for service providers. The application streamlines the entire customer journey from initial booking to service completion, providing both clients and detailers with a seamless, professional experience.",
+        tech_img: [nextjs_img, firebase_img, typescript_img, tailwind_img], 
+        github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
+        liveSite: 'https://tapdetail.com',
+        category: "Full-Stack",
         featured: true
     },
     { 
@@ -33,7 +43,7 @@ const projects = [
     { 
         title: "DreamCatcher", 
         description: "A full-stack web application developed with React, Flask, Firebase, OpenAI API, and HuggingFace, designed to help users analyze and generate a visualization of their dream. The app includes features such as user authentication, the ability to interpret dreams, and view generated images. The backend, powered by Flask and Firebase, handles user credential verification and database management. Key features include user authentication, dream interpretation, and data visualization for an enhanced user experience.",
-        tech_img: [react_img, flask_img, html_img, css_img, javascript_img, firebase_img], 
+        tech_img: [react_img, flask_img, firebase_img], 
         github: 'https://github.com/jamesrm67/hacklytics-2025',
         category: "Web App",
         featured: true
@@ -41,10 +51,10 @@ const projects = [
     { 
         title: "Book Club", 
         description: "A full-stack web application developed with Flask, React, and Flask-SQLAlchemy, designed to connect book enthusiasts. The app includes features such as user authentication, the ability to log books, and manage book collections. The backend, powered by Flask and Flask-SQLAlchemy, handles user credential verification and database management.", 
-        tech_img: [python_img, flask_img, javascript_img, react_img, html_img, css_img], 
+        tech_img: [react_img, python_img, flask_img], 
         github: "https://github.com/sijun-kevin-hu/BookClub",
         category: "Web App",
-        featured: true
+        featured: false
     },
     { 
         title: "Poker Profit Tracker", 
@@ -101,7 +111,7 @@ const ProjectCard = ({ project, index, isVisible }) => {
             <div className='p-6'>
                 <div className='flex items-start justify-between mb-4'>
                     <div className='flex-1'>
-                        <div className='flex items-center gap-3 mb-2'>
+                        <div className='flex items-center gap-3 mb-2 flex-wrap'>
                             <span className='px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full'>
                                 {project.category}
                             </span>
@@ -117,7 +127,7 @@ const ProjectCard = ({ project, index, isVisible }) => {
                     </div>
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className='ml-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        className='ml-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-shrink-0'
                     >
                         <svg 
                             className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
@@ -131,34 +141,54 @@ const ProjectCard = ({ project, index, isVisible }) => {
                 </div>
 
                 <div className={`overflow-hidden transition-all duration-500 ${
-                    isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
                 }`}>
-                    <p className='text-gray-700 leading-relaxed mb-6'>
-                        {project.description}
-                    </p>
-                    
-                    <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
-                        <div className='flex flex-wrap gap-2'>
-                            {project.tech_img.map((tech, techIndex) => (
-                                <div key={techIndex} className='p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-300'>
-                                    <img src={tech} alt='tech' className='w-6 h-6' />
-                                </div>
-                            ))}
+                    <div className='pt-4 pb-2'>
+                        <p className='text-gray-700 leading-relaxed mb-6 text-sm sm:text-base'>
+                            {project.description}
+                        </p>
+                        
+                        <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
+                            <div className='flex flex-wrap gap-2 w-full sm:w-auto'>
+                                {project.tech_img.map((tech, techIndex) => (
+                                    <div key={techIndex} className='p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-300'>
+                                        <img src={tech} alt='tech' className='w-6 h-6' />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className='flex gap-2 w-full sm:w-auto'>
+                                {project.github && (
+                                    <a 
+                                        href={project.github} 
+                                        target='_blank' 
+                                        rel='noopener noreferrer'
+                                        className='inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors duration-300 group flex-1 sm:flex-none justify-center'
+                                    >
+                                        <img src={github_img} alt='GitHub' className='w-5 h-5' />
+                                        <span className='text-sm font-medium'>View Code</span>
+                                        <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
+                                        </svg>
+                                    </a>
+                                )}
+                                {project.liveSite && (
+                                    <a 
+                                        href={project.liveSite} 
+                                        target='_blank' 
+                                        rel='noopener noreferrer'
+                                        className='inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 group flex-1 sm:flex-none justify-center'
+                                    >
+                                        <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
+                                        </svg>
+                                        <span className='text-sm font-medium'>Live Site</span>
+                                        <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
+                                        </svg>
+                                    </a>
+                                )}
+                            </div>
                         </div>
-                        {project.github && (
-                            <a 
-                                href={project.github} 
-                                target='_blank' 
-                                rel='noopener noreferrer'
-                                className='inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors duration-300 group'
-                            >
-                                <img src={github_img} alt='GitHub' className='w-5 h-5' />
-                                <span className='text-sm font-medium'>View Code</span>
-                                <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
-                                </svg>
-                            </a>
-                        )}
                     </div>
                 </div>
             </div>
