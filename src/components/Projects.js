@@ -16,20 +16,21 @@ import nextjs_img from '../images/next.png';
 
 const projects = [
     { 
-        title: "AdaLens", 
-        description: "An innovative AI-driven browser extension designed to enhance web accessibility for visually impaired users. The application dynamically generates and injects descriptive 'alt' text for images lacking proper accessibility attributes, making the web more inclusive for everyone. Built with TypeScript for the browser extension, Flask (Python) backend for secure API handling, and integrated Google Gemini API for advanced image analysis capabilities. The project demonstrates cutting-edge AI implementation in accessibility technology, creating a seamless bridge between modern AI capabilities and real-world accessibility needs.",
-        tech_img: [typescript_img, flask_img, python_img], 
-        github: 'https://github.com/sijun-kevin-hu/AdaLens',
-        category: "AI/ML",
-        featured: true
-    },
-    { 
         title: "TAP Detail App", 
         description: "A comprehensive full-stack business management application designed specifically for mobile auto detailers. Features include a professional booking system for clients to schedule appointments, advanced appointment management with calendar integration, comprehensive client management system with customer profiles and history, automated email reminder system for appointments, and a complete business dashboard for service providers. The application streamlines the entire customer journey from initial booking to service completion, providing both clients and detailers with a seamless, professional experience.",
         tech_img: [nextjs_img, firebase_img, typescript_img, tailwind_img], 
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
         liveSite: 'https://tapdetail.com',
         category: "Full-Stack",
+        featured: true
+    },
+    { 
+        title: "AdaLens", 
+        description: "An innovative AI-driven browser extension designed to enhance web accessibility for visually impaired users. The application dynamically generates and injects descriptive 'alt' text for images lacking proper accessibility attributes, making the web more inclusive for everyone. Built with TypeScript for the browser extension, Flask (Python) backend for secure API handling, and integrated Google Gemini API for advanced image analysis capabilities. The project demonstrates cutting-edge AI implementation in accessibility technology, creating a seamless bridge between modern AI capabilities and real-world accessibility needs.",
+        tech_img: [typescript_img, flask_img, python_img], 
+        github: 'https://github.com/sijun-kevin-hu/AdaLens',
+        liveSite: 'https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod',
+        category: "AI/ML",
         featured: true
     },
     { 
@@ -148,21 +149,21 @@ const ProjectCard = ({ project, index, isVisible }) => {
                             {project.description}
                         </p>
                         
-                        <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
-                            <div className='flex flex-wrap gap-2 w-full sm:w-auto'>
+                        <div className='flex flex-col gap-4'>
+                            <div className='flex flex-wrap gap-2'>
                                 {project.tech_img.map((tech, techIndex) => (
                                     <div key={techIndex} className='p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-300'>
                                         <img src={tech} alt='tech' className='w-6 h-6' />
                                     </div>
                                 ))}
                             </div>
-                            <div className='flex gap-2 w-full sm:w-auto'>
+                            <div className='flex flex-wrap gap-2'>
                                 {project.github && (
                                     <a 
                                         href={project.github} 
                                         target='_blank' 
                                         rel='noopener noreferrer'
-                                        className='inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors duration-300 group flex-1 sm:flex-none justify-center'
+                                        className='inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit'
                                     >
                                         <img src={github_img} alt='GitHub' className='w-5 h-5' />
                                         <span className='text-sm font-medium'>View Code</span>
@@ -176,7 +177,7 @@ const ProjectCard = ({ project, index, isVisible }) => {
                                         href={project.liveSite} 
                                         target='_blank' 
                                         rel='noopener noreferrer'
-                                        className='inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 group flex-1 sm:flex-none justify-center'
+                                        className='inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit'
                                     >
                                         <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
