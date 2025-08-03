@@ -85,6 +85,9 @@ const Footer = () => {
           <p className="text-gray-400 text-sm mt-2">
             Designed and developed with ❤️ by Sijun Kevin Hu
           </p>
+          <p className="text-gray-400 text-sm mt-2">
+            Icons by <a href="https://icons8.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors duration-300">Icons8</a>
+          </p>
         </div>
       </div>
     </footer>
