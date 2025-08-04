@@ -17,7 +17,7 @@ import nextjs_img from '../images/next.png';
 const projects = [
     { 
         title: "TAP Detail App", 
-        description: "A comprehensive full-stack business management application designed specifically for mobile auto detailers. Features include a professional booking system for clients to schedule appointments, advanced appointment management with calendar integration, comprehensive client management system with customer profiles and history, automated email reminder system for appointments, and a complete business dashboard for service providers. The application streamlines the entire customer journey from initial booking to service completion, providing both clients and detailers with a seamless, professional experience.",
+        description: "A comprehensive full-stack business management application designed specifically for mobile auto detailers. Features include a professional booking system for clients to schedule and manage appointments, a comprehensive client management system with earnings and history, automated email reminder system for appointments, and a business dashboard for service providers. The application streamlines the entire customer journey from initial booking to service completion, providing both clients and detailers with a seamless, professional experience.",
         tech_img: [nextjs_img, firebase_img, typescript_img, tailwind_img], 
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
         liveSite: 'https://tapdetail.com',
