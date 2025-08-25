@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../index.css';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
 import gmailLogo from '../images/gmail-logo.png';
 import dev from '../images/dev.png';
+import { CONTACT_INFO, CAROUSEL_PHRASES} from '../constants';
 
 const Hero = () => {
     const [displayedText, setDisplayedText] = useState('');
@@ -11,14 +12,13 @@ const Hero = () => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [typingSpeed, setTypingSpeed] = useState(100);
     const [isVisible, setIsVisible] = useState(false);
+    const words = CAROUSEL_PHRASES.words;
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
     useEffect(() => {
-        const words = ['Web Developer.', 'Software Developer.', 'Full Stack Developer.', 'AI/ML Enthusiast.', 'Tech Innovator.', 'Clean Code Advocate.'];
-
         const handleTyping = () => {
             const currentWord = words[wordIndex];
             const nextText = isDeleting
@@ -41,7 +41,7 @@ const Hero = () => {
 
         const timer = setTimeout(handleTyping, typingSpeed);
         return () => clearTimeout(timer);
-    }, [displayedText, isDeleting, typingSpeed, wordIndex]);
+    }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
 
     return (
         <section className='relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50'>
@@ -100,7 +100,7 @@ const Hero = () => {
                             <span className='text-gray-600 font-medium'>Connect with me:</span>
                             <div className='flex gap-3 sm:gap-4'>
                                 <a 
-                                    href='https://linkedin.com/in/sijunkevinhu' 
+                                    href={CONTACT_INFO.linkedin}
                                     className='p-3 bg-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:bg-blue-50'
                                     target='_blank'
                                     rel='noopener noreferrer'
@@ -108,7 +108,7 @@ const Hero = () => {
                                     <img src={linkedInLogo} alt="LinkedIn" className='w-6 h-6 sm:w-8 sm:h-8' />
                                 </a>
                                 <a 
-                                    href='https://github.com/sijun-kevin-hu' 
+                                    href={CONTACT_INFO.github}
                                     className='p-3 bg-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:bg-gray-50'
                                     target='_blank'
                                     rel='noopener noreferrer'
@@ -116,7 +116,7 @@ const Hero = () => {
                                     <img src={githubLogo} alt="GitHub" className='w-6 h-6 sm:w-8 sm:h-8' />
                                 </a>
                                 <a 
-                                    href='mailto:kevinhu91846@gmail.com' 
+                                    href={"mailto:" + CONTACT_INFO.email}
                                     className='p-3 bg-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:bg-red-50'
                                     target='_blank'
                                     rel='noopener noreferrer'
