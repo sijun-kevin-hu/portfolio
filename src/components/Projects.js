@@ -121,25 +121,25 @@ const ProjectCard = ({ project, index, isVisible }) => {
                 <div className='flex items-start justify-between mb-4'>
                     <div className='flex-1'>
                         <div className='flex items-center gap-3 mb-2 flex-wrap'>
-                            <span className='px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full'>
+                            <span className='px-3 py-1 bg-cyan-500/20 text-cyan-400 text-sm font-medium rounded-full border border-cyan-500/30'>
                                 {project.category}
                             </span>
                             {project.featured && (
-                                <span className='px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full'>
+                                <span className='px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm font-medium rounded-full border border-yellow-500/30'>
                                     Featured
                                 </span>
                             )}
                         </div>
-                        <h3 className='text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300'>
+                        <h3 className='text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300'>
                             {project.title}
                         </h3>
                     </div>
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className='ml-4 p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-shrink-0'
+                        className='ml-4 p-2 rounded-full hover:bg-cyan-500/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 flex-shrink-0'
                     >
                         <svg 
-                            className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
+                            className={`w-5 h-5 text-gray-300 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
                             fill='none' 
                             stroke='currentColor' 
                             viewBox='0 0 24 24'
@@ -153,14 +153,14 @@ const ProjectCard = ({ project, index, isVisible }) => {
                     isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
                 }`}>
                     <div className='pt-4 pb-2'>
-                        <p className='text-gray-700 leading-relaxed mb-6 text-sm sm:text-base'>
+                        <p className='text-gray-300 leading-relaxed mb-6 text-sm sm:text-base'>
                             {project.description}
                         </p>
                         
                         <div className='flex flex-col gap-4'>
                             <div className='flex flex-wrap gap-2'>
                                 {project.tech_img.map((tech, techIndex) => (
-                                    <div key={techIndex} className='p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-300'>
+                                    <div key={techIndex} className='p-2 bg-gray-800/50 rounded-lg hover:bg-gray-700/50 transition-colors duration-300 border border-cyan-500/20'>
                                         <img src={tech} alt='tech' className='w-6 h-6' />
                                     </div>
                                 ))}
@@ -171,7 +171,7 @@ const ProjectCard = ({ project, index, isVisible }) => {
                                         href={project.github} 
                                         target='_blank' 
                                         rel='noopener noreferrer'
-                                        className='inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit'
+                                        className='inline-flex items-center gap-2 px-4 py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit border border-cyan-500/30 hover:border-cyan-400'
                                     >
                                         <img src={github_img} alt='GitHub' className='w-5 h-5' />
                                         <span className='text-sm font-medium'>View Code</span>
@@ -185,7 +185,7 @@ const ProjectCard = ({ project, index, isVisible }) => {
                                         href={project.liveSite} 
                                         target='_blank' 
                                         rel='noopener noreferrer'
-                                        className='inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit'
+                                        className='inline-flex items-center gap-2 px-4 py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit border border-cyan-500/50 hover:border-cyan-400'
                                     >
                                         <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
@@ -231,22 +231,23 @@ const Projects = () => {
     }, []);
 
     return (
-        <section className='section-padding bg-gradient-to-br from-gray-50 to-white relative overflow-hidden' id='projects'>
-            {/* Background decoration */}
+        <section className='section-padding relative overflow-hidden' id='projects'>
+            {/* Cyberpunk background effects */}
             <div className='absolute inset-0 overflow-hidden'>
-                <div className='absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30'></div>
-                <div className='absolute bottom-0 left-0 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30'></div>
+                <div className='absolute top-0 right-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full filter blur-xl opacity-50'></div>
+                <div className='absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'></div>
+                <div className='absolute inset-0 grid-overlay opacity-10'></div>
             </div>
 
             <div className='relative z-10 max-w-7xl mx-auto'>
                 <div className={`text-center mb-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <h2 className='text-blue-600 uppercase font-bold text-sm tracking-wider mb-4'>
+                    <h2 className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'>
                         What I Made
                     </h2>
-                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6'>
+                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'>
                         Projects.
                     </h1>
-                    <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                    <p className='text-xl text-gray-300 max-w-3xl mx-auto'>
                         Here are some of the projects I've worked on. Each one represents a unique challenge and learning opportunity.
                     </p>
                 </div>
@@ -264,11 +265,11 @@ const Projects = () => {
 
                 {/* Call to action */}
                 <div className={`text-center mt-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <div className='card p-8 max-w-4xl mx-auto'>
-                        <h3 className='text-2xl font-bold text-gray-900 mb-4'>
+                    <div className='cyber-card p-8 max-w-4xl mx-auto'>
+                        <h3 className='text-2xl font-bold text-white mb-4'>
                             Interested in collaborating?
                         </h3>
-                        <p className='text-gray-700 leading-relaxed mb-6'>
+                        <p className='text-gray-300 leading-relaxed mb-6'>
                             I'm always open to new opportunities and exciting projects. Let's work together to create something amazing!
                         </p>
                         <a 

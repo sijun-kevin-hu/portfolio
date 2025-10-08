@@ -44,12 +44,32 @@ const Hero = () => {
     }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
 
     return (
-        <section className='relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50'>
-            {/* Background decoration */}
+        <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
+            {/* Cyberpunk background effects */}
             <div className='absolute inset-0 overflow-hidden'>
-                <div className='absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse'></div>
-                <div className='absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse'></div>
-                <div className='absolute top-40 left-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse'></div>
+                {/* Grid overlay */}
+                <div className='absolute inset-0 grid-overlay opacity-20'></div>
+                
+                {/* Floating geometric shapes */}
+                <div className='absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full filter blur-xl animate-pulse'></div>
+                <div className='absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full filter blur-xl animate-pulse'></div>
+                <div className='absolute top-40 left-40 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full filter blur-xl animate-pulse'></div>
+                
+                
+                {/* Subtle floating particles */}
+                <div className='absolute inset-0'>
+                    {[...Array(8)].map((_, i) => (
+                        <div
+                            key={i}
+                            className='absolute w-1 h-1 bg-cyan-400/30 rounded-full matrix-rain'
+                            style={{
+                                left: `${Math.random() * 100}%`,
+                                animationDelay: `${Math.random() * 5}s`,
+                                animationDuration: `${8 + Math.random() * 4}s`
+                            }}
+                        ></div>
+                    ))}
+                </div>
             </div>
 
             <div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16'>
@@ -57,14 +77,14 @@ const Hero = () => {
                     {/* Left side - Text content */}
                     <div className={`space-y-8 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
                         <div className='space-y-4'>
-                            <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight'>
+                            <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight'>
                                 Hi, I'm{' '}
                                 <span className='gradient-text'>Kevin.</span>
                             </h1>
                             
-                            <p className='text-xl sm:text-2xl md:text-3xl text-gray-700 font-medium'>
+                            <p className='text-xl sm:text-2xl md:text-3xl text-gray-200 font-medium'>
                                 I am a{' '}
-                                <span className='text-blue-600 font-semibold'>
+                                <span className='text-cyan-400 font-semibold'>
                                     {displayedText}
                                     <span className='blink-cursor'></span>
                                 </span>
@@ -97,11 +117,11 @@ const Hero = () => {
 
                         {/* Social Links */}
                         <div className='flex items-center gap-4 sm:gap-6'>
-                            <span className='text-gray-600 font-medium'>Connect with me:</span>
+                            <span className='text-gray-400 font-medium'>Connect with me:</span>
                             <div className='flex gap-3 sm:gap-4'>
                                 <a 
                                     href={CONTACT_INFO.linkedin}
-                                    className='p-3 bg-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:bg-blue-50'
+                                    className='p-3 bg-gray-800/50 rounded-full border border-cyan-500/30 hover:border-cyan-400 hover:scale-110 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25'
                                     target='_blank'
                                     rel='noopener noreferrer'
                                 >
@@ -109,7 +129,7 @@ const Hero = () => {
                                 </a>
                                 <a 
                                     href={CONTACT_INFO.github}
-                                    className='p-3 bg-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:bg-gray-50'
+                                    className='p-3 bg-gray-800/50 rounded-full border border-cyan-500/30 hover:border-cyan-400 hover:scale-110 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25'
                                     target='_blank'
                                     rel='noopener noreferrer'
                                 >
@@ -117,7 +137,7 @@ const Hero = () => {
                                 </a>
                                 <a 
                                     href={"mailto:" + CONTACT_INFO.email}
-                                    className='p-3 bg-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 hover:bg-red-50'
+                                    className='p-3 bg-gray-800/50 rounded-full border border-cyan-500/30 hover:border-cyan-400 hover:scale-110 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25'
                                     target='_blank'
                                     rel='noopener noreferrer'
                                 >
@@ -130,11 +150,12 @@ const Hero = () => {
                     {/* Right side - Image */}
                     <div className={`flex justify-center lg:justify-end ${isVisible ? 'slide-in-left' : 'opacity-0'}`}>
                         <div className='relative'>
-                            <div className='absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-3xl opacity-20 animate-pulse'></div>
+                            <div className='absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full blur-3xl opacity-30 animate-pulse'></div>
+                            <div className='absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full blur-2xl opacity-20 animate-pulse' style={{animationDelay: '1s'}}></div>
                             <img 
                                 src={dev} 
                                 alt="Developer illustration" 
-                                className='relative w-full max-w-md lg:max-w-lg xl:max-w-xl float hover:scale-105 transition-transform duration-500'
+                                className='relative w-full max-w-md lg:max-w-lg xl:max-w-xl float hover:scale-105 transition-transform duration-500 hologram'
                             />
                         </div>
                     </div>
@@ -143,8 +164,8 @@ const Hero = () => {
 
             {/* Scroll indicator */}
             <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce'>
-                <div className='w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center'>
-                    <div className='w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse'></div>
+                <div className='w-6 h-10 border-2 border-cyan-400 rounded-full flex justify-center'>
+                    <div className='w-1 h-3 bg-cyan-400 rounded-full mt-2 animate-pulse'></div>
                 </div>
             </div>
         </section>

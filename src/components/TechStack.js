@@ -49,24 +49,25 @@ const SkillCard = ({ skill, index }) => {
 
     return (
         <div 
-            className={`card p-6 text-center group cursor-pointer transition-all duration-300 hover-lift ${
+            className={`cyber-card p-6 text-center group cursor-pointer transition-all duration-300 hover-lift ${
                 isHovered ? 'scale-105' : ''
             }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{ animationDelay: `${index * 100}ms` }}
         >
-            <div className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r ${skill.color} p-4 shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+            <div className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r ${skill.color} p-4 shadow-lg group-hover:shadow-xl transition-all duration-300 relative overflow-hidden`}>
+                <div className='absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
                 <img 
                     src={skill.img} 
                     alt={skill.name} 
-                    className='w-full h-full object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300' 
+                    className='w-full h-full object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300 relative z-10' 
                 />
             </div>
-            <h3 className='text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300'>
+            <h3 className='text-lg font-semibold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300'>
                 {skill.name}
             </h3>
-            <div className='w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 mx-auto'></div>
+            <div className='w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 mx-auto'></div>
         </div>
     );
 };
@@ -75,8 +76,8 @@ const SkillSet = ({ title, skills, isVisible }) => {
     return (
         <div className={`space-y-8 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
             <div className='text-center'>
-                <h3 className='text-2xl font-bold text-gray-900 mb-2'>{title}</h3>
-                <div className='w-16 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full'></div>
+                <h3 className='text-2xl font-bold text-white mb-2'>{title}</h3>
+                <div className='w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full'></div>
             </div>
             <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6'>
                 {skills.map((skill, index) => (
@@ -113,22 +114,23 @@ const TechStack = () => {
     }, []);
 
     return (
-        <section className='section-padding bg-gradient-to-br from-white to-gray-50 relative overflow-hidden' id='skills'>
-            {/* Background decoration */}
+        <section className='section-padding relative overflow-hidden' id='skills'>
+            {/* Cyberpunk background effects */}
             <div className='absolute inset-0 overflow-hidden'>
-                <div className='absolute top-0 left-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30'></div>
-                <div className='absolute bottom-0 right-0 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-30'></div>
+                <div className='absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full filter blur-xl opacity-50'></div>
+                <div className='absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'></div>
+                <div className='absolute inset-0 grid-overlay opacity-10'></div>
             </div>
 
             <div className='relative z-10 max-w-7xl mx-auto'>
                 <div className={`text-center mb-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <h2 className='text-blue-600 uppercase font-bold text-sm tracking-wider mb-4'>
+                    <h2 className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'>
                         My Skills
                     </h2>
-                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6'>
+                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'>
                         Tech Stack.
                     </h1>
-                    <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                    <p className='text-xl text-gray-300 max-w-3xl mx-auto'>
                         Here are the technologies and tools I use to bring ideas to life
                     </p>
                 </div>
@@ -148,11 +150,11 @@ const TechStack = () => {
 
                 {/* Additional info */}
                 <div className={`text-center mt-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <div className='card p-8 max-w-4xl mx-auto'>
-                        <h3 className='text-2xl font-bold text-gray-900 mb-4'>
+                    <div className='cyber-card p-8 max-w-4xl mx-auto'>
+                        <h3 className='text-2xl font-bold text-white mb-4'>
                             Always Learning
                         </h3>
-                        <p className='text-gray-700 leading-relaxed'>
+                        <p className='text-gray-300 leading-relaxed'>
                             I'm constantly expanding my skill set and exploring new technologies. 
                             I believe in staying up-to-date with the latest industry trends and best practices 
                             to deliver the best possible solutions.
