@@ -81,8 +81,8 @@ html {
     0 0 20px #ff00ff;
 }
 
-/* Smooth transitions */
-* {
+/* Optimized transitions - only for interactive elements */
+button, a, .cyber-card, .card, .btn-primary, .btn-secondary {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -283,7 +283,8 @@ html {
 }
 
 .matrix-rain {
-  animation: matrix-rain 3s linear infinite;
+  animation: matrix-rain 12s linear infinite;
+  will-change: transform, opacity;
 }
 
 
@@ -315,4 +316,12 @@ html {
     linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
+}
+
+/* Text truncation utilities */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

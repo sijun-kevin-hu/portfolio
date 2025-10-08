@@ -108,97 +108,86 @@ const projects = [
 ];
 
 const ProjectCard = ({ project, index, isVisible }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
         <div 
-            className={`card overflow-hidden transition-all duration-500 ${
+            className={`cyber-card overflow-hidden transition-all duration-300 cursor-pointer ${
                 isVisible ? 'fade-in' : 'opacity-0'
-            }`}
+            } ${isHovered ? 'scale-105' : ''}`}
             style={{ animationDelay: `${index * 100}ms` }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
-            <div className='p-6'>
-                <div className='flex items-start justify-between mb-4'>
-                    <div className='flex-1'>
-                        <div className='flex items-center gap-3 mb-2 flex-wrap'>
-                            <span className='px-3 py-1 bg-cyan-500/20 text-cyan-400 text-sm font-medium rounded-full border border-cyan-500/30'>
-                                {project.category}
+            <div className='p-6 h-full flex flex-col'>
+                {/* Header */}
+                <div className='mb-4'>
+                    <div className='flex items-center gap-2 mb-3 flex-wrap'>
+                        <span className='px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-medium rounded-full border border-cyan-500/30'>
+                            {project.category}
+                        </span>
+                        {project.featured && (
+                            <span className='px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-medium rounded-full border border-yellow-500/30'>
+                                ⭐ Featured
                             </span>
-                            {project.featured && (
-                                <span className='px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm font-medium rounded-full border border-yellow-500/30'>
-                                    Featured
-                                </span>
-                            )}
-                        </div>
-                        <h3 className='text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300'>
-                            {project.title}
-                        </h3>
+                        )}
                     </div>
-                    <button
-                        onClick={() => setIsExpanded(!isExpanded)}
-                        className='ml-4 p-2 rounded-full hover:bg-cyan-500/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 flex-shrink-0'
-                    >
-                        <svg 
-                            className={`w-5 h-5 text-gray-300 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
-                            fill='none' 
-                            stroke='currentColor' 
-                            viewBox='0 0 24 24'
-                        >
-                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
-                        </svg>
-                    </button>
+                    <h3 className='text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300'>
+                        {project.title}
+                    </h3>
                 </div>
 
-                <div className={`overflow-hidden transition-all duration-500 ${
-                    isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-                }`}>
-                    <div className='pt-4 pb-2'>
-                        <p className='text-gray-300 leading-relaxed mb-6 text-sm sm:text-base'>
-                            {project.description}
-                        </p>
-                        
-                        <div className='flex flex-col gap-4'>
-                            <div className='flex flex-wrap gap-2'>
-                                {project.tech_img.map((tech, techIndex) => (
-                                    <div key={techIndex} className='p-2 bg-gray-800/50 rounded-lg hover:bg-gray-700/50 transition-colors duration-300 border border-cyan-500/20'>
-                                        <img src={tech} alt='tech' className='w-6 h-6' />
-                                    </div>
-                                ))}
+                {/* Description */}
+                <div className='flex-1 mb-4'>
+                    <p className='text-gray-300 leading-relaxed text-sm line-clamp-4'>
+                        {project.description}
+                    </p>
+                </div>
+
+                {/* Tech Stack */}
+                <div className='mb-4'>
+                    <div className='flex flex-wrap gap-2'>
+                        {project.tech_img.slice(0, 4).map((tech, techIndex) => (
+                            <div key={techIndex} className='p-1.5 bg-gray-800/50 rounded-md hover:bg-gray-700/50 transition-colors duration-300 border border-cyan-500/20'>
+                                <img src={tech} alt='tech' className='w-5 h-5' />
                             </div>
-                            <div className='flex flex-wrap gap-2'>
-                                {project.github && (
-                                    <a 
-                                        href={project.github} 
-                                        target='_blank' 
-                                        rel='noopener noreferrer'
-                                        className='inline-flex items-center gap-2 px-4 py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit border border-cyan-500/30 hover:border-cyan-400'
-                                    >
-                                        <img src={github_img} alt='GitHub' className='w-5 h-5' />
-                                        <span className='text-sm font-medium'>View Code</span>
-                                        <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
-                                        </svg>
-                                    </a>
-                                )}
-                                {project.liveSite && (
-                                    <a 
-                                        href={project.liveSite} 
-                                        target='_blank' 
-                                        rel='noopener noreferrer'
-                                        className='inline-flex items-center gap-2 px-4 py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 group flex-1 sm:flex-none justify-center min-w-fit border border-cyan-500/50 hover:border-cyan-400'
-                                    >
-                                        <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
-                                        </svg>
-                                        <span className='text-sm font-medium'>Live Site</span>
-                                        <svg className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
-                                        </svg>
-                                    </a>
-                                )}
+                        ))}
+                        {project.tech_img.length > 4 && (
+                            <div className='p-1.5 bg-gray-800/50 rounded-md border border-cyan-500/20'>
+                                <span className='text-xs text-gray-400'>+{project.tech_img.length - 4}</span>
                             </div>
-                        </div>
+                        )}
                     </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className='flex gap-2 mt-auto'>
+                    {project.github && (
+                        <a 
+                            href={project.github} 
+                            target='_blank' 
+                            rel='noopener noreferrer'
+                            className='flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 text-sm border border-cyan-500/30 hover:border-cyan-400'
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <img src={github_img} alt='GitHub' className='w-4 h-4' />
+                            <span>Code</span>
+                        </a>
+                    )}
+                    {project.liveSite && (
+                        <a 
+                            href={project.liveSite} 
+                            target='_blank' 
+                            rel='noopener noreferrer'
+                            className='flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 text-sm border border-cyan-500/50 hover:border-cyan-400'
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
+                            </svg>
+                            <span>Live</span>
+                        </a>
+                    )}
                 </div>
             </div>
         </div>
@@ -252,7 +241,7 @@ const Projects = () => {
                     </p>
                 </div>
 
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+                <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
                     {projects.map((project, index) => (
                         <ProjectCard 
                             key={index} 

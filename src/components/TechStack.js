@@ -45,29 +45,21 @@ const technicalFrameworks = [
 ];
 
 const SkillCard = ({ skill, index }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
     return (
         <div 
-            className={`cyber-card p-6 text-center group cursor-pointer transition-all duration-300 hover-lift ${
-                isHovered ? 'scale-105' : ''
-            }`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{ animationDelay: `${index * 100}ms` }}
+            className='cyber-card p-4 text-center group cursor-pointer transition-all duration-300 hover-lift'
+            style={{ animationDelay: `${index * 50}ms` }}
         >
-            <div className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r ${skill.color} p-4 shadow-lg group-hover:shadow-xl transition-all duration-300 relative overflow-hidden`}>
-                <div className='absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+            <div className={`w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r ${skill.color} p-3 shadow-lg group-hover:shadow-xl transition-all duration-300 relative overflow-hidden`}>
                 <img 
                     src={skill.img} 
                     alt={skill.name} 
                     className='w-full h-full object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300 relative z-10' 
                 />
             </div>
-            <h3 className='text-lg font-semibold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300'>
+            <h3 className='text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors duration-300'>
                 {skill.name}
             </h3>
-            <div className='w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 mx-auto'></div>
         </div>
     );
 };
@@ -79,7 +71,7 @@ const SkillSet = ({ title, skills, isVisible }) => {
                 <h3 className='text-2xl font-bold text-white mb-2'>{title}</h3>
                 <div className='w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full'></div>
             </div>
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6'>
+            <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'>
                 {skills.map((skill, index) => (
                     <SkillCard key={skill.name} skill={skill} index={index} />
                 ))}
