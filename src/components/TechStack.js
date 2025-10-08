@@ -54,7 +54,7 @@ const SkillCard = ({ skill, index }) => {
                 <img 
                     src={skill.img} 
                     alt={skill.name} 
-                    className='w-full h-full object-contain filter brightness-0 invert group-hover:scale-110 transition-transform duration-300 relative z-10' 
+                    className='w-full h-full object-contain filter brightness-75 contrast-125 group-hover:scale-110 transition-transform duration-300 relative z-10' 
                 />
             </div>
             <h3 className='text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors duration-300'>
