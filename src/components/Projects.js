@@ -16,21 +16,12 @@ import nextjs_img from '../images/next.png';
 
 const projects = [
     { 
-        title: "TAP Detail App", 
+        title: "Tap Detail", 
         description: "A comprehensive full-stack business management application designed specifically for mobile auto detailers. Features include a professional booking system for clients to schedule and manage appointments, a comprehensive client management system with earnings and history, automated email reminder system for appointments, and a business dashboard for service providers. The application streamlines the entire customer journey from initial booking to service completion, providing both clients and detailers with a seamless, professional experience.",
         tech_img: [nextjs_img, firebase_img, typescript_img, tailwind_img], 
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
         liveSite: 'https://tapdetail.com',
         category: "Full-Stack",
-        featured: true
-    },
-    { 
-        title: "AdaLens", 
-        description: "An innovative AI-driven browser extension designed to enhance web accessibility for visually impaired users. The application dynamically generates and injects descriptive 'alt' text for images lacking proper accessibility attributes, making the web more inclusive for everyone. Built with TypeScript for the browser extension, Flask (Python) backend for secure API handling, and integrated Google Gemini API for advanced image analysis capabilities. The project demonstrates cutting-edge AI implementation in accessibility technology, creating a seamless bridge between modern AI capabilities and real-world accessibility needs.",
-        tech_img: [typescript_img, flask_img, python_img], 
-        github: 'https://github.com/sijun-kevin-hu/AdaLens',
-        liveSite: 'https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod',
-        category: "AI/ML",
         featured: true
     },
     { 
@@ -41,13 +32,30 @@ const projects = [
         category: "Mobile App",
         featured: true
     },
+    {
+        title: "BubbledIn",
+        description: "Real-time audio collaboration app that creates private “audio bubbles” so teams can communicate clearly in loud environments like hackathons, expos, and classrooms. Built with React, WebRTC, and Firebase, it enables seamless peer-to-peer voice streaming, instant QR-based room joining, and AI-powered live transcription using the Gemini API to enhance accessibility and comprehension.",
+        tech_img: [react_img, typescript_img, firebase_img],
+        github: 'https://github.com/elenesturua/BubbledIn',
+        category: "Web App",
+        featured: true
+    },
     { 
         title: "DreamCatcher", 
         description: "A full-stack web application developed with React, Flask, Firebase, OpenAI API, and HuggingFace, designed to help users analyze and generate a visualization of their dream. The app includes features such as user authentication, the ability to interpret dreams, and view generated images. The backend, powered by Flask and Firebase, handles user credential verification and database management. Key features include user authentication, dream interpretation, and data visualization for an enhanced user experience.",
         tech_img: [react_img, flask_img, firebase_img], 
         github: 'https://github.com/jamesrm67/hacklytics-2025',
         category: "Web App",
-        featured: true
+        featured: false
+    },
+    { 
+        title: "AdaLens", 
+        description: "An innovative AI-driven browser extension designed to enhance web accessibility for visually impaired users. The application dynamically generates and injects descriptive 'alt' text for images lacking proper accessibility attributes, making the web more inclusive for everyone. Built with TypeScript for the browser extension, Flask (Python) backend for secure API handling, and integrated Google Gemini API for advanced image analysis capabilities. The project demonstrates cutting-edge AI implementation in accessibility technology, creating a seamless bridge between modern AI capabilities and real-world accessibility needs.",
+        tech_img: [typescript_img, flask_img, python_img], 
+        github: 'https://github.com/sijun-kevin-hu/AdaLens',
+        liveSite: 'https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod',
+        category: "AI/ML",
+        featured: false
     },
     { 
         title: "Book Club", 
