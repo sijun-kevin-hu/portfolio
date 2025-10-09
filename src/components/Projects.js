@@ -38,6 +38,7 @@ const projects = [
         tech_img: [react_img, typescript_img, firebase_img],
         github: 'https://github.com/elenesturua/BubbledIn',
         category: "Web App",
+        liveSite: 'https://https://bubbled-in.vercel.app',
         featured: true
     },
     { 
