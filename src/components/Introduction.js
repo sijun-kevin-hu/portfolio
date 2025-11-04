@@ -106,8 +106,8 @@ const Introduction = () => {
                                 <h3 className='text-xl font-semibold text-white'>Let's Connect</h3>
                             </div>
                             <p className='text-gray-300 leading-relaxed'>
-                                I'd love to collaborate on exciting projects or share ideas! Whether you have a project in mind or just want to chat about technology, 
-                                feel free to reach out.
+                                Down to collab on something cool or just talk tech? Hit me up! Always down to chat about projects, 
+                                share memes, or debate the best framework (React wins, fight me).
                             </p>
                         </div>
                     </div>
