@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import pythonimg from '../images/python.png';
 import javaimg from '../images/java.png';
 import react_img from '../images/react.png';
@@ -44,105 +45,244 @@ const technicalFrameworks = [
     { name: "Git", img: git_img, color: "from-red-500 to-red-600"}
 ];
 
-const SkillCard = ({ skill, index }) => {
+const SkillCard = ({ skill, index, isVisible }) => {
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const cardRef = useRef(null);
+    
+    const handleMouseMove = (e) => {
+        if (cardRef.current) {
+            const rect = cardRef.current.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            setMousePosition({ x: x * 0.15, y: y * 0.15 });
+        }
+    };
+    
+    const handleMouseLeave = () => {
+        setMousePosition({ x: 0, y: 0 });
+    };
+    
     return (
-        <div 
-            className='cyber-card p-4 text-center group cursor-pointer transition-all duration-300 hover-lift'
-            style={{ animationDelay: `${index * 50}ms` }}
+        <motion.div 
+            ref={cardRef}
+            className='cyber-card p-4 text-center group cursor-pointer relative overflow-hidden'
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={isVisible ? { 
+                opacity: 1, 
+                scale: 1, 
+                y: 0,
+                x: mousePosition.x,
+            } : { opacity: 0, scale: 0.8, y: 20 }}
+            style={{ 
+                transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+                transformStyle: 'preserve-3d' 
+            }}
+            transition={{ 
+                delay: index * 0.05,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+            }}
+            whileHover={{ 
+                scale: 1.1,
+                z: 50,
+                transition: { duration: 0.3 }
+            }}
         >
-            <div className={`w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r ${skill.color} p-3 shadow-lg group-hover:shadow-xl transition-all duration-300 relative overflow-hidden`}>
-                <img 
+            <motion.div 
+                className={`w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r ${skill.color} p-3 shadow-lg relative overflow-hidden`}
+                whileHover={{ 
+                    rotate: 360,
+                    scale: 1.15,
+                    boxShadow: "0 0 30px rgba(0, 255, 255, 0.5)"
+                }}
+                transition={{ duration: 0.6, type: "spring" }}
+            >
+                <motion.img 
                     src={skill.img} 
                     alt={skill.name} 
-                    className='w-full h-full object-contain filter brightness-75 contrast-125 group-hover:scale-110 transition-transform duration-300 relative z-10' 
+                    className='w-full h-full object-contain filter brightness-75 contrast-125 relative z-10' 
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ duration: 0.3 }}
                 />
-            </div>
-            <h3 className='text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors duration-300'>
+                <motion.div
+                    className='absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 opacity-0'
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                />
+            </motion.div>
+            <motion.h3 
+                className='text-sm font-semibold text-white'
+                whileHover={{ color: '#00ffff' }}
+                transition={{ duration: 0.3 }}
+            >
                 {skill.name}
-            </h3>
-        </div>
+            </motion.h3>
+        </motion.div>
     );
 };
 
-const SkillSet = ({ title, skills, isVisible }) => {
+const SkillSet = ({ title, skills, isVisible, containerVariants }) => {
     return (
-        <div className={`space-y-8 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-            <div className='text-center'>
+        <motion.div 
+            className='space-y-8'
+            initial={{ opacity: 0 }}
+            animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6 }}
+        >
+            <motion.div 
+                className='text-center'
+                initial={{ opacity: 0, y: -20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                transition={{ duration: 0.6 }}
+            >
                 <h3 className='text-2xl font-bold text-white mb-2'>{title}</h3>
-                <div className='w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full'></div>
-            </div>
-            <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'>
+                <motion.div 
+                    className='w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full'
+                    initial={{ width: 0 }}
+                    animate={isVisible ? { width: 64 } : { width: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                />
+            </motion.div>
+            <motion.div 
+                className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4'
+                variants={containerVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+            >
                 {skills.map((skill, index) => (
-                    <SkillCard key={skill.name} skill={skill} index={index} />
+                    <SkillCard key={skill.name} skill={skill} index={index} isVisible={isVisible} />
                 ))}
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 
 const TechStack = () => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        const element = document.getElementById('skills');
-        if (element) {
-            observer.observe(element);
-        }
-
-        return () => {
-            if (element) {
-                observer.unobserve(element);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.1 });
+    
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.03,
+                delayChildren: 0.2
             }
-        };
-    }, []);
+        }
+    };
+    
+    const titleVariants = {
+        hidden: { opacity: 0, y: -30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 120,
+                damping: 12
+            }
+        }
+    };
 
     return (
-        <section className='section-padding relative overflow-hidden' id='skills'>
+        <section ref={ref} className='section-padding relative overflow-hidden' id='skills'>
             {/* Cyberpunk background effects */}
-            <div className='absolute inset-0 overflow-hidden'>
-                <div className='absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full filter blur-xl opacity-50'></div>
-                <div className='absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'></div>
+            <motion.div 
+                className='absolute inset-0 overflow-hidden'
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 1 }}
+            >
+                <motion.div 
+                    className='absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full filter blur-xl opacity-50'
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 45, 0],
+                    }}
+                    transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
+                <motion.div 
+                    className='absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'
+                    animate={{
+                        scale: [1, 1.3, 1],
+                        rotate: [0, -45, 0],
+                    }}
+                    transition={{
+                        duration: 25,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
                 <div className='absolute inset-0 grid-overlay opacity-10'></div>
-            </div>
+            </motion.div>
 
             <div className='relative z-10 max-w-7xl mx-auto'>
-                <div className={`text-center mb-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <h2 className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'>
+                <motion.div 
+                    className='text-center mb-16'
+                    variants={titleVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                >
+                    <motion.h2 
+                        className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'
+                        whileHover={{ scale: 1.05 }}
+                    >
                         My Skills
-                    </h2>
-                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'>
+                    </motion.h2>
+                    <motion.h1 
+                        className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'
+                        whileHover={{ scale: 1.02 }}
+                    >
                         Tech Stack.
-                    </h1>
-                    <p className='text-xl text-gray-300 max-w-3xl mx-auto'>
+                    </motion.h1>
+                    <motion.p 
+                        className='text-xl text-gray-300 max-w-3xl mx-auto'
+                        initial={{ opacity: 0 }}
+                        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
                         Here are the technologies and tools I use to bring ideas to life
-                    </p>
-                </div>
+                    </motion.p>
+                </motion.div>
 
                 <div className='space-y-16'>
                     <SkillSet 
                         title="Programming Languages" 
                         skills={technicalLanguages} 
-                        isVisible={isVisible}
+                        isVisible={isInView}
+                        containerVariants={containerVariants}
                     />
                     <SkillSet 
                         title="Frameworks & Tools" 
                         skills={technicalFrameworks} 
-                        isVisible={isVisible}
+                        isVisible={isInView}
+                        containerVariants={containerVariants}
                     />
                 </div>
 
                 {/* Additional info */}
-                <div className={`text-center mt-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <div className='cyber-card p-8 max-w-4xl mx-auto'>
+                <motion.div 
+                    className='text-center mt-16'
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                >
+                    <motion.div 
+                        className='cyber-card p-8 max-w-4xl mx-auto'
+                        whileHover={{ 
+                            y: -5,
+                            boxShadow: "0 20px 60px rgba(0, 255, 255, 0.2)"
+                        }}
+                        transition={{ duration: 0.3 }}
+                    >
                         <h3 className='text-2xl font-bold text-white mb-4'>
                             Always Learning
                         </h3>
@@ -151,8 +291,8 @@ const TechStack = () => {
                             I believe in staying up-to-date with the latest industry trends and best practices 
                             to deliver the best possible solutions.
                         </p>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import java_img from '../images/java.png';
 import python_img from '../images/python.png';
 import github_img from '../images/github.png';
@@ -111,17 +112,45 @@ const projects = [
 const ProjectCard = ({ project, index, isVisible }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const cardRef = useRef(null);
     
     // Check if description is long enough to need truncation
     const descriptionLength = project.description.length;
     const needsTruncation = descriptionLength > 150;
+    
+    const cardVariants = {
+        hidden: { 
+            opacity: 0, 
+            y: 50,
+            scale: 0.9
+        },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+                delay: index * 0.1,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+            }
+        }
+    };
 
     return (
-        <div 
-            className={`cyber-card overflow-hidden transition-all duration-300 cursor-pointer ${
-                isVisible ? 'fade-in' : 'opacity-0'
-            } ${isHovered ? 'scale-105' : ''}`}
-            style={{ animationDelay: `${index * 100}ms` }}
+        <motion.div 
+            ref={cardRef}
+            className='cyber-card overflow-hidden cursor-pointer relative perspective-1000'
+            variants={cardVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            whileHover={{ 
+                y: -10,
+                rotateY: 5,
+                rotateX: -2,
+                transition: { duration: 0.3 }
+            }}
+            style={{ transformStyle: 'preserve-3d' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -167,9 +196,18 @@ const ProjectCard = ({ project, index, isVisible }) => {
                 <div className='mb-3 sm:mb-4'>
                     <div className='flex flex-wrap gap-2'>
                         {project.tech_img.slice(0, 4).map((tech, techIndex) => (
-                            <div key={techIndex} className='p-1.5 bg-gray-800/50 rounded-md hover:bg-gray-700/50 transition-colors duration-300 border border-cyan-500/20'>
+                            <motion.div 
+                                key={techIndex} 
+                                className='p-1.5 bg-gray-800/50 rounded-md border border-cyan-500/20'
+                                whileHover={{ 
+                                    scale: 1.2,
+                                    rotate: 360,
+                                    backgroundColor: 'rgba(55, 65, 81, 0.7)'
+                                }}
+                                transition={{ duration: 0.3 }}
+                            >
                                 <img src={tech} alt='tech' className='w-4 h-4 sm:w-5 sm:h-5' />
-                            </div>
+                            </motion.div>
                         ))}
                         {project.tech_img.length > 4 && (
                             <div className='p-1.5 bg-gray-800/50 rounded-md border border-cyan-500/20'>
@@ -209,88 +247,166 @@ const ProjectCard = ({ project, index, isVisible }) => {
                     )}
                 </div>
             </div>
-        </div>
+            {/* Hover glow effect */}
+            <motion.div
+                className='absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-purple-500/0 opacity-0 pointer-events-none'
+                animate={isHovered ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.3 }}
+            />
+        </motion.div>
     );
 };
 
 const Projects = () => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        const element = document.getElementById('projects');
-        if (element) {
-            observer.observe(element);
-        }
-
-        return () => {
-            if (element) {
-                observer.unobserve(element);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.1 });
+    
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
             }
-        };
-    }, []);
+        }
+    };
+    
+    const titleVariants = {
+        hidden: { opacity: 0, y: -30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 120,
+                damping: 12
+            }
+        }
+    };
 
     return (
-        <section className='section-padding relative overflow-hidden' id='projects'>
+        <section ref={ref} className='section-padding relative overflow-hidden' id='projects'>
             {/* Cyberpunk background effects */}
-            <div className='absolute inset-0 overflow-hidden'>
-                <div className='absolute top-0 right-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full filter blur-xl opacity-50'></div>
-                <div className='absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'></div>
+            <motion.div 
+                className='absolute inset-0 overflow-hidden'
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 1 }}
+            >
+                <motion.div 
+                    className='absolute top-0 right-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full filter blur-xl opacity-50'
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        rotate: [0, 60, 0],
+                    }}
+                    transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
+                <motion.div 
+                    className='absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'
+                    animate={{
+                        scale: [1, 1.3, 1],
+                        rotate: [0, -60, 0],
+                    }}
+                    transition={{
+                        duration: 25,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
                 <div className='absolute inset-0 grid-overlay opacity-10'></div>
-            </div>
+            </motion.div>
 
             <div className='relative z-10 max-w-7xl mx-auto'>
-                <div className={`text-center mb-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <h2 className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'>
+                <motion.div 
+                    className='text-center mb-16'
+                    variants={titleVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                >
+                    <motion.h2 
+                        className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'
+                        whileHover={{ scale: 1.05 }}
+                    >
                         What I Made
-                    </h2>
-                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'>
+                    </motion.h2>
+                    <motion.h1 
+                        className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'
+                        whileHover={{ scale: 1.02 }}
+                    >
                         Projects.
-                    </h1>
-                    <p className='text-xl text-gray-300 max-w-3xl mx-auto'>
+                    </motion.h1>
+                    <motion.p 
+                        className='text-xl text-gray-300 max-w-3xl mx-auto'
+                        initial={{ opacity: 0 }}
+                        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
                         Here are some of the projects I've worked on. Each one represents a unique challenge and learning opportunity.
-                    </p>
-                </div>
+                    </motion.p>
+                </motion.div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
+                <motion.div 
+                    className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                >
                     {projects.map((project, index) => (
                         <ProjectCard 
                             key={index} 
                             project={project} 
                             index={index}
-                            isVisible={isVisible}
+                            isVisible={isInView}
                         />
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Call to action */}
-                <div className={`text-center mt-16 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
-                    <div className='cyber-card p-8 max-w-4xl mx-auto'>
+                <motion.div 
+                    className='text-center mt-16'
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                >
+                    <motion.div 
+                        className='cyber-card p-8 max-w-4xl mx-auto'
+                        whileHover={{ 
+                            y: -5,
+                            boxShadow: "0 20px 60px rgba(0, 255, 255, 0.2)"
+                        }}
+                        transition={{ duration: 0.3 }}
+                    >
                         <h3 className='text-2xl font-bold text-white mb-4'>
                             Interested in collaborating?
                         </h3>
                         <p className='text-gray-300 leading-relaxed mb-6'>
                             I'm always open to new opportunities and exciting projects. Let's work together to create something amazing!
                         </p>
-                        <a 
+                        <motion.a 
                             href='mailto:kevinhu91846@gmail.com' 
                             className='btn-primary inline-flex items-center group'
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             <span>Get In Touch</span>
-                            <svg className='ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <motion.svg 
+                                className='ml-2 w-5 h-5' 
+                                fill='none' 
+                                stroke='currentColor' 
+                                viewBox='0 0 24 24'
+                                whileHover={{ x: 5 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                            >
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+                            </motion.svg>
+                        </motion.a>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

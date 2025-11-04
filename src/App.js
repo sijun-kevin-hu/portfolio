@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import './index.css';
@@ -8,10 +9,23 @@ import Projects from "./components/Projects";
 import Footer from "./components/Footer";
 
 function App() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden" style={{
       minHeight: '100dvh'
     }}>
+      {/* Scroll Progress Indicator */}
+      <motion.div
+        className="scroll-progress"
+        style={{ scaleX }}
+      />
+
       {/* Optimized background */}
       <div className="fixed inset-0 z-0" style={{
         top: 'env(safe-area-inset-top, 0)',

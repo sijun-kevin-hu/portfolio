@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import '../index.css';
 import codeLogo from '../images/code-icon.png';
 
@@ -15,6 +16,12 @@ const Navbar = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+    
+    const navLinks = [
+        { href: '#about', label: 'About' },
+        { href: '#skills', label: 'Skills' },
+        { href: '#projects', label: 'Projects' }
+    ];
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -34,40 +41,51 @@ const Navbar = () => {
                 <div className='flex items-center justify-between h-16 lg:h-20'>
                     {/* Logo */}
                     <div className='flex-shrink-0'>
-                        <a href='/' className='flex items-center space-x-2 group'>
-                            <div className='relative'>
-                                <img src={codeLogo} alt='code-logo' className='w-8 h-8 lg:w-10 lg:h-10 transition-transform duration-300 group-hover:rotate-12' />
-                            </div>
-                            <span className='text-xl lg:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300'>
+                        <motion.a 
+                            href='/' 
+                            className='flex items-center space-x-2 group'
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <motion.div 
+                                className='relative'
+                                whileHover={{ rotate: 360 }}
+                                transition={{ duration: 0.6 }}
+                            >
+                                <img src={codeLogo} alt='code-logo' className='w-8 h-8 lg:w-10 lg:h-10' />
+                            </motion.div>
+                            <motion.span 
+                                className='text-xl lg:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300'
+                                whileHover={{ color: '#00ffff' }}
+                            >
                                 Sijun Kevin Hu
-                            </span>
-                        </a>
+                            </motion.span>
+                        </motion.a>
                     </div>
 
                     {/* Desktop Navigation */}
                     <div className='hidden md:block'>
                         <div className='ml-10 flex items-baseline space-x-8'>
-                            <a 
-                                href='#about' 
-                                className='text-gray-300 hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-cyan-500/10 relative group'
-                            >
-                                About
-                                <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full'></span>
-                            </a>
-                            <a 
-                                href='#skills' 
-                                className='text-gray-300 hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-cyan-500/10 relative group'
-                            >
-                                Skills
-                                <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full'></span>
-                            </a>
-                            <a 
-                                href='#projects' 
-                                className='text-gray-300 hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-cyan-500/10 relative group'
-                            >
-                                Projects
-                                <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full'></span>
-                            </a>
+                            {navLinks.map((link, index) => (
+                                <motion.a
+                                    key={link.href}
+                                    href={link.href}
+                                    className='text-gray-300 hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-cyan-500/10 relative group'
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                >
+                                    {link.label}
+                                    <motion.span
+                                        className='absolute bottom-0 left-0 h-0.5 bg-cyan-400'
+                                        initial={{ width: 0 }}
+                                        whileHover={{ width: '100%' }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+                                </motion.a>
+                            ))}
                         </div>
                     </div>
 
@@ -105,35 +123,35 @@ const Navbar = () => {
             </div>
 
             {/* Mobile menu */}
-            <div className={`md:hidden transition-all duration-300 ease-in-out ${
-                isMenuOpen 
-                    ? 'max-h-64 opacity-100' 
-                    : 'max-h-0 opacity-0'
-            } overflow-hidden`}>
-                <div className='px-2 pt-2 pb-3 space-y-1 bg-gray-900/95 backdrop-blur-md border-t border-cyan-500/30'>
-                    <a
-                        href='#about'
-                        className='block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all duration-300'
-                        onClick={closeMenu}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        className='md:hidden overflow-hidden'
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
                     >
-                        About
-                    </a>
-                    <a
-                        href='#skills'
-                        className='block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all duration-300'
-                        onClick={closeMenu}
-                    >
-                        Skills
-                    </a>
-                    <a
-                        href='#projects'
-                        className='block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all duration-300'
-                        onClick={closeMenu}
-                    >
-                        Projects
-                    </a>
-                </div>
-            </div>
+                        <div className='px-2 pt-2 pb-3 space-y-1 bg-gray-900/95 backdrop-blur-md border-t border-cyan-500/30'>
+                            {navLinks.map((link, index) => (
+                                <motion.a
+                                    key={link.href}
+                                    href={link.href}
+                                    className='block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all duration-300'
+                                    onClick={closeMenu}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    whileHover={{ x: 5 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {link.label}
+                                </motion.a>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };
