@@ -110,6 +110,11 @@ const projects = [
 
 const ProjectCard = ({ project, index, isVisible }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
+    
+    // Check if description is long enough to need truncation
+    const descriptionLength = project.description.length;
+    const needsTruncation = descriptionLength > 150;
 
     return (
         <div 
@@ -120,10 +125,10 @@ const ProjectCard = ({ project, index, isVisible }) => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <div className='p-6 h-full flex flex-col'>
+            <div className='p-4 sm:p-6 h-full flex flex-col'>
                 {/* Header */}
-                <div className='mb-4'>
-                    <div className='flex items-center gap-2 mb-3 flex-wrap'>
+                <div className='mb-3 sm:mb-4'>
+                    <div className='flex items-center gap-2 mb-2 sm:mb-3 flex-wrap'>
                         <span className='px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-medium rounded-full border border-cyan-500/30'>
                             {project.category}
                         </span>
@@ -133,24 +138,37 @@ const ProjectCard = ({ project, index, isVisible }) => {
                             </span>
                         )}
                     </div>
-                    <h3 className='text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300'>
+                    <h3 className='text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-cyan-400 transition-colors duration-300'>
                         {project.title}
                     </h3>
                 </div>
 
                 {/* Description */}
-                <div className='flex-1 mb-4'>
-                    <p className='text-gray-300 leading-relaxed text-sm line-clamp-4'>
+                <div className='flex-1 mb-3 sm:mb-4 min-h-0'>
+                    <p className={`text-gray-300 leading-relaxed text-xs sm:text-sm break-words ${
+                        isExpanded ? '' : 'line-clamp-4'
+                    }`}>
                         {project.description}
                     </p>
+                    {needsTruncation && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsExpanded(!isExpanded);
+                            }}
+                            className='mt-2 text-cyan-400 hover:text-cyan-300 text-xs font-medium transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded'
+                        >
+                            {isExpanded ? 'Read less' : 'Read more'}
+                        </button>
+                    )}
                 </div>
 
                 {/* Tech Stack */}
-                <div className='mb-4'>
+                <div className='mb-3 sm:mb-4'>
                     <div className='flex flex-wrap gap-2'>
                         {project.tech_img.slice(0, 4).map((tech, techIndex) => (
                             <div key={techIndex} className='p-1.5 bg-gray-800/50 rounded-md hover:bg-gray-700/50 transition-colors duration-300 border border-cyan-500/20'>
-                                <img src={tech} alt='tech' className='w-5 h-5' />
+                                <img src={tech} alt='tech' className='w-4 h-4 sm:w-5 sm:h-5' />
                             </div>
                         ))}
                         {project.tech_img.length > 4 && (
@@ -168,10 +186,10 @@ const ProjectCard = ({ project, index, isVisible }) => {
                             href={project.github} 
                             target='_blank' 
                             rel='noopener noreferrer'
-                            className='flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 text-sm border border-cyan-500/30 hover:border-cyan-400'
+                            className='flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 text-xs sm:text-sm border border-cyan-500/30 hover:border-cyan-400'
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <img src={github_img} alt='GitHub' className='w-4 h-4' />
+                            <img src={github_img} alt='GitHub' className='w-3.5 h-3.5 sm:w-4 sm:h-4' />
                             <span>Code</span>
                         </a>
                     )}
@@ -180,10 +198,10 @@ const ProjectCard = ({ project, index, isVisible }) => {
                             href={project.liveSite} 
                             target='_blank' 
                             rel='noopener noreferrer'
-                            className='flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 text-sm border border-cyan-500/50 hover:border-cyan-400'
+                            className='flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 text-xs sm:text-sm border border-cyan-500/50 hover:border-cyan-400'
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <svg className='w-3.5 h-3.5 sm:w-4 sm:h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
                             </svg>
                             <span>Live</span>

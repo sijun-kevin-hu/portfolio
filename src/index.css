@@ -350,3 +350,11 @@ button, a, .cyber-card, .card, .btn-primary, .btn-secondary {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Ensure proper word breaking on mobile */
+p, .break-words {
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}

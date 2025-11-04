@@ -58,8 +58,8 @@ const Introduction = () => {
                                 <h3 className='text-xl font-semibold text-white'>Who I Am</h3>
                             </div>
                             <p className='text-gray-300 leading-relaxed'>
-                                Hi, I'm Kevin! I'm a fourth-year Computer Science student at Georgia Tech with a passion for full-stack engineering and web development. 
-                                I love building apps that not only work well but also make an impact on the people who use them.
+                                Hey! I'm Kevin 👋 Currently grinding through my fourth year at Georgia Tech studying CS. 
+                                I build stuff on the web and honestly, there's nothing better than seeing someone actually use what you made.
                             </p>
                         </div>
 
@@ -73,8 +73,8 @@ const Introduction = () => {
                                 <h3 className='text-xl font-semibold text-white'>What I Do</h3>
                             </div>
                             <p className='text-gray-300 leading-relaxed'>
-                                I'm always excited to learn new technologies and take on challenges that push me to grow. 
-                                Whether it's creating sleek, user-friendly interfaces or building out efficient backends, I enjoy every part of the process that brings ideas to life.
+                                I'm basically a tech stack hopper—always trying out the latest thing. Frontend, backend, whatever. 
+                                If it's cool and solves a problem, count me in. Currently obsessed with making things that look good AND work smoothly.
                             </p>
                         </div>
                     </div>
@@ -91,8 +91,8 @@ const Introduction = () => {
                                 <h3 className='text-xl font-semibold text-white'>My Approach</h3>
                             </div>
                             <p className='text-gray-300 leading-relaxed'>
-                                Outside of coding, I'm always looking for ways to get creative and explore how technology can solve real-world problems.
-                                I believe in writing clean, maintainable code and creating intuitive user experiences.
+                                When I'm not debugging at 2am, I'm probably thinking about how to make tech less... complicated? 
+                                Clean code, good vibes, and UX that doesn't make people want to throw their laptop. That's the goal.
                             </p>
                         </div>
 
