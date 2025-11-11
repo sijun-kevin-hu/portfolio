@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import './index.css';
-import Introduction from "./components/Introduction";
-import TechStack from "./components/TechStack";
-import Projects from "./components/Projects";
-import Footer from "./components/Footer";
+const Introduction = lazy(() => import("./components/Introduction"));
+const TechStack = lazy(() => import("./components/TechStack"));
+const Projects = lazy(() => import("./components/Projects"));
+const Footer = lazy(() => import("./components/Footer"));
 
 function App() {
   const { scrollYProgress } = useScroll();
@@ -43,11 +43,15 @@ function App() {
         <Navbar />
         <main className="relative">
           <Hero />
-          <Introduction />
-          <TechStack />
-          <Projects />
+          <Suspense fallback={<div className="text-center py-12">Loading...</div>}>
+            <Introduction />
+            <TechStack />
+            <Projects />
+          </Suspense>
         </main>
-        <Footer />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </div>
     </div>
   );

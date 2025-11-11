@@ -46,56 +46,29 @@ const technicalFrameworks = [
 ];
 
 const SkillCard = ({ skill, index, isVisible }) => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const cardRef = useRef(null);
-    
-    const handleMouseMove = (e) => {
-        if (cardRef.current) {
-            const rect = cardRef.current.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            setMousePosition({ x: x * 0.15, y: y * 0.15 });
-        }
-    };
-    
-    const handleMouseLeave = () => {
-        setMousePosition({ x: 0, y: 0 });
-    };
     
     return (
         <motion.div 
             ref={cardRef}
             className='cyber-card p-4 text-center group cursor-pointer relative overflow-hidden'
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={isVisible ? { 
-                opacity: 1, 
-                scale: 1, 
-                y: 0,
-                x: mousePosition.x,
-            } : { opacity: 0, scale: 0.8, y: 20 }}
-            style={{ 
-                transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-                transformStyle: 'preserve-3d' 
-            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ 
-                delay: index * 0.05,
-                type: "spring",
-                stiffness: 100,
-                damping: 15
+                delay: index * 0.04,
+                duration: 0.4,
+                ease: "easeOut"
             }}
             whileHover={{ 
-                scale: 1.1,
-                z: 50,
-                transition: { duration: 0.3 }
+                scale: 1.06,
+                transition: { duration: 0.2 }
             }}
         >
             <motion.div 
                 className={`w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r ${skill.color} p-3 shadow-lg relative overflow-hidden`}
                 whileHover={{ 
                     rotate: 360,
-                    scale: 1.15,
+                    scale: 1.1,
                     boxShadow: "0 0 30px rgba(0, 255, 255, 0.5)"
                 }}
                 transition={{ duration: 0.6, type: "spring" }}
@@ -104,19 +77,19 @@ const SkillCard = ({ skill, index, isVisible }) => {
                     src={skill.img} 
                     alt={skill.name} 
                     className='w-full h-full object-contain filter brightness-75 contrast-125 relative z-10' 
-                    whileHover={{ scale: 1.2 }}
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.12 }}
+                    transition={{ duration: 0.2 }}
                 />
                 <motion.div
                     className='absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 opacity-0'
                     whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.2 }}
                 />
             </motion.div>
             <motion.h3 
                 className='text-sm font-semibold text-white'
                 whileHover={{ color: '#00ffff' }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.2 }}
             >
                 {skill.name}
             </motion.h3>

@@ -202,7 +202,7 @@ const Hero = () => {
                                 variants={itemVariants}
                             >
                                 I am a{' '}
-                                <span className='text-cyan-400 font-semibold inline-block'>
+                                <span className='text-cyan-400 font-semibold inline-block' style={{ minWidth: '12ch', minHeight: '1.2em', display: 'inline-block' }}>
                                     {displayedText}
                                     <motion.span 
                                         className='blink-cursor inline-block ml-1'
