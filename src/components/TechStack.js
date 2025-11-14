@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import pythonimg from '../images/python.png';
 import javaimg from '../images/java.png';
