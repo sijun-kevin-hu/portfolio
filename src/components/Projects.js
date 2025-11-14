@@ -97,6 +97,7 @@ const projects = [
         tech_img: [html_img, css_img, javascript_img], 
         github: 'https://github.com/sijun-kevin-hu/chinabuffet-website',
         category: "Website",
+        liveSite: 'https://tnchinabuffet.com',
         featured: false
     },
     { 
