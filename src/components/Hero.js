@@ -145,7 +145,7 @@ const Hero = () => {
             </motion.div>
 
             <motion.div 
-                className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-16'
+                className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-32'
                 style={{ y }}
                 variants={containerVariants}
                 initial="hidden"
