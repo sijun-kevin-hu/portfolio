@@ -2,24 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-sans: 'Outfit', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+  --color-neon-cyan: #00f3ff;
+  --color-neon-purple: #bc13fe;
+  --color-deep-bg: #0a0a0f;
+}
+
 /* iPhone safe area support */
 html, body {
-  background-color: #111827;
+  background-color: var(--color-deep-bg);
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
+  font-family: var(--font-sans);
 }
 
 #root {
   min-height: 100vh;
   min-height: 100dvh;
-  background-color: #111827;
+  background-color: var(--color-deep-bg);
 }
 
 /* Ensure dark theme extends to all edges on mobile */
 body {
   margin: 0;
   padding: 0;
-  background-color: #111827;
+  background-color: var(--color-deep-bg);
   /* Support for iPhone safe areas */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
@@ -36,20 +45,20 @@ body {
 
 /* Cyberpunk scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #050505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #00ffff, #ff00ff);
-  border-radius: 4px;
+  background: linear-gradient(180deg, var(--color-neon-cyan), var(--color-neon-purple));
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #00cccc, #cc00cc);
+  background: linear-gradient(180deg, #fff, var(--color-neon-cyan));
 }
 
 /* Smooth scrolling */
@@ -69,54 +78,40 @@ html {
   display: inline-block;
   width: 3px;
   height: 1.2em;
-  background: linear-gradient(45deg, #00ffff, #ff00ff);
-  animation: blink 1.2s ease-in-out infinite;
-  border-radius: 2px;
-  box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+  background: var(--color-neon-cyan);
+  animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-  0%, 50% {
-    opacity: 1;
-    transform: scaleY(1);
-    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
-  }
-  51%, 100% {
-    opacity: 0.3;
-    transform: scaleY(0.3);
-    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* Cyberpunk gradient backgrounds */
 .gradient-bg {
-  background: linear-gradient(135deg, #00ffff 0%, #ff00ff 50%, #ffff00 100%);
+  background: linear-gradient(135deg, var(--color-neon-cyan) 0%, var(--color-neon-purple) 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #00ffff 0%, #ff00ff 50%, #ffff00 100%);
+  background: linear-gradient(135deg, #fff 0%, var(--color-neon-cyan) 50%, var(--color-neon-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
 }
 
 .neon-text {
-  color: #00ffff;
+  color: var(--color-neon-cyan);
   text-shadow: 
-    0 0 5px #00ffff,
-    0 0 10px #00ffff,
-    0 0 15px #00ffff,
-    0 0 20px #00ffff;
+    0 0 5px var(--color-neon-cyan),
+    0 0 10px var(--color-neon-cyan);
 }
 
 .neon-pink {
-  color: #ff00ff;
+  color: var(--color-neon-purple);
   text-shadow: 
-    0 0 5px #ff00ff,
-    0 0 10px #ff00ff,
-    0 0 15px #ff00ff,
-    0 0 20px #ff00ff;
+    0 0 5px var(--color-neon-purple),
+    0 0 10px var(--color-neon-purple);
 }
 
 /* Optimized transitions - only for performant properties */
@@ -132,22 +127,20 @@ button, a, .cyber-card, .card, .btn-primary, .btn-secondary {
 
 /* Cyberpunk glass morphism effect */
 .glass {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 255, 255, 0.3);
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 
-    0 0 20px rgba(0, 255, 255, 0.2),
-    inset 0 0 20px rgba(0, 255, 255, 0.1);
+    0 4px 30px rgba(0, 0, 0, 0.1),
+    inset 0 0 20px rgba(255, 255, 255, 0.02);
 }
 
 .cyber-card {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 
-    0 0 30px rgba(0, 255, 255, 0.1),
-    inset 0 0 30px rgba(0, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  background: rgba(15, 20, 30, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 243, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cyber-card:hover {

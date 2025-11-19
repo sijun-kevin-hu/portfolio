@@ -4,14 +4,19 @@ import { motion, useMotionValue, useSpring, useAnimation } from 'framer-motion';
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
-  const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
+
+  // Smoother spring config
+  const springConfig = { damping: 25, stiffness: 400, mass: 0.5 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
+  // Trail effect
+  const trailX = useSpring(cursorX, { damping: 40, stiffness: 200, mass: 0.8 });
+  const trailY = useSpring(cursorY, { damping: 40, stiffness: 200, mass: 0.8 });
+
   const controls = useAnimation();
   const dotControls = useAnimation();
-  
+
   const isHovering = useRef(false);
   const isClicking = useRef(false);
 
@@ -29,17 +34,16 @@ const CustomCursor = () => {
 
     const handleMouseOver = (e) => {
       const target = e.target;
-      // Optimized check order for performance
-      const isInteractive = 
-        target.tagName === 'A' || 
-        target.tagName === 'BUTTON' || 
+      const isInteractive =
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON' ||
         target.classList.contains('cursor-pointer') ||
-        target.closest('a') || 
+        target.closest('a') ||
         target.closest('button');
-        
+
       if (!!isInteractive !== isHovering.current) {
-          isHovering.current = !!isInteractive;
-          updateAnimation();
+        isHovering.current = !!isInteractive;
+        updateAnimation();
       }
     };
 
@@ -70,30 +74,28 @@ const CustomCursor = () => {
     default: {
       height: 32,
       width: 32,
-      backgroundColor: "rgba(0, 255, 255, 0.1)",
-      border: "1px solid rgba(0, 255, 255, 0.5)",
-      // mixBlendMode: "screen", // Removed for performance
+      backgroundColor: "rgba(0, 243, 255, 0.1)",
+      border: "1px solid rgba(0, 243, 255, 0.4)",
       rotate: 0,
       scale: 1,
       x: -16,
       y: -16
     },
     hover: {
-      height: 48,
-      width: 48,
-      backgroundColor: "rgba(255, 0, 255, 0.2)",
-      border: "1px solid rgba(255, 0, 255, 0.8)",
-      // mixBlendMode: "difference", // Removed for performance
+      height: 60,
+      width: 60,
+      backgroundColor: "rgba(188, 19, 254, 0.1)",
+      border: "1px solid rgba(188, 19, 254, 0.6)",
       rotate: 45,
-      scale: 1.2,
-      x: -24,
-      y: -24
+      scale: 1.1,
+      x: -30,
+      y: -30
     },
     click: {
       height: 24,
       width: 24,
-      backgroundColor: "rgba(255, 255, 0, 0.5)",
-      border: "2px solid rgba(255, 255, 0, 1)",
+      backgroundColor: "rgba(0, 243, 255, 0.4)",
+      border: "2px solid rgba(0, 243, 255, 1)",
       scale: 0.8,
       rotate: 90,
       x: -12,
@@ -106,13 +108,15 @@ const CustomCursor = () => {
       opacity: 1,
       scale: 1,
       x: -4,
-      y: -4
+      y: -4,
+      backgroundColor: "#00f3ff"
     },
     hover: {
-      opacity: 0.5,
+      opacity: 0.8,
       scale: 1.5,
       x: -4,
-      y: -4
+      y: -4,
+      backgroundColor: "#bc13fe"
     },
     click: {
       opacity: 0,
@@ -124,8 +128,9 @@ const CustomCursor = () => {
 
   return (
     <>
+      {/* Main Cursor Ring */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block backdrop-blur-[1px]"
         style={{
           translateX: cursorXSpring,
           translateY: cursorYSpring,
@@ -141,8 +146,10 @@ const CustomCursor = () => {
           mass: 0.5
         }}
       />
+
+      {/* Center Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] hidden md:block shadow-[0_0_10px_rgba(0,243,255,0.8)]"
         style={{
           translateX: cursorXSpring,
           translateY: cursorYSpring,
@@ -155,6 +162,18 @@ const CustomCursor = () => {
           type: "spring",
           stiffness: 500,
           damping: 25
+        }}
+      />
+
+      {/* Trail Effect */}
+      <motion.div
+        className="fixed top-0 left-0 w-4 h-4 rounded-full pointer-events-none z-[9998] hidden md:block bg-cyan-500/20 blur-sm"
+        style={{
+          translateX: trailX,
+          translateY: trailY,
+          x: -8,
+          y: -8,
+          willChange: "transform",
         }}
       />
     </>
