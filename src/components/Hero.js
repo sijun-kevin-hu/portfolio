@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import '../index.css';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
@@ -24,8 +24,12 @@ const Hero = () => {
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
     
-    // Magnetic hover effect
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    // Magnetic hover effect - Optimized with useMotionValue
+    const buttonX = useMotionValue(0);
+    const buttonY = useMotionValue(0);
+    const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+    const buttonXSpring = useSpring(buttonX, springConfig);
+    const buttonYSpring = useSpring(buttonY, springConfig);
     const buttonRef = useRef(null);
     
     const handleMouseMove = (e) => {
@@ -33,12 +37,14 @@ const Hero = () => {
             const rect = buttonRef.current.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            setMousePosition({ x: x * 0.3, y: y * 0.3 });
+            buttonX.set(x * 0.3);
+            buttonY.set(y * 0.3);
         }
     };
     
     const handleMouseLeave = () => {
-        setMousePosition({ x: 0, y: 0 });
+        buttonX.set(0);
+        buttonY.set(0);
     };
 
     useEffect(() => {
@@ -215,9 +221,9 @@ const Hero = () => {
                             onMouseLeave={handleMouseLeave}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            animate={{
-                                x: mousePosition.x,
-                                y: mousePosition.y,
+                            style={{
+                                x: buttonXSpring,
+                                y: buttonYSpring,
                             }}
                             transition={{ type: "spring", stiffness: 300, damping: 20 }}
                         >

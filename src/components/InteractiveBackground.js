@@ -77,7 +77,8 @@ const InteractiveBackground = () => {
         const init = () => {
             particles = [];
             const isMobile = window.innerWidth < 768;
-            const densityDivisor = isMobile ? 15000 : 9000;
+            // Significantly reduced particle count for better performance
+            const densityDivisor = isMobile ? 25000 : 15000;
             const numberOfParticles = (canvas.width * canvas.height) / densityDivisor;
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle());
@@ -88,19 +89,26 @@ const InteractiveBackground = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const isMobile = window.innerWidth < 768;
             const connectionDistance = isMobile ? 60 : 100;
+            const connectionDistanceSq = connectionDistance * connectionDistance;
 
             for (let i = 0; i < particles.length; i++) {
                 particles[i].draw();
                 particles[i].update();
                 
-                // Draw connections
+                // Draw connections - Optimized loop
                 for (let j = i; j < particles.length; j++) {
                     let dx = particles[i].x - particles[j].x;
-                    let dy = particles[i].y - particles[j].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    // Quick check to avoid expensive sqrt
+                    if (Math.abs(dx) > connectionDistance) continue;
 
-                    if (distance < connectionDistance) {
+                    let dy = particles[i].y - particles[j].y;
+                    if (Math.abs(dy) > connectionDistance) continue;
+
+                    let distanceSq = dx * dx + dy * dy;
+
+                    if (distanceSq < connectionDistanceSq) {
                         ctx.beginPath();
+                        let distance = Math.sqrt(distanceSq);
                         ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance/connectionDistance})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);

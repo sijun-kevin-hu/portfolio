@@ -1,21 +1,22 @@
 import React, { useState, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { projects } from '../data/projects';
 import github_img from '../images/github.png';
 
 const FeaturedProjectCard = ({ project, index }) => {
     const cardRef = useRef(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
 
     const handleMouseMove = (e) => {
         if (cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect();
-            setMousePosition({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top
-            });
+            mouseX.set(e.clientX - rect.left);
+            mouseY.set(e.clientY - rect.top);
         }
     };
+
+    const background = useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(6, 182, 212, 0.1), transparent 40%)`;
 
     return (
         <motion.div
@@ -32,10 +33,10 @@ const FeaturedProjectCard = ({ project, index }) => {
             
             <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-12 overflow-hidden">
                 {/* Spotlight Effect */}
-                <div 
+                <motion.div 
                     className="absolute inset-0 z-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 pointer-events-none"
                     style={{
-                        background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(6, 182, 212, 0.1), transparent 40%)`
+                        background: background
                     }}
                 />
 
