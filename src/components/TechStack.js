@@ -1,171 +1,132 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import SkillSet from './SkillSet';
+import React, { useState, useRef } from 'react';
+import { motion, useInView, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { technicalLanguages, technicalFrameworks, technicalTools } from '../data/techStack';
 
-const TechStack = () => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.1 });
-    
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.03,
-                delayChildren: 0.2
-            }
-        }
-    };
-    
-    const titleVariants = {
-        hidden: { opacity: 0, y: -30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: "spring",
-                stiffness: 120,
-                damping: 12
-            }
-        }
-    };
+const SpotlightCard = ({ skill, index }) => {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }) {
+        const { left, top } = currentTarget.getBoundingClientRect();
+        mouseX.set(clientX - left);
+        mouseY.set(clientY - top);
+    }
 
     return (
-        <section ref={ref} className='section-padding relative overflow-hidden' id='skills'>
-            {/* Cyberpunk background effects - Optimized */}
-            <motion.div 
-                className='absolute inset-0 overflow-hidden'
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 1 }}
-            >
-                <motion.div 
-                    className='absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-cyan-500/5 to-blue-500/5 rounded-full filter blur-3xl opacity-30'
-                    animate={{
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 45, 0],
-                    }}
-                    transition={{
-                        duration: 20,
-                        repeat: Infinity,
-                        ease: "linear"
-                    }}
-                    style={{ willChange: 'transform' }}
-                />
-                <motion.div 
-                    className='absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-full filter blur-3xl opacity-30'
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        rotate: [0, -45, 0],
-                    }}
-                    transition={{
-                        duration: 25,
-                        repeat: Infinity,
-                        ease: "linear"
-                    }}
-                    style={{ willChange: 'transform' }}
-                />
-                <div className='absolute inset-0 grid-overlay opacity-5'></div>
-                
-                {/* Floating particles - Reduced count */}
-                {[...Array(6)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-cyan-400/20 rounded-full"
-                        style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                        }}
-                        animate={{
-                            y: [0, -30, 0],
-                            opacity: [0, 0.5, 0],
-                        }}
-                        transition={{
-                            duration: 5 + Math.random() * 5,
-                            repeat: Infinity,
-                            delay: Math.random() * 5,
-                            ease: "easeInOut"
-                        }}
-                    />
-                ))}
-            </motion.div>
-
-            <div className='relative z-10 max-w-7xl mx-auto'>
-                <motion.div 
-                    className='text-center mb-16'
-                    variants={titleVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                >
-                    <motion.h2 
-                        className='text-cyan-400 uppercase font-bold text-sm tracking-wider mb-4'
-                        whileHover={{ scale: 1.05 }}
-                    >
-                        My Skills
-                    </motion.h2>
-                    <motion.h1 
-                        className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'
-                        whileHover={{ scale: 1.02 }}
-                    >
-                        Tech Stack.
-                    </motion.h1>
-                    <motion.p 
-                        className='text-xl text-gray-300 max-w-3xl mx-auto'
-                        initial={{ opacity: 0 }}
-                        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        Here are the technologies and tools I use to bring ideas to life
-                    </motion.p>
-                </motion.div>
-
-                <div className='space-y-16'>
-                    <SkillSet 
-                        title="Programming Languages" 
-                        skills={technicalLanguages} 
-                        isVisible={isInView}
-                        containerVariants={containerVariants}
-                    />
-                    <SkillSet 
-                        title="Frameworks" 
-                        skills={technicalFrameworks} 
-                        isVisible={isInView}
-                        containerVariants={containerVariants}
-                    />
-                    <SkillSet 
-                        title="Tools & Platforms" 
-                        skills={technicalTools} 
-                        isVisible={isInView}
-                        containerVariants={containerVariants}
+        <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3, delay: index * 0.03 }}
+            className="group relative border border-white/10 bg-gray-900/50 overflow-hidden rounded-xl"
+            onMouseMove={handleMouseMove}
+        >
+            <motion.div
+                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                style={{
+                    background: useMotionTemplate`
+                        radial-gradient(
+                        650px circle at ${mouseX}px ${mouseY}px,
+                        rgba(255,255,255,0.1),
+                        transparent 80%
+                        )
+                    `,
+                }}
+            />
+            <div className="relative h-full flex flex-col items-center justify-center p-6 gap-4">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    {/* Glow effect behind icon */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
+                    <skill.icon 
+                        className="w-full h-full object-contain relative z-10 drop-shadow-lg text-gray-300 group-hover:text-white transition-colors duration-300" 
                     />
                 </div>
+                <h3 className="text-gray-400 font-medium text-sm tracking-wider uppercase group-hover:text-white transition-colors duration-300">
+                    {skill.name}
+                </h3>
+            </div>
+        </motion.div>
+    );
+};
 
-                {/* Additional info */}
+const TechStack = () => {
+    const [activeTab, setActiveTab] = useState('Languages');
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+    const tabs = [
+        { id: 'Languages', label: 'LANGUAGES', data: technicalLanguages },
+        { id: 'Frameworks', label: 'FRAMEWORKS', data: technicalFrameworks },
+        { id: 'Tools', label: 'TOOLS', data: technicalTools },
+    ];
+
+    const activeData = tabs.find(t => t.id === activeTab)?.data || [];
+
+    return (
+        <section ref={ref} className='section-padding relative overflow-hidden py-24' id='skills'>
+            {/* Background Grid */}
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/90 to-gray-900 pointer-events-none" />
+            
+            <div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                 <motion.div 
-                    className='text-center mt-16'
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{ delay: 0.8, duration: 0.6 }}
+                    className='text-center mb-16'
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                    transition={{ duration: 0.6 }}
                 >
-                    <motion.div 
-                        className='cyber-card p-8 max-w-4xl mx-auto'
-                        whileHover={{ 
-                            y: -5,
-                            boxShadow: "0 20px 60px rgba(0, 255, 255, 0.2)"
-                        }}
-                        transition={{ duration: 0.3 }}
+                    <motion.h2 
+                        className='text-cyan-400 uppercase font-bold text-xs tracking-[0.2em] mb-4'
                     >
-                        <h3 className='text-2xl font-bold text-white mb-4'>
-                            Always Learning
-                        </h3>
-                        <p className='text-gray-300 leading-relaxed'>
-                            I'm constantly expanding my skill set and exploring new technologies. 
-                            I believe in staying up-to-date with the latest industry trends and best practices 
-                            to deliver the best possible solutions.
-                        </p>
-                    </motion.div>
+                        System Capabilities
+                    </motion.h2>
+                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight'>
+                        Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Stack</span>
+                    </h1>
                 </motion.div>
+
+                {/* Cyberpunk Tabs */}
+                <div className="flex justify-center mb-12">
+                    <div className="flex flex-wrap justify-center gap-4 sm:gap-8 border-b border-white/10 pb-4 px-8">
+                        {tabs.map((tab) => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`relative pb-4 text-sm font-bold tracking-wider transition-colors duration-300 ${
+                                    activeTab === tab.id ? 'text-cyan-400' : 'text-gray-500 hover:text-gray-300'
+                                }`}
+                            >
+                                {tab.label}
+                                {activeTab === tab.id && (
+                                    <motion.div
+                                        layoutId="activeTabIndicator"
+                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Grid */}
+                <motion.div 
+                    layout
+                    className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+                >
+                    <AnimatePresence mode='popLayout'>
+                        {activeData.map((skill, index) => (
+                            <SpotlightCard key={skill.name} skill={skill} index={index} />
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
+
+                {/* Decorative Elements */}
+                <div className="mt-20 flex justify-between items-center opacity-30 text-[10px] text-cyan-400 font-mono tracking-widest uppercase">
+                    <span>Sys.Ver.2.0.24</span>
+                    <div className="h-px w-32 bg-cyan-400/50" />
+                    <span>Status: Online</span>
+                </div>
             </div>
         </section>
     );

@@ -180,13 +180,15 @@ const Hero = () => {
                                 variants={itemVariants}
                             >
                                 I am a{' '}
-                                <span className='text-cyan-400 font-semibold inline-block relative' style={{ minWidth: '12ch', minHeight: '1.2em', display: 'inline-block' }}>
-                                    {displayedText}
-                                    <motion.span 
-                                        className='absolute -right-1 top-0 bottom-0 w-1 bg-cyan-400'
-                                        animate={{ opacity: [1, 0, 1] }}
-                                        transition={{ duration: 0.8, repeat: Infinity }}
-                                    />
+                                <span className='text-cyan-400 font-semibold inline-block text-left' style={{ minWidth: '12ch', minHeight: '1.2em' }}>
+                                    <span className="inline-block relative">
+                                        {displayedText || '\u200B'}
+                                        <motion.span 
+                                            className='absolute -right-1 top-0 bottom-0 w-1 bg-cyan-400'
+                                            animate={{ opacity: [1, 0, 1] }}
+                                            transition={{ duration: 0.8, repeat: Infinity }}
+                                        />
+                                    </span>
                                 </span>
                             </motion.div>
                         </div>

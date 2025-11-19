@@ -18,10 +18,10 @@ const IntroCard = () => {
 
     // Select a few icons for the floating animation
     const floatingIcons = [
-        technicalFrameworks[0].img, // React
-        technicalLanguages[0].img,  // Python
-        technicalLanguages[2].img,  // JavaScript
-        technicalFrameworks[3].img  // Tailwind
+        technicalFrameworks[0], // React
+        technicalLanguages[0],  // Python
+        technicalLanguages[2],  // JavaScript
+        technicalFrameworks[3]  // Tailwind
     ];
 
     return (
@@ -103,7 +103,7 @@ const IntroCard = () => {
                         {/* Floating Tech Icons */}
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <div className="relative w-full h-full">
-                                {floatingIcons.map((icon, i) => (
+                                {floatingIcons.map((item, i) => (
                                     <motion.div
                                         key={i}
                                         className="absolute"
@@ -123,7 +123,7 @@ const IntroCard = () => {
                                         }}
                                     >
                                         <div className="p-3 bg-gray-900/90 rounded-xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10 backdrop-blur-sm">
-                                            <img src={icon} alt="tech" className="w-10 h-10" />
+                                            <item.icon className="w-10 h-10 text-cyan-400" />
                                         </div>
                                     </motion.div>
                                 ))}

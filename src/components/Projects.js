@@ -65,9 +65,9 @@ const FeaturedProjectCard = ({ project, index }) => {
                         </p>
 
                         <div className="flex flex-wrap gap-3 pt-4">
-                            {project.tech_img.map((tech, i) => (
+                            {project.tech_img.map((TechIcon, i) => (
                                 <div key={i} className="p-2 bg-gray-800/50 rounded-lg border border-white/10 hover:border-cyan-500/30 transition-colors" title="Tech Stack">
-                                    <img src={tech} alt="tech" className="w-6 h-6" />
+                                    <TechIcon className="w-6 h-6 text-cyan-400" />
                                 </div>
                             ))}
                         </div>
@@ -78,10 +78,10 @@ const FeaturedProjectCard = ({ project, index }) => {
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition-all duration-300 border border-white/10 hover:border-cyan-500/50 group/btn"
+                                    className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition-all duration-300 border border-white/20 hover:border-cyan-500/50 group/btn shadow-lg shadow-black/20"
                                 >
-                                    <img src={github_img} alt="GitHub" className="w-5 h-5" />
-                                    <span>View Code</span>
+                                    <img src={github_img} alt="GitHub" className="w-6 h-6" />
+                                    <span className="font-semibold">View Code</span>
                                     <svg className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
@@ -92,12 +92,12 @@ const FeaturedProjectCard = ({ project, index }) => {
                                     href={project.liveSite}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 px-6 py-3 bg-cyan-600/20 text-cyan-400 rounded-xl hover:bg-cyan-600/30 transition-all duration-300 border border-cyan-500/50 hover:border-cyan-400 group/btn"
+                                    className="flex items-center gap-2 px-6 py-3 bg-cyan-600/20 text-cyan-400 rounded-xl hover:bg-cyan-600/30 transition-all duration-300 border border-cyan-500/50 hover:border-cyan-400 group/btn shadow-lg shadow-cyan-900/20"
                                 >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
-                                    <span>Live Demo</span>
+                                    <span className="font-semibold">Live Demo</span>
                                 </a>
                             )}
                         </div>
@@ -127,7 +127,7 @@ const FeaturedProjectCard = ({ project, index }) => {
                         {/* Floating Tech Icons */}
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="relative w-full h-full">
-                                {project.tech_img.slice(0, 3).map((tech, i) => (
+                                {project.tech_img.slice(0, 3).map((TechIcon, i) => (
                                     <motion.div
                                         key={i}
                                         className="absolute"
@@ -146,7 +146,7 @@ const FeaturedProjectCard = ({ project, index }) => {
                                         }}
                                     >
                                         <div className="p-3 bg-gray-900/90 rounded-xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10 backdrop-blur-sm">
-                                            <img src={tech} alt="tech" className="w-8 h-8 md:w-10 md:h-10" />
+                                            <TechIcon className="w-8 h-8 md:w-10 md:h-10 text-cyan-400" />
                                         </div>
                                     </motion.div>
                                 ))}
@@ -179,15 +179,17 @@ const SmallProjectCard = ({ project, index }) => {
                     </span>
                     <div className="flex gap-2">
                         {project.github && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                                <img src={github_img} alt="GitHub" className="w-5 h-5 opacity-70 hover:opacity-100" />
+                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800/80 hover:bg-gray-700 text-white text-xs font-medium rounded-lg border border-white/10 hover:border-cyan-500/30 transition-all group/link">
+                                <img src={github_img} alt="GitHub" className="w-4 h-4 opacity-90 group-hover/link:opacity-100" />
+                                <span>Code</span>
                             </a>
                         )}
                         {project.liveSite && (
-                            <a href={project.liveSite} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <a href={project.liveSite} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800/80 hover:bg-gray-700 text-cyan-400 text-xs font-medium rounded-lg border border-white/10 hover:border-cyan-500/30 transition-all group/link">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
+                                <span>Live</span>
                             </a>
                         )}
                     </div>
@@ -225,9 +227,9 @@ const SmallProjectCard = ({ project, index }) => {
                 </div>
 
                 <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.tech_img.slice(0, 4).map((tech, i) => (
+                    {project.tech_img.slice(0, 4).map((TechIcon, i) => (
                         <div key={i} className="p-1.5 bg-gray-800 rounded border border-white/5">
-                            <img src={tech} alt="tech" className="w-4 h-4 opacity-80" />
+                            <TechIcon className="w-4 h-4 opacity-80 text-gray-300" />
                         </div>
                     ))}
                     {project.tech_img.length > 4 && (
