@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { motion, useInView, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { projects } from '../data/projects';
 import github_img from '../images/github.png';
 
-const FeaturedProjectCard = ({ project, index }) => {
+const FeaturedProjectCard = React.memo(({ project, index }) => {
     const cardRef = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -158,9 +158,9 @@ const FeaturedProjectCard = ({ project, index }) => {
             </div>
         </motion.div>
     );
-};
+});
 
-const SmallProjectCard = ({ project, index }) => {
+const SmallProjectCard = React.memo(({ project, index }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const shouldTruncate = project.description.length > 130;
 
@@ -240,7 +240,7 @@ const SmallProjectCard = ({ project, index }) => {
             </div>
         </motion.div>
     );
-};
+});
 
 const Projects = () => {
     const ref = useRef(null);
@@ -248,15 +248,15 @@ const Projects = () => {
     const [filter, setFilter] = useState('All');
     const [showAll, setShowAll] = useState(false);
 
-    const categories = ['All', ...new Set(projects.map(p => p.category))];
+    const categories = useMemo(() => ['All', ...new Set(projects.map(p => p.category))], []);
     
     // Filter logic
-    const filteredProjects = projects.filter(project => 
+    const filteredProjects = useMemo(() => projects.filter(project => 
         filter === 'All' ? true : project.category === filter
-    );
+    ), [filter]);
 
-    const featuredProjects = filteredProjects.filter(p => p.featured);
-    const otherProjects = filteredProjects.filter(p => !p.featured);
+    const featuredProjects = useMemo(() => filteredProjects.filter(p => p.featured), [filteredProjects]);
+    const otherProjects = useMemo(() => filteredProjects.filter(p => !p.featured), [filteredProjects]);
 
     return (
         <section ref={ref} className="section-padding relative overflow-hidden py-20" id="projects">

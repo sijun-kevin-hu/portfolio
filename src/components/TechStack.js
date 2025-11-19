@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { motion, useInView, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { technicalLanguages, technicalFrameworks, technicalTools } from '../data/techStack';
 
-const SpotlightCard = ({ skill, index }) => {
+const SpotlightCard = React.memo(({ skill }) => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -14,10 +14,12 @@ const SpotlightCard = ({ skill, index }) => {
 
     return (
         <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3, delay: index * 0.03 }}
+            variants={{
+                hidden: { opacity: 0, scale: 0.9 },
+                visible: { opacity: 1, scale: 1 },
+                exit: { opacity: 0, scale: 0.9 }
+            }}
+            transition={{ duration: 0.3 }}
             className="group relative border border-white/10 bg-gray-900/50 overflow-hidden rounded-xl"
             onMouseMove={handleMouseMove}
         >
@@ -47,20 +49,20 @@ const SpotlightCard = ({ skill, index }) => {
             </div>
         </motion.div>
     );
-};
+});
 
 const TechStack = () => {
     const [activeTab, setActiveTab] = useState('Languages');
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: 0.1 });
 
-    const tabs = [
+    const tabs = useMemo(() => [
         { id: 'Languages', label: 'LANGUAGES', data: technicalLanguages },
         { id: 'Frameworks', label: 'FRAMEWORKS', data: technicalFrameworks },
         { id: 'Tools', label: 'TOOLS', data: technicalTools },
-    ];
+    ], []);
 
-    const activeData = tabs.find(t => t.id === activeTab)?.data || [];
+    const activeData = useMemo(() => tabs.find(t => t.id === activeTab)?.data || [], [activeTab, tabs]);
 
     return (
         <section ref={ref} className='section-padding relative overflow-hidden py-24' id='skills'>
@@ -110,16 +112,36 @@ const TechStack = () => {
                 </div>
 
                 {/* Grid */}
-                <motion.div 
-                    layout
-                    className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
-                >
-                    <AnimatePresence mode='popLayout'>
-                        {activeData.map((skill, index) => (
-                            <SpotlightCard key={skill.name} skill={skill} index={index} />
-                        ))}
+                <div className="min-h-[400px]"> {/* Added min-height to prevent collapse during transition */}
+                    <AnimatePresence mode='wait'>
+                        <motion.div 
+                            key={activeTab}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: {
+                                        staggerChildren: 0.03
+                                    }
+                                },
+                                exit: { 
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.15
+                                    }
+                                }
+                            }}
+                            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+                        >
+                            {activeData.map((skill) => (
+                                <SpotlightCard key={skill.name} skill={skill} />
+                            ))}
+                        </motion.div>
                     </AnimatePresence>
-                </motion.div>
+                </div>
 
                 {/* Decorative Elements */}
                 <div className="mt-20 flex justify-between items-center opacity-30 text-[10px] text-cyan-400 font-mono tracking-widest uppercase">

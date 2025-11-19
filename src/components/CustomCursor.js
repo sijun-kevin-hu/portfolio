@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useAnimation } from 'framer-motion';
 
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
@@ -9,15 +9,22 @@ const CustomCursor = () => {
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
+  const controls = useAnimation();
+  const dotControls = useAnimation();
+  
+  const isHovering = useRef(false);
+  const isClicking = useRef(false);
 
   useEffect(() => {
     const moveCursor = (e) => {
-      // Use requestAnimationFrame to throttle updates if needed, 
-      // but useMotionValue is generally optimized.
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
+    };
+
+    const updateAnimation = () => {
+      const variant = isClicking.current ? "click" : isHovering.current ? "hover" : "default";
+      controls.start(variant);
+      dotControls.start(variant);
     };
 
     const handleMouseOver = (e) => {
@@ -30,16 +37,26 @@ const CustomCursor = () => {
         target.closest('a') || 
         target.closest('button');
         
-      setIsHovering(!!isInteractive);
+      if (!!isInteractive !== isHovering.current) {
+          isHovering.current = !!isInteractive;
+          updateAnimation();
+      }
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseDown = () => {
+      isClicking.current = true;
+      updateAnimation();
+    };
 
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handleMouseOver);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
+    const handleMouseUp = () => {
+      isClicking.current = false;
+      updateAnimation();
+    };
+
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("mousedown", handleMouseDown, { passive: true });
+    window.addEventListener("mouseup", handleMouseUp, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
@@ -47,7 +64,7 @@ const CustomCursor = () => {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, controls, dotControls]);
 
   const variants = {
     default: {
@@ -115,7 +132,8 @@ const CustomCursor = () => {
           willChange: "transform",
         }}
         variants={variants}
-        animate={isClicking ? "click" : isHovering ? "hover" : "default"}
+        initial="default"
+        animate={controls}
         transition={{
           type: "spring",
           stiffness: 500,
@@ -131,7 +149,8 @@ const CustomCursor = () => {
           willChange: "transform",
         }}
         variants={dotVariants}
-        animate={isClicking ? "click" : isHovering ? "hover" : "default"}
+        initial="default"
+        animate={dotControls}
         transition={{
           type: "spring",
           stiffness: 500,

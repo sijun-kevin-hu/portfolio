@@ -9,24 +9,7 @@ const InteractiveBackground = () => {
         let animationFrameId;
         let particles = [];
         let mouse = { x: null, y: null, radius: 150 };
-
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
+        let resizeTimeout;
 
         class Particle {
             constructor() {
@@ -78,11 +61,24 @@ const InteractiveBackground = () => {
             particles = [];
             const isMobile = window.innerWidth < 768;
             // Significantly reduced particle count for better performance
-            const densityDivisor = isMobile ? 25000 : 15000;
+            // Increased density divisor to reduce number of particles
+            const densityDivisor = isMobile ? 80000 : 50000;
             const numberOfParticles = (canvas.width * canvas.height) / densityDivisor;
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle());
             }
+        };
+
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // Re-init particles on resize to adjust count
+            init();
+        };
+
+        const handleResize = () => {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 100);
         };
 
         const animate = () => {
@@ -108,24 +104,43 @@ const InteractiveBackground = () => {
 
                     if (distanceSq < connectionDistanceSq) {
                         ctx.beginPath();
+                        // Only calculate sqrt if we are actually drawing
                         let distance = Math.sqrt(distanceSq);
                         ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance/connectionDistance})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
-                        ctx.closePath();
                     }
                 }
             }
             animationFrameId = requestAnimationFrame(animate);
         };
 
-        init();
+        // Initialize
+        window.addEventListener('resize', handleResize);
+        resizeCanvas(); // This calls init()
+
+        const handleMouseMove = (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        };
+
+        const handleMouseOut = () => {
+            mouse.x = null;
+            mouse.y = null;
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseout', handleMouseOut);
+
         animate();
 
         return () => {
-            window.removeEventListener('resize', resizeCanvas);
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseout', handleMouseOut);
+            if (resizeTimeout) clearTimeout(resizeTimeout);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
@@ -140,4 +155,3 @@ const InteractiveBackground = () => {
 };
 
 export default InteractiveBackground;
-
