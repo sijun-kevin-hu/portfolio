@@ -10,11 +10,22 @@ const InteractiveBackground = () => {
         let particles = [];
         let mouse = { x: null, y: null, radius: 150 };
         let resizeTimeout;
+        
+        // Configuration state to avoid constant recalculation
+        let state = {
+            width: 0,
+            height: 0,
+            isMobile: false,
+            connectionDistance: 100,
+            connectionDistanceSq: 10000
+        };
 
         class Particle {
             constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
+                this.x = Math.random() * state.width;
+                this.y = Math.random() * state.height;
+                this.vx = 0;
+                this.vy = 0;
                 this.size = Math.random() * 2 + 1;
                 this.baseX = this.x;
                 this.baseY = this.y;
@@ -22,108 +33,76 @@ const InteractiveBackground = () => {
                 this.color = Math.random() > 0.5 ? '#00ffff' : '#ff00ff';
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-
             update() {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = mouse.radius;
-                let force = (maxDistance - distance) / maxDistance;
-                let directionX = forceDirectionX * force * this.density;
-                let directionY = forceDirectionY * force * this.density;
-
-                if (distance < mouse.radius) {
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dx = this.x - this.baseX;
-                        this.x -= dx / 10;
-                    }
-                    if (this.y !== this.baseY) {
-                        let dy = this.y - this.baseY;
-                        this.y -= dy / 10;
+                // Physics based interaction for smooth movement
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouse.radius) {
+                        const maxDistance = mouse.radius;
+                        const force = (maxDistance - distance) / maxDistance;
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        
+                        // Reduced power for gentler, smoother movement
+                        const power = force * this.density * 0.05;
+                        
+                        this.vx -= forceDirectionX * power;
+                        this.vy -= forceDirectionY * power;
                     }
                 }
+
+                // Spring back to base - gentler spring
+                const dxBase = this.baseX - this.x;
+                const dyBase = this.baseY - this.y;
+                const springStrength = 0.02;
+
+                this.vx += dxBase * springStrength;
+                this.vy += dyBase * springStrength;
+
+                // Higher friction for smoother, slower movement
+                this.vx *= 0.95;
+                this.vy *= 0.95;
+
+                this.x += this.vx;
+                this.y += this.vy;
             }
         }
 
+        const updateState = () => {
+            state.width = window.innerWidth;
+            state.height = window.innerHeight;
+            state.isMobile = state.width < 768;
+            state.connectionDistance = state.isMobile ? 80 : 120; 
+            state.connectionDistanceSq = state.connectionDistance * state.connectionDistance;
+            
+            canvas.width = state.width;
+            canvas.height = state.height;
+        };
+
         const init = () => {
             particles = [];
-            const isMobile = window.innerWidth < 768;
-            // Significantly reduced particle count for better performance
-            // Increased density divisor to reduce number of particles
-            const densityDivisor = isMobile ? 80000 : 50000;
-            const numberOfParticles = (canvas.width * canvas.height) / densityDivisor;
+            updateState();
+            
+            // Significantly increased particle count
+            const densityDivisor = state.isMobile ? 20000 : 9000;
+            const numberOfParticles = (state.width * state.height) / densityDivisor;
+            
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle());
             }
         };
 
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            // Re-init particles on resize to adjust count
-            init();
-        };
-
         const handleResize = () => {
             if (resizeTimeout) clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(resizeCanvas, 100);
+            resizeTimeout = setTimeout(init, 100);
         };
 
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const isMobile = window.innerWidth < 768;
-            const connectionDistance = isMobile ? 60 : 100;
-            const connectionDistanceSq = connectionDistance * connectionDistance;
-
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].draw();
-                particles[i].update();
-                
-                // Draw connections - Optimized loop
-                for (let j = i; j < particles.length; j++) {
-                    let dx = particles[i].x - particles[j].x;
-                    // Quick check to avoid expensive sqrt
-                    if (Math.abs(dx) > connectionDistance) continue;
-
-                    let dy = particles[i].y - particles[j].y;
-                    if (Math.abs(dy) > connectionDistance) continue;
-
-                    let distanceSq = dx * dx + dy * dy;
-
-                    if (distanceSq < connectionDistanceSq) {
-                        ctx.beginPath();
-                        // Only calculate sqrt if we are actually drawing
-                        let distance = Math.sqrt(distanceSq);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance/connectionDistance})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        // Initialize
-        window.addEventListener('resize', handleResize);
-        resizeCanvas(); // This calls init()
-
-        const handleMouseMove = (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
+        const handleMouseMove = (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
         };
 
         const handleMouseOut = () => {
@@ -131,9 +110,153 @@ const InteractiveBackground = () => {
             mouse.y = null;
         };
 
+        const animate = () => {
+            ctx.clearRect(0, 0, state.width, state.height);
+            
+            const cellSize = state.connectionDistance;
+            const cols = Math.ceil(state.width / cellSize);
+            const rows = Math.ceil(state.height / cellSize);
+            const grid = new Array(cols * rows);
+            
+            // Batched drawing lists
+            const cyanParticles = [];
+            const magentaParticles = [];
+            // Line buckets for opacity levels (0.1 to 1.0)
+            // Index 0 = opacity > 0 && <= 0.1, Index 9 = opacity > 0.9 && <= 1.0
+            const lineBuckets = Array(10).fill(null).map(() => []); 
+            
+            // 1. Update particles and populate grid
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.update();
+                
+                // Add to grid
+                const col = Math.floor(p.x / cellSize);
+                const row = Math.floor(p.y / cellSize);
+                
+                if (col >= 0 && col < cols && row >= 0 && row < rows) {
+                    const index = row * cols + col;
+                    if (!grid[index]) grid[index] = [];
+                    grid[index].push(i);
+                }
+                
+                if (p.color === '#00ffff') cyanParticles.push(p);
+                else magentaParticles.push(p);
+            }
+            
+            // 2. Draw Particles
+            ctx.fillStyle = '#00ffff';
+            ctx.beginPath();
+            for (let p of cyanParticles) {
+                ctx.moveTo(p.x + p.size, p.y);
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            }
+            ctx.fill();
+            
+            ctx.fillStyle = '#ff00ff';
+            ctx.beginPath();
+            for (let p of magentaParticles) {
+                ctx.moveTo(p.x + p.size, p.y);
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            }
+            ctx.fill();
+
+            // 3. Calculate Connections and Bucket them
+            const neighbors = [
+                { dx: 1, dy: 0 },
+                { dx: -1, dy: 1 },
+                { dx: 0, dy: 1 },
+                { dx: 1, dy: 1 }
+            ];
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const index = y * cols + x;
+                    const cellParticles = grid[index];
+                    
+                    if (!cellParticles || cellParticles.length === 0) continue;
+
+                    for (let i = 0; i < cellParticles.length; i++) {
+                        const pA = particles[cellParticles[i]];
+
+                        // Same cell connections
+                        for (let j = i + 1; j < cellParticles.length; j++) {
+                            const pB = particles[cellParticles[j]];
+                            queueConnection(pA, pB, lineBuckets);
+                        }
+
+                        // Neighbor cell connections
+                        for (let offset of neighbors) {
+                            const nx = x + offset.dx;
+                            const ny = y + offset.dy;
+
+                            if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+                                const nIndex = ny * cols + nx;
+                                const neighborParticles = grid[nIndex];
+                                if (neighborParticles) {
+                                    for (let k = 0; k < neighborParticles.length; k++) {
+                                        const pB = particles[neighborParticles[k]];
+                                        queueConnection(pA, pB, lineBuckets);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 4. Draw Lines from Buckets
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < lineBuckets.length; i++) {
+                const bucket = lineBuckets[i];
+                if (bucket.length === 0) continue;
+
+                // Opacity: index 0 is approx 0.1, index 9 is approx 1.0
+                const opacity = (i + 1) / 10; 
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.beginPath();
+                
+                for (let j = 0; j < bucket.length; j += 4) {
+                    ctx.moveTo(bucket[j], bucket[j+1]);
+                    ctx.lineTo(bucket[j+2], bucket[j+3]);
+                }
+                ctx.stroke();
+            }
+
+            animationFrameId = requestAnimationFrame(animate);
+        };
+
+        const queueConnection = (pA, pB, buckets) => {
+            let dx = pA.x - pB.x;
+            let dy = pA.y - pB.y;
+            
+            if (Math.abs(dx) > state.connectionDistance) return;
+            if (Math.abs(dy) > state.connectionDistance) return;
+
+            let distanceSq = dx * dx + dy * dy;
+
+            if (distanceSq < state.connectionDistanceSq) {
+                let distance = Math.sqrt(distanceSq);
+                // 1 - distance/max = alpha. 
+                // if distance is small, alpha is 1.
+                // if distance is max, alpha is 0.
+                let alpha = 1 - (distance / state.connectionDistance);
+                
+                // Map alpha 0..1 to index 0..9
+                let bucketIdx = Math.floor(alpha * 10);
+                if (bucketIdx < 0) bucketIdx = 0;
+                if (bucketIdx > 9) bucketIdx = 9;
+                
+                buckets[bucketIdx].push(pA.x, pA.y, pB.x, pB.y);
+            }
+        };
+
+        // Initialize
+        window.addEventListener('resize', handleResize);
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseout', handleMouseOut);
-
+        
+        init();
         animate();
 
         return () => {

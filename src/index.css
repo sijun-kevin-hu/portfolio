@@ -55,7 +55,13 @@ body {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 80px;
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 100px;
+  }
 }
 
 /* Cyberpunk cursor animation */

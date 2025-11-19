@@ -203,7 +203,7 @@ const Hero = () => {
                             className='text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed'
                             variants={itemVariants}
                         >
-                            Full-stack developer passionate about creating innovative solutions and bringing ideas to life through code.
+                            AI/ML engineer & full-stack builder. Turning ideas into code, one commit at a time 🚀
                         </motion.p>
                     </motion.div>
 

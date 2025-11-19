@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { motion, useInView, useMotionValue, useMotionTemplate } from 'framer-motion';
-import { technicalFrameworks, technicalLanguages } from '../data/techStack';
 
 const IntroCard = () => {
     const cardRef = useRef(null);
@@ -16,14 +15,6 @@ const IntroCard = () => {
     };
 
     const background = useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(6, 182, 212, 0.1), transparent 40%)`;
-
-    // Select a few icons for the floating animation
-    const floatingIcons = [
-        technicalFrameworks[0], // React
-        technicalLanguages[0],  // Python
-        technicalLanguages[2],  // JavaScript
-        technicalFrameworks[3]  // Tailwind
-    ];
 
     return (
         <motion.div
@@ -98,36 +89,6 @@ const IntroCard = () => {
                                 <p className="pl-4"><span className="text-blue-300">coffee</span>: <span className="text-purple-400">true</span>,</p>
                                 <p className="pl-4"><span className="text-blue-300">sleep</span>: <span className="text-purple-400">false</span></p>
                                 <p><span className="text-yellow-400">{'}'}</span>;</p>
-                            </div>
-                        </div>
-
-                        {/* Floating Tech Icons */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div className="relative w-full h-full">
-                                {floatingIcons.map((item, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className="absolute"
-                                        style={{
-                                            top: `${20 + i * 25}%`,
-                                            right: `${10 + (i % 2) * 40}%`,
-                                        }}
-                                        animate={{
-                                            y: [0, -15, 0],
-                                            rotate: [0, 10, 0]
-                                        }}
-                                        transition={{
-                                            duration: 3 + i,
-                                            repeat: Infinity,
-                                            ease: "easeInOut",
-                                            delay: i * 0.5
-                                        }}
-                                    >
-                                        <div className="p-3 bg-gray-900/90 rounded-xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10 backdrop-blur-sm">
-                                            <item.icon className="w-10 h-10 text-cyan-400" />
-                                        </div>
-                                    </motion.div>
-                                ))}
                             </div>
                         </div>
                     </div>

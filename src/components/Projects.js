@@ -124,35 +124,6 @@ const FeaturedProjectCard = React.memo(({ project, index }) => {
                                 <p><span className="text-yellow-400">{'}'}</span>;</p>
                             </div>
                         </div>
-
-                        {/* Floating Tech Icons */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="relative w-full h-full">
-                                {project.tech_img.slice(0, 3).map((TechIcon, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className="absolute"
-                                        style={{
-                                            top: `${30 + i * 20}%`,
-                                            left: `${20 + i * 25}%`,
-                                        }}
-                                        animate={{
-                                            y: [0, -10, 0],
-                                            rotate: [0, 5, 0]
-                                        }}
-                                        transition={{
-                                            duration: 3 + i,
-                                            repeat: Infinity,
-                                            ease: "easeInOut"
-                                        }}
-                                    >
-                                        <div className="p-3 bg-gray-900/90 rounded-xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10 backdrop-blur-sm">
-                                            <TechIcon className="w-8 h-8 md:w-10 md:h-10 text-cyan-400" />
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -248,7 +219,11 @@ const Projects = () => {
     const [filter, setFilter] = useState('All');
     const [showAll, setShowAll] = useState(false);
 
-    const categories = useMemo(() => ['All', ...new Set(projects.map(p => p.category))], []);
+    const categories = useMemo(() => {
+        const uniqueCategories = new Set(projects.map(p => p.category));
+        const orderedCategories = ['AI/ML', 'Full-Stack', 'Mobile'];
+        return ['All', ...orderedCategories.filter(cat => uniqueCategories.has(cat))];
+    }, []);
     
     // Filter logic
     const filteredProjects = useMemo(() => projects.filter(project => 

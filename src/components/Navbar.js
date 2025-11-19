@@ -31,6 +31,27 @@ const Navbar = () => {
         setIsMenuOpen(false);
     };
 
+    const handleNavClick = (e, href) => {
+        e.preventDefault();
+        const targetId = href.substring(1); // Remove the # from href
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+            const navbarHeight = window.innerWidth >= 1024 ? 80 : 64; // lg:h-20 = 80px, h-16 = 64px
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Close mobile menu if open
+        if (isMenuOpen) {
+            closeMenu();
+        }
+    };
+
     return (
         <>
             <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -85,7 +106,8 @@ const Navbar = () => {
                                     <motion.a
                                         key={link.href}
                                         href={link.href}
-                                        className='text-gray-300 hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-cyan-500/10 relative group overflow-hidden'
+                                        onClick={(e) => handleNavClick(e, link.href)}
+                                        className='text-gray-300 hover:text-cyan-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-cyan-500/10 relative group overflow-hidden cursor-pointer'
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         initial={{ opacity: 0, y: -20 }}
@@ -155,8 +177,8 @@ const Navbar = () => {
                                     <motion.a
                                         key={link.href}
                                         href={link.href}
-                                        className='block text-4xl font-bold text-gray-300 hover:text-cyan-400 transition-colors duration-300'
-                                        onClick={closeMenu}
+                                        onClick={(e) => handleNavClick(e, link.href)}
+                                        className='block text-4xl font-bold text-gray-300 hover:text-cyan-400 transition-colors duration-300 cursor-pointer'
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.2 + index * 0.1 }}

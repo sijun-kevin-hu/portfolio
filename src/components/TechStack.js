@@ -80,7 +80,7 @@ const TechStack = () => {
                     <motion.h2 
                         className='text-cyan-400 uppercase font-bold text-xs tracking-[0.2em] mb-4'
                     >
-                        System Capabilities
+                        Capabilities
                     </motion.h2>
                     <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight'>
                         Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Stack</span>
