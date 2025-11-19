@@ -5,6 +5,7 @@ import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
 import gmailLogo from '../images/gmail-logo.png';
 import { CONTACT_INFO, CAROUSEL_PHRASES} from '../constants';
+import InteractiveBackground from './InteractiveBackground';
 
 const Hero = () => {
     const [displayedText, setDisplayedText] = useState('');
@@ -103,76 +104,56 @@ const Hero = () => {
 
     return (
         <section ref={containerRef} className='relative min-h-screen flex items-center justify-center overflow-hidden'>
+            {/* Interactive Background */}
+            <InteractiveBackground />
+            
             {/* Optimized background effects */}
             <motion.div 
-                className='absolute inset-0 overflow-hidden'
+                className='absolute inset-0 overflow-hidden pointer-events-none'
                 style={{ opacity, scale }}
             >
                 {/* Grid overlay */}
                 <div className='absolute inset-0 grid-overlay opacity-10'></div>
                 
-                {/* Floating geometric shapes with animation */}
+                {/* Floating geometric shapes with animation - Optimized */}
                 <motion.div 
-                    className='absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full filter blur-3xl'
+                    className='absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full filter blur-3xl'
                     animate={{
-                        scale: [1, 1.2, 1],
+                        scale: [1, 1.1, 1],
                         rotate: [0, 90, 0],
                     }}
                     transition={{
                         duration: 20,
                         repeat: Infinity,
-                        ease: "easeInOut"
+                        ease: "linear"
                     }}
+                    style={{ willChange: 'transform' }}
                 ></motion.div>
                 <motion.div 
-                    className='absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-purple-500/15 to-pink-500/15 rounded-full filter blur-3xl'
+                    className='absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-3xl'
                     animate={{
-                        scale: [1, 1.3, 1],
+                        scale: [1, 1.2, 1],
                         rotate: [0, -90, 0],
                     }}
                     transition={{
                         duration: 25,
                         repeat: Infinity,
-                        ease: "easeInOut"
+                        ease: "linear"
                     }}
+                    style={{ willChange: 'transform' }}
                 ></motion.div>
-                
-                {/* Enhanced floating particles */}
-                <div className='absolute inset-0'>
-                    {[...Array(6)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className='absolute w-1.5 h-1.5 bg-cyan-400/30 rounded-full'
-                            style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                            }}
-                            animate={{
-                                y: [0, -100, 0],
-                                opacity: [0, 1, 0],
-                                scale: [0, 1, 0],
-                            }}
-                            transition={{
-                                duration: 8 + Math.random() * 4,
-                                repeat: Infinity,
-                                delay: Math.random() * 2,
-                                ease: "easeInOut"
-                            }}
-                        />
-                    ))}
-                </div>
             </motion.div>
 
             <motion.div 
-                className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16'
+                className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-16'
                 style={{ y }}
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                <div className='text-center space-y-12'>
+                <div className='text-center space-y-8 sm:space-y-12'>
                     {/* Main heading */}
-                    <motion.div className='space-y-6' variants={itemVariants}>
+                    <motion.div className='space-y-4 sm:space-y-6' variants={itemVariants}>
                         <div className='space-y-4'>
                             <motion.h1 
                                 className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-tight'
@@ -180,20 +161,17 @@ const Hero = () => {
                             >
                                 Hi, I'm{' '}
                                 <motion.span 
-                                    className='gradient-text inline-block'
-                                    animate={{
-                                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                                    }}
-                                    transition={{
-                                        duration: 5,
-                                        repeat: Infinity,
-                                        ease: "linear"
-                                    }}
-                                    style={{
-                                        backgroundSize: '200% 200%',
+                                    className='relative inline-block'
+                                    whileHover={{
+                                        scale: 1.1,
+                                        rotate: [0, -5, 5, -5, 0],
+                                        transition: { duration: 0.5 }
                                     }}
                                 >
-                                    Kevin
+                                    <span className='absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 blur-lg opacity-50 animate-pulse'></span>
+                                    <span className='relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-gradient-x'>
+                                        Kevin
+                                    </span>
                                 </motion.span>
                             </motion.h1>
                             
@@ -202,12 +180,12 @@ const Hero = () => {
                                 variants={itemVariants}
                             >
                                 I am a{' '}
-                                <span className='text-cyan-400 font-semibold inline-block' style={{ minWidth: '12ch', minHeight: '1.2em', display: 'inline-block' }}>
+                                <span className='text-cyan-400 font-semibold inline-block relative' style={{ minWidth: '12ch', minHeight: '1.2em', display: 'inline-block' }}>
                                     {displayedText}
                                     <motion.span 
-                                        className='blink-cursor inline-block ml-1'
+                                        className='absolute -right-1 top-0 bottom-0 w-1 bg-cyan-400'
                                         animate={{ opacity: [1, 0, 1] }}
-                                        transition={{ duration: 1, repeat: Infinity }}
+                                        transition={{ duration: 0.8, repeat: Infinity }}
                                     />
                                 </span>
                             </motion.div>
@@ -267,13 +245,13 @@ const Hero = () => {
                         
                         <motion.a 
                             href='#projects' 
-                            className='btn-secondary inline-flex items-center justify-center group px-8 py-4 text-lg'
+                            className='btn-secondary inline-flex items-center justify-center group px-8 py-4 text-lg relative overflow-hidden'
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            <span>View Projects</span>
+                            <span className="relative z-10">View Projects</span>
                             <motion.svg 
-                                className='ml-2 w-5 h-5' 
+                                className='ml-2 w-5 h-5 relative z-10' 
                                 fill='none' 
                                 stroke='currentColor' 
                                 viewBox='0 0 24 24'
@@ -282,6 +260,7 @@ const Hero = () => {
                             >
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 7l5 5m0 0l-5 5m5-5H6' />
                             </motion.svg>
+                            <div className="absolute inset-0 bg-cyan-500/10 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300" />
                         </motion.a>
                     </motion.div>
 
@@ -300,7 +279,7 @@ const Hero = () => {
                                 <motion.a
                                     key={index}
                                     href={social.href}
-                                    className='p-3 bg-gray-800/50 rounded-full border border-cyan-500/30 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25'
+                                    className='p-3 bg-gray-800/50 rounded-full border border-cyan-500/30 hover:border-cyan-400 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 relative overflow-hidden group'
                                     target='_blank'
                                     rel='noopener noreferrer'
                                     whileHover={{ scale: 1.15, rotate: 5 }}
@@ -309,7 +288,8 @@ const Hero = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.8 + index * 0.1 }}
                                 >
-                                    <img src={social.logo} alt={social.alt} className='w-6 h-6 sm:w-8 sm:h-8' />
+                                    <div className="absolute inset-0 bg-cyan-400/20 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 rounded-full" />
+                                    <img src={social.logo} alt={social.alt} className='w-6 h-6 sm:w-8 sm:h-8 relative z-10' />
                                 </motion.a>
                             ))}
                         </div>
@@ -318,30 +298,34 @@ const Hero = () => {
             </motion.div>
 
             {/* Enhanced Scroll indicator */}
-            <motion.div 
-                className='absolute bottom-8 left-1/2 transform -translate-x-1/2'
-                variants={floatingVariants}
-                animate="animate"
-            >
+            <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20'>
                 <motion.div 
-                    className='w-6 h-10 border-2 border-cyan-400 rounded-full flex justify-center cursor-pointer'
-                    whileHover={{ scale: 1.2 }}
-                    onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                    variants={floatingVariants}
+                    animate="animate"
                 >
                     <motion.div 
-                        className='w-1 h-3 bg-cyan-400 rounded-full mt-2'
-                        animate={{
-                            y: [0, 12, 0],
-                            opacity: [1, 0.5, 1]
-                        }}
-                        transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                    />
+                        className='flex flex-col items-center gap-2 cursor-pointer group'
+                        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                        whileHover={{ scale: 1.1 }}
+                    >
+                        <span className="text-xs text-cyan-400 font-medium tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">Scroll</span>
+                        <div className='w-6 h-10 border-2 border-cyan-400/50 rounded-full flex justify-center group-hover:border-cyan-400 transition-colors'>
+                            <motion.div 
+                                className='w-1 h-2 bg-cyan-400 rounded-full mt-2'
+                                animate={{
+                                    y: [0, 16, 0],
+                                    opacity: [1, 0, 1]
+                                }}
+                                transition={{
+                                    duration: 1.5,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                            />
+                        </div>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
+            </div>
         </section>
     );
 };

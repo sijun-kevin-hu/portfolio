@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import java_img from '../images/java.png';
 import python_img from '../images/python.png';
 import github_img from '../images/github.png';
@@ -110,52 +110,62 @@ const projects = [
     }
 ];
 
-const ProjectCard = ({ project, index, isVisible }) => {
+const ProjectCard = ({ project, index, isMobile }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const cardRef = useRef(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     
     // Check if description is long enough to need truncation
     const descriptionLength = project.description.length;
     const needsTruncation = descriptionLength > 150;
-    
-    const cardVariants = {
-        hidden: { 
-            opacity: 0, 
-            y: 50,
-            scale: 0.9
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-                delay: index * 0.1,
-                type: "spring",
-                stiffness: 100,
-                damping: 15
-            }
+
+    const handleMouseMove = (e) => {
+        if (cardRef.current && !isMobile) {
+            const rect = cardRef.current.getBoundingClientRect();
+            setMousePosition({
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            });
         }
     };
-
+    
     return (
         <motion.div 
+            layout
             ref={cardRef}
-            className='cyber-card overflow-hidden cursor-pointer relative perspective-1000'
-            variants={cardVariants}
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            whileHover={{ 
+            className='cyber-card overflow-hidden cursor-pointer relative perspective-1000 h-full flex flex-col group'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            whileHover={!isMobile ? { 
                 y: -10,
                 rotateY: 5,
                 rotateX: -2,
                 transition: { duration: 0.3 }
-            }}
+            } : {}}
             style={{ transformStyle: 'preserve-3d' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onMouseMove={handleMouseMove}
+            onClick={() => isMobile && setIsHovered(!isHovered)}
         >
-            <div className='p-4 sm:p-6 h-full flex flex-col'>
+            {/* Spotlight Effect */}
+            <div 
+                className="absolute inset-0 z-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 pointer-events-none"
+                style={{
+                    background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(6, 182, 212, 0.15), transparent 40%)`
+                }}
+            />
+            <div 
+                className="absolute inset-0 z-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 pointer-events-none"
+                style={{
+                    background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(139, 92, 246, 0.1), transparent 40%)`
+                }}
+            />
+
+            <div className='p-4 sm:p-6 h-full flex flex-col relative z-10'>
                 {/* Header */}
                 <div className='mb-3 sm:mb-4'>
                     <div className='flex items-center gap-2 mb-2 sm:mb-3 flex-wrap'>
@@ -225,11 +235,12 @@ const ProjectCard = ({ project, index, isVisible }) => {
                             href={project.github} 
                             target='_blank' 
                             rel='noopener noreferrer'
-                            className='flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 text-xs sm:text-sm border border-cyan-500/30 hover:border-cyan-400'
+                            className='flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-800/50 text-white rounded-lg hover:bg-gray-700/50 transition-colors duration-300 text-xs sm:text-sm border border-cyan-500/30 hover:border-cyan-400 relative overflow-hidden group/btn'
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <img src={github_img} alt='GitHub' className='w-3.5 h-3.5 sm:w-4 sm:h-4' />
-                            <span>Code</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-500" />
+                            <img src={github_img} alt='GitHub' className='w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10' />
+                            <span className="relative z-10">Code</span>
                         </a>
                     )}
                     {project.liveSite && (
@@ -237,13 +248,14 @@ const ProjectCard = ({ project, index, isVisible }) => {
                             href={project.liveSite} 
                             target='_blank' 
                             rel='noopener noreferrer'
-                            className='flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 text-xs sm:text-sm border border-cyan-500/50 hover:border-cyan-400'
+                            className='flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-cyan-600/20 text-cyan-400 rounded-lg hover:bg-cyan-600/30 transition-colors duration-300 text-xs sm:text-sm border border-cyan-500/50 hover:border-cyan-400 relative overflow-hidden group/btn'
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <svg className='w-3.5 h-3.5 sm:w-4 sm:h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-500" />
+                            <svg className='w-3.5 h-3.5 sm:w-4 sm:h-4 relative z-10' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14' />
                             </svg>
-                            <span>Live</span>
+                            <span className="relative z-10">Live</span>
                         </a>
                     )}
                 </div>
@@ -261,17 +273,21 @@ const ProjectCard = ({ project, index, isVisible }) => {
 const Projects = () => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: 0.1 });
+    const [filter, setFilter] = useState('All');
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
     
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2
-            }
-        }
-    };
+    const categories = ['All', ...new Set(projects.map(p => p.category))];
+    
+    const filteredProjects = projects.filter(project => 
+        filter === 'All' ? true : project.category === filter
+    );
     
     const titleVariants = {
         hidden: { opacity: 0, y: -30 },
@@ -324,7 +340,7 @@ const Projects = () => {
 
             <div className='relative z-10 max-w-7xl mx-auto'>
                 <motion.div 
-                    className='text-center mb-16'
+                    className='text-center mb-12'
                     variants={titleVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
@@ -342,29 +358,51 @@ const Projects = () => {
                         Projects.
                     </motion.h1>
                     <motion.p 
-                        className='text-xl text-gray-300 max-w-3xl mx-auto'
+                        className='text-xl text-gray-300 max-w-3xl mx-auto mb-8'
                         initial={{ opacity: 0 }}
                         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ delay: 0.3 }}
                     >
                         Here are some of the projects I've worked on. Each one represents a unique challenge and learning opportunity.
                     </motion.p>
+
+                    {/* Filter Buttons */}
+                    <div className="flex flex-wrap justify-center gap-4 mb-12">
+                        {categories.map((category, index) => (
+                            <motion.button
+                                key={category}
+                                onClick={() => setFilter(category)}
+                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
+                                    filter === category 
+                                        ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500' 
+                                        : 'bg-gray-800/50 text-gray-400 border-gray-700 hover:border-cyan-500/50 hover:text-cyan-300'
+                                }`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 + index * 0.1 }}
+                            >
+                                {category}
+                            </motion.button>
+                        ))}
+                    </div>
                 </motion.div>
 
                 <motion.div 
+                    layout
                     className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
                 >
-                    {projects.map((project, index) => (
-                        <ProjectCard 
-                            key={index} 
-                            project={project} 
-                            index={index}
-                            isVisible={isInView}
-                        />
-                    ))}
+                    <AnimatePresence mode='popLayout'>
+                        {filteredProjects.map((project, index) => (
+                            <ProjectCard 
+                                key={project.title} 
+                                project={project} 
+                                index={index}
+                                isMobile={isMobile}
+                            />
+                        ))}
+                    </AnimatePresence>
                 </motion.div>
 
                 {/* Call to action */}

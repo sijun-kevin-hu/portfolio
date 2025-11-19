@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import CustomCursor from "./components/CustomCursor";
 import './index.css';
 const Introduction = lazy(() => import("./components/Introduction"));
 const TechStack = lazy(() => import("./components/TechStack"));
@@ -25,6 +26,8 @@ function App() {
         className="scroll-progress"
         style={{ scaleX }}
       />
+
+      <CustomCursor />
 
       {/* Optimized background */}
       <div className="fixed inset-0 z-0" style={{

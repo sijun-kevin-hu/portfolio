@@ -57,10 +57,11 @@ const Introduction = () => {
                 transition={{ duration: 1 }}
             >
                 <motion.div 
-                    className='absolute top-0 right-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full filter blur-xl opacity-50'
+                    className='absolute top-0 right-0 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full filter blur-3xl opacity-30'
                     animate={{
                         scale: [1, 1.2, 1],
-                        x: [0, 20, 0],
+                        x: [0, 50, 0],
+                        y: [0, 30, 0],
                     }}
                     transition={{
                         duration: 15,
@@ -69,10 +70,11 @@ const Introduction = () => {
                     }}
                 />
                 <motion.div 
-                    className='absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-xl opacity-50'
+                    className='absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full filter blur-3xl opacity-30'
                     animate={{
                         scale: [1, 1.3, 1],
-                        x: [0, -20, 0],
+                        x: [0, -50, 0],
+                        y: [0, -30, 0],
                     }}
                     transition={{
                         duration: 18,
@@ -80,7 +82,17 @@ const Introduction = () => {
                         ease: "easeInOut"
                     }}
                 />
-                <div className='absolute inset-0 grid-overlay opacity-10'></div>
+                <div className='absolute inset-0 grid-overlay opacity-5'></div>
+                
+                {/* Animated mesh lines */}
+                <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
+                    <defs>
+                        <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-cyan-500" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+                </svg>
             </motion.div>
 
             <div className='relative z-10 max-w-7xl mx-auto'>
@@ -97,7 +109,7 @@ const Introduction = () => {
                         About Me
                     </motion.h2>
                     <motion.h1 
-                        className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6'
+                        className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 glitch'
                         whileHover={{ scale: 1.02 }}
                     >
                         Introduction.
@@ -119,7 +131,7 @@ const Introduction = () => {
                     {/* Left side - Text content */}
                     <motion.div className='space-y-6' variants={cardVariants}>
                         <motion.div 
-                            className='cyber-card p-8 perspective-1000'
+                            className='cyber-card p-8 perspective-1000 group'
                             whileHover={{ 
                                 y: -8,
                                 rotateY: 5,
@@ -127,9 +139,10 @@ const Introduction = () => {
                             }}
                             style={{ transformStyle: 'preserve-3d' }}
                         >
-                            <div className='flex items-center mb-4'>
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                            <div className='flex items-center mb-4 relative z-10'>
                                 <motion.div 
-                                    className='w-12 h-12 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full flex items-center justify-center mr-4'
+                                    className='w-12 h-12 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full flex items-center justify-center mr-4 shadow-lg shadow-cyan-500/20'
                                     whileHover={{ rotate: 360, scale: 1.1 }}
                                     transition={{ duration: 0.5 }}
                                 >
@@ -139,14 +152,14 @@ const Introduction = () => {
                                 </motion.div>
                                 <h3 className='text-xl font-semibold text-white'>Who I Am</h3>
                             </div>
-                            <p className='text-gray-300 leading-relaxed'>
+                            <p className='text-gray-300 leading-relaxed relative z-10'>
                                 Hey! I'm Kevin 👋 Currently grinding through my fourth year at Georgia Tech studying CS. 
                                 I build stuff on the web and honestly, there's nothing better than seeing someone actually use what you made.
                             </p>
                         </motion.div>
 
                         <motion.div 
-                            className='cyber-card p-8 perspective-1000'
+                            className='cyber-card p-8 perspective-1000 group'
                             whileHover={{ 
                                 y: -8,
                                 rotateY: -5,
@@ -154,9 +167,10 @@ const Introduction = () => {
                             }}
                             style={{ transformStyle: 'preserve-3d' }}
                         >
-                            <div className='flex items-center mb-4'>
+                            <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                            <div className='flex items-center mb-4 relative z-10'>
                                 <motion.div 
-                                    className='w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center mr-4'
+                                    className='w-12 h-12 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full flex items-center justify-center mr-4 shadow-lg shadow-green-500/20'
                                     whileHover={{ rotate: 360, scale: 1.1 }}
                                     transition={{ duration: 0.5 }}
                                 >
@@ -166,7 +180,7 @@ const Introduction = () => {
                                 </motion.div>
                                 <h3 className='text-xl font-semibold text-white'>What I Do</h3>
                             </div>
-                            <p className='text-gray-300 leading-relaxed'>
+                            <p className='text-gray-300 leading-relaxed relative z-10'>
                                 I'm basically a tech stack hopper—always trying out the latest thing. Frontend, backend, whatever. 
                                 If it's cool and solves a problem, count me in. Currently obsessed with making things that look good AND work smoothly.
                             </p>
@@ -176,7 +190,7 @@ const Introduction = () => {
                     {/* Right side - Additional content */}
                     <motion.div className='space-y-6' variants={cardVariants}>
                         <motion.div 
-                            className='cyber-card p-8 perspective-1000'
+                            className='cyber-card p-8 perspective-1000 group'
                             whileHover={{ 
                                 y: -8,
                                 rotateY: -5,
@@ -184,9 +198,10 @@ const Introduction = () => {
                             }}
                             style={{ transformStyle: 'preserve-3d' }}
                         >
-                            <div className='flex items-center mb-4'>
+                            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                            <div className='flex items-center mb-4 relative z-10'>
                                 <motion.div 
-                                    className='w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4'
+                                    className='w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4 shadow-lg shadow-purple-500/20'
                                     whileHover={{ rotate: 360, scale: 1.1 }}
                                     transition={{ duration: 0.5 }}
                                 >
@@ -196,14 +211,14 @@ const Introduction = () => {
                                 </motion.div>
                                 <h3 className='text-xl font-semibold text-white'>My Approach</h3>
                             </div>
-                            <p className='text-gray-300 leading-relaxed'>
+                            <p className='text-gray-300 leading-relaxed relative z-10'>
                                 When I'm not debugging at 2am, I'm probably thinking about how to make tech less... complicated? 
                                 Clean code, good vibes, and UX that doesn't make people want to throw their laptop. That's the goal.
                             </p>
                         </motion.div>
 
                         <motion.div 
-                            className='cyber-card p-8 perspective-1000'
+                            className='cyber-card p-8 perspective-1000 group'
                             whileHover={{ 
                                 y: -8,
                                 rotateY: 5,
@@ -211,9 +226,10 @@ const Introduction = () => {
                             }}
                             style={{ transformStyle: 'preserve-3d' }}
                         >
-                            <div className='flex items-center mb-4'>
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                            <div className='flex items-center mb-4 relative z-10'>
                                 <motion.div 
-                                    className='w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mr-4'
+                                    className='w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mr-4 shadow-lg shadow-orange-500/20'
                                     whileHover={{ rotate: 360, scale: 1.1 }}
                                     transition={{ duration: 0.5 }}
                                 >
@@ -223,7 +239,7 @@ const Introduction = () => {
                                 </motion.div>
                                 <h3 className='text-xl font-semibold text-white'>Let's Connect</h3>
                             </div>
-                            <p className='text-gray-300 leading-relaxed'>
+                            <p className='text-gray-300 leading-relaxed relative z-10'>
                                 Down to collab on something cool or just talk tech? Hit me up! Always down to chat about projects, 
                                 share memes, or debate the best framework (React wins, fight me).
                             </p>
@@ -240,13 +256,13 @@ const Introduction = () => {
                 >
                     <motion.a 
                         href='#projects' 
-                        className='btn-primary inline-flex items-center group'
+                        className='btn-primary inline-flex items-center group relative overflow-hidden'
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <span>View My Work</span>
+                        <span className="relative z-10">View My Work</span>
                         <motion.svg 
-                            className='ml-2 w-5 h-5' 
+                            className='ml-2 w-5 h-5 relative z-10' 
                             fill='none' 
                             stroke='currentColor' 
                             viewBox='0 0 24 24'
@@ -255,6 +271,7 @@ const Introduction = () => {
                         >
                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M13 7l5 5m0 0l-5 5m5-5H6' />
                         </motion.svg>
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                     </motion.a>
                 </motion.div>
             </div>

@@ -27,6 +27,13 @@ body {
   padding-right: env(safe-area-inset-right);
 }
 
+/* Hide default cursor on desktop */
+@media (min-width: 768px) {
+  body, a, button, input, textarea, select {
+    cursor: none !important;
+  }
+}
+
 /* Cyberpunk scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -120,7 +127,7 @@ button, a, .cyber-card, .card, .btn-primary, .btn-secondary {
 /* Cyberpunk glass morphism effect */
 .glass {
   background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   border: 1px solid rgba(0, 255, 255, 0.3);
   box-shadow: 
     0 0 20px rgba(0, 255, 255, 0.2),
@@ -129,7 +136,7 @@ button, a, .cyber-card, .card, .btn-primary, .btn-secondary {
 
 .cyber-card {
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(8px);
   border: 1px solid rgba(0, 255, 255, 0.2);
   box-shadow: 
     0 0 30px rgba(0, 255, 255, 0.1),
