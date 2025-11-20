@@ -1,24 +1,26 @@
 import { FaJava } from 'react-icons/fa';
-import { 
-    SiPython, SiFirebase, SiAndroid, SiFlask, SiReact, 
-    SiHtml5, SiCss3, SiMysql, SiJavascript, SiTailwindcss, 
-    SiTypescript, SiNextdotjs 
+import {
+    SiPython, SiFirebase, SiAndroid, SiFlask, SiReact,
+    SiHtml5, SiCss3, SiMysql, SiJavascript, SiTailwindcss,
+    SiTypescript, SiNextdotjs
 } from 'react-icons/si';
 
 export const projects = [
-    { 
-        title: "Tap Detail", 
+    {
+        title: "Tap Detail",
         description: "A comprehensive business management platform for mobile auto detailers. It streamlines the entire workflow - from client booking and appointment management to automated reminders and earnings tracking - giving detailers a professional edge and clients a seamless experience.",
-        tech_img: [SiNextdotjs, SiFirebase, SiTypescript, SiTailwindcss], 
+        tech_img: [SiNextdotjs, SiFirebase, SiTypescript, SiTailwindcss],
+        technologies: ["Next.js", "Firebase", "TypeScript", "Tailwind"],
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
         liveSite: 'https://tapdetail.com',
         category: "Full-Stack",
         featured: true
     },
-    { 
-        title: "Spotistats", 
+    {
+        title: "Spotistats",
         description: "Why wait for December? Spotistats gives you your Spotify Wrapped insights year-round. Built with Android and Firebase, it visualizes your top artists and tracks, lets you add friends, and keeps your music stats synchronized in real-time.",
-        tech_img: [FaJava, SiFirebase, SiAndroid], 
+        tech_img: [FaJava, SiFirebase, SiAndroid],
+        technologies: ["Java", "Firebase", "Android SDK"],
         github: 'https://github.com/sijun-kevin-hu/SpotifyWrapped/tree/main',
         category: "Mobile",
         featured: true
@@ -27,73 +29,82 @@ export const projects = [
         title: "BubbledIn",
         description: "Communicate clearly in the chaos. BubbledIn creates private 'audio bubbles' for teams in loud environments like hackathons. It combines WebRTC for crystal-clear voice streaming with AI-powered live transcription, ensuring you never miss a word.",
         tech_img: [SiReact, SiTypescript, SiFirebase],
+        technologies: ["React", "TypeScript", "Firebase"],
         github: 'https://github.com/elenesturua/BubbledIn',
         category: "Full-Stack",
         liveSite: 'https://bubbled-in.vercel.app',
         featured: true
     },
-    { 
-        title: "DreamCatcher", 
+    {
+        title: "DreamCatcher",
         description: "Turn your dreams into visuals. Using OpenAI and HuggingFace, DreamCatcher analyzes your dream journals and generates unique AI imagery to represent them. It’s a surreal exploration of your subconscious, powered by a modern React and Flask stack.",
-        tech_img: [SiReact, SiFlask, SiFirebase], 
+        tech_img: [SiReact, SiFlask, SiFirebase],
+        technologies: ["React", "Flask", "Firebase"],
         github: 'https://github.com/jamesrm67/hacklytics-2025',
         category: "Full-Stack",
         featured: false
     },
-    { 
-        title: "AdaLens", 
+    {
+        title: "AdaLens",
         description: "Making the web visible to everyone. AdaLens is an AI-powered browser extension that automatically generates descriptive alt text for images missing accessibility tags. By leveraging Google's Gemini API, it bridges the gap between visual content and screen readers.",
-        tech_img: [SiTypescript, SiFlask, SiPython], 
+        tech_img: [SiTypescript, SiFlask, SiPython],
+        technologies: ["TypeScript", "Flask", "Python"],
         github: 'https://github.com/sijun-kevin-hu/AdaLens',
         liveSite: 'https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod',
         category: "AI/ML",
         featured: true
     },
-    { 
-        title: "Book Club", 
-        description: "A digital gathering place for bibliophiles. This full-stack app lets users log their reading journey, manage collections, and connect with a community of readers. Built with Flask and React, it’s designed to keep your reading life organized and social.", 
-        tech_img: [SiReact, SiPython, SiFlask], 
+    {
+        title: "Book Club",
+        description: "A digital gathering place for bibliophiles. This full-stack app lets users log their reading journey, manage collections, and connect with a community of readers. Built with Flask and React, it’s designed to keep your reading life organized and social.",
+        tech_img: [SiReact, SiPython, SiFlask],
+        technologies: ["React", "Python", "Flask"],
         github: "https://github.com/sijun-kevin-hu/BookClub",
         category: "Full-Stack",
         featured: false
     },
-    { 
-        title: "Poker Profit Tracker", 
+    {
+        title: "Poker Profit Tracker",
         description: "Know your game. This tracker helps poker players log sessions, analyze win rates, and manage their bankroll. Built with a robust JavaEE backend, it provides the data-driven insights needed to take your game from gambling to investing.",
-        tech_img: [FaJava, SiMysql, SiHtml5, SiCss3], 
+        tech_img: [FaJava, SiMysql, SiHtml5, SiCss3],
+        technologies: ["Java", "MySQL", "HTML5", "CSS3"],
         github: "https://github.com/sijun-kevin-hu/PokerProfitTracker",
         category: "Full-Stack",
         featured: false
     },
-    { 
-        title: "Course Scheduler", 
+    {
+        title: "Course Scheduler",
         description: "Your academic personal assistant. This Android app helps students juggle courses, assignments, and deadlines. With features for schedule planning and weekly task prioritization, it’s designed to keep your GPA high and your stress low.",
-        tech_img: [FaJava, SiAndroid], 
+        tech_img: [FaJava, SiAndroid],
+        technologies: ["Java", "Android SDK"],
         github: 'https://github.com/sijun-kevin-hu/Scheduler',
         category: "Mobile",
         featured: false
     },
-    { 
-        title: "Atlanta News Scraper", 
+    {
+        title: "Atlanta News Scraper",
         description: "Local news, aggregated. This Python-based scraper pulls the latest headlines from Fox 5 Atlanta, presenting them in a clean, readable format. It’s a custom-built tool for staying informed without the clutter.",
-        tech_img: [SiPython, SiFlask], 
+        tech_img: [SiPython, SiFlask],
+        technologies: ["Python", "Flask"],
         github: 'https://github.com/sijun-kevin-hu/Atlanta-News-Scraper',
         category: "Full-Stack",
         featured: false
     },
-    { 
-        title: "Restaurant Website", 
+    {
+        title: "Restaurant Website",
         description: "A digital storefront for a local favorite. This responsive website showcases the menu, location, and story of a Chinese buffet. It’s designed to drive foot traffic and reservations through an inviting and accessible online presence.",
-        tech_img: [SiHtml5, SiCss3, SiJavascript], 
+        tech_img: [SiHtml5, SiCss3, SiJavascript],
+        technologies: ["HTML5", "CSS3", "JavaScript"],
         github: 'https://github.com/sijun-kevin-hu/chinabuffet-website',
         category: "Full-Stack",
         liveSite: 'https://tnchinabuffet.com',
         featured: false
     },
-    { 
-        title: "Portfolio Website", 
+    {
+        title: "Portfolio Website",
         description: "The site you're on right now! A showcase of my journey as a developer, built with React and Tailwind to be fast, responsive, and a little bit stylish.",
-        tech_img: [SiReact, SiJavascript, SiTailwindcss, SiCss3, SiHtml5], 
+        tech_img: [SiReact, SiJavascript, SiTailwindcss, SiCss3, SiHtml5],
+        technologies: ["React", "JavaScript", "Tailwind", "CSS3", "HTML5"],
         github: 'https://github.com/sijun-kevin-hu/portfolio',
         category: "Full-Stack",
         featured: false

@@ -21,9 +21,22 @@ const CustomCursor = () => {
   const isClicking = useRef(false);
 
   useEffect(() => {
+    let rafId = null;
+    let mouseX = -100;
+    let mouseY = -100;
+
     const moveCursor = (e) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      // Throttle updates using requestAnimationFrame (Safari optimization)
+      if (rafId === null) {
+        rafId = requestAnimationFrame(() => {
+          cursorX.set(mouseX);
+          cursorY.set(mouseY);
+          rafId = null;
+        });
+      }
     };
 
     const updateAnimation = () => {
@@ -67,6 +80,9 @@ const CustomCursor = () => {
       window.removeEventListener("mouseover", handleMouseOver);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, [cursorX, cursorY, controls, dotControls]);
 
@@ -130,11 +146,12 @@ const CustomCursor = () => {
     <>
       {/* Main Cursor Ring */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block backdrop-blur-[1px]"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
         style={{
           translateX: cursorXSpring,
           translateY: cursorYSpring,
           willChange: "transform",
+          transform: "translate3d(0, 0, 0)", // Force GPU acceleration
         }}
         variants={variants}
         initial="default"
@@ -154,6 +171,7 @@ const CustomCursor = () => {
           translateX: cursorXSpring,
           translateY: cursorYSpring,
           willChange: "transform",
+          transform: "translate3d(0, 0, 0)", // Force GPU acceleration
         }}
         variants={dotVariants}
         initial="default"
@@ -174,6 +192,7 @@ const CustomCursor = () => {
           x: -8,
           y: -8,
           willChange: "transform",
+          transform: "translate3d(0, 0, 0)", // Force GPU acceleration
         }}
       />
     </>

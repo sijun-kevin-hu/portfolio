@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo } from 'react';
-import { motion, useInView, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { projects } from '../data/projects';
 import github_img from '../images/github.png';
 
@@ -24,7 +24,7 @@ const FeaturedProjectCard = React.memo(({ project, index }) => {
             ref={cardRef}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-20px" }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
             onMouseMove={handleMouseMove}
             className="relative w-full mb-16 group perspective-1000"
@@ -147,11 +147,10 @@ const FeaturedProjectCard = React.memo(({ project, index }) => {
                                     <p className="pl-4"><span className="text-blue-300">title</span>: <span className="text-green-400">"{project.title}"</span>,</p>
                                     <p className="pl-4"><span className="text-blue-300">category</span>: <span className="text-green-400">"{project.category}"</span>,</p>
                                     <p className="pl-4"><span className="text-blue-300">technologies</span>: <span className="text-yellow-400">{'['}</span></p>
-                                    {project.tech_img.slice(0, 3).map((_, i) => (
-                                        <p key={i} className="pl-8"><span className="text-green-400">"Tech_Stack_{i + 1}"</span>,</p>
+                                    {project.technologies.slice(0, 3).map((tech, i) => (
+                                        <p key={i} className="pl-8"><span className="text-green-400">"{tech}"</span>,</p>
                                     ))}
-                                    <p className="pl-4"><span className="text-yellow-400">{']'}</span>,</p>
-                                    <p className="pl-4"><span className="text-blue-300">status</span>: <span className="text-cyan-400">"Ready to Deploy"</span></p>
+                                    <p className="pl-4"><span className="text-yellow-400">{']'}</span></p>
                                     <p><span className="text-yellow-400">{'}'}</span>;</p>
                                     <p className="text-gray-600 mt-4">{'// Innovation in progress...'}</p>
                                 </div>
@@ -237,8 +236,6 @@ const SmallProjectCard = React.memo(({ project, index }) => {
 });
 
 const Projects = () => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.1 });
     const [filter, setFilter] = useState('All');
     const [showAll, setShowAll] = useState(false);
 
@@ -257,7 +254,7 @@ const Projects = () => {
     const otherProjects = useMemo(() => filteredProjects.filter(p => !p.featured), [filteredProjects]);
 
     return (
-        <section ref={ref} className="section-padding relative overflow-hidden py-32 bg-gray-900" id="projects">
+        <section className="section-padding relative overflow-hidden py-32 bg-gray-900" id="projects">
             {/* Background Effects */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] opacity-20" />
@@ -269,7 +266,8 @@ const Projects = () => {
                 <motion.div
                     className="text-center mb-24"
                     initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-20px" }}
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="text-cyan-400 font-mono text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
