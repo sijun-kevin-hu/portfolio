@@ -1,24 +1,36 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useAnimation } from 'framer-motion';
 
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Smoother spring config
-  const springConfig = { damping: 25, stiffness: 400, mass: 0.5 };
+  // Detect Safari
+  const [isSafari] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  });
+
+  // Smoother spring config - but more aggressive for Safari
+  const springConfig = isSafari
+    ? { damping: 35, stiffness: 250, mass: 0.3, restDelta: 0.001, restSpeed: 0.001 }
+    : { damping: 25, stiffness: 400, mass: 0.5 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  // Trail effect
-  const trailX = useSpring(cursorX, { damping: 40, stiffness: 200, mass: 0.8 });
-  const trailY = useSpring(cursorY, { damping: 40, stiffness: 200, mass: 0.8 });
+  // Trail effect - disabled for Safari
+  const trailConfig = isSafari
+    ? { damping: 50, stiffness: 150, mass: 0.5, restDelta: 0.001, restSpeed: 0.001 }
+    : { damping: 40, stiffness: 200, mass: 0.8 };
+  const trailX = useSpring(cursorX, trailConfig);
+  const trailY = useSpring(cursorY, trailConfig);
 
   const controls = useAnimation();
   const dotControls = useAnimation();
 
   const isHovering = useRef(false);
   const isClicking = useRef(false);
+  const hoverCheckTimer = useRef(null);
 
   useEffect(() => {
     let rafId = null;
@@ -46,6 +58,14 @@ const CustomCursor = () => {
     };
 
     const handleMouseOver = (e) => {
+      // Throttle hover checks for Safari
+      if (isSafari) {
+        if (hoverCheckTimer.current) return;
+        hoverCheckTimer.current = setTimeout(() => {
+          hoverCheckTimer.current = null;
+        }, 150); // Only check every 150ms on Safari
+      }
+
       const target = e.target;
       const isInteractive =
         target.tagName === 'A' ||
@@ -83,8 +103,11 @@ const CustomCursor = () => {
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
+      if (hoverCheckTimer.current) {
+        clearTimeout(hoverCheckTimer.current);
+      }
     };
-  }, [cursorX, cursorY, controls, dotControls]);
+  }, [cursorX, cursorY, controls, dotControls, isSafari]);
 
   const variants = {
     default: {
@@ -185,7 +208,7 @@ const CustomCursor = () => {
 
       {/* Trail Effect */}
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 rounded-full pointer-events-none z-[9998] hidden md:block bg-cyan-500/20 blur-sm"
+        className={`fixed top-0 left-0 w-4 h-4 rounded-full pointer-events-none z-[9998] hidden md:block bg-cyan-500/20 ${!isSafari ? 'blur-sm' : ''}`}
         style={{
           translateX: trailX,
           translateY: trailY,
