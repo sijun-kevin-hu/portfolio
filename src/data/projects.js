@@ -7,6 +7,16 @@ import {
 
 export const projects = [
     {
+        title: "Infinite Story Universe",
+        description: "A collaborative, AI-powered storytelling platform where users vote on the narrative's direction. It uses Vertex AI to generate unique story chapters and cover art, creating an ever-expanding multiverse of user-driven fiction.",
+        tech_img: [SiReact, SiTypescript, SiFirebase],
+        technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
+        github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
+        liveSite: 'https://infinitestoryuniverse.com',
+        category: "Full-Stack",
+        featured: true
+    },
+    {
         title: "Tap Detail",
         description: "A comprehensive business management platform for mobile auto detailers. It streamlines the entire workflow - from client booking and appointment management to automated reminders and earnings tracking - giving detailers a professional edge and clients a seamless experience.",
         tech_img: [SiNextdotjs, SiFirebase, SiTypescript, SiTailwindcss],
