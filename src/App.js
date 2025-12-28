@@ -41,8 +41,15 @@ function App() {
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='20' cy='20' r='1'/%3E%3C/g%3E%3C/svg%3E")`
         }}></div>
       </div>
-      
+
       <div className="relative z-10">
+        {/* Browser recommendation */}
+        <div className="fixed top-2 left-0 w-full z-40 text-center pointer-events-none">
+          <span className="text-[10px] font-mono tracking-[0.2em] text-gray-500 uppercase opacity-60 mix-blend-screen">
+            Best viewed on Chrome
+          </span>
+        </div>
+
         <Navbar />
         <main className="relative">
           <Hero />
