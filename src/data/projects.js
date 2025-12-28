@@ -2,7 +2,7 @@ import { FaJava } from 'react-icons/fa';
 import {
     SiPython, SiFirebase, SiAndroid, SiFlask, SiReact,
     SiHtml5, SiCss3, SiMysql, SiJavascript, SiTailwindcss,
-    SiTypescript, SiNextdotjs
+    SiTypescript, SiNextdotjs, SiPandas, SiNumpy, SiScikitlearn
 } from 'react-icons/si';
 
 export const projects = [
@@ -14,6 +14,15 @@ export const projects = [
         github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
         liveSite: 'https://infinitestoryuniverse.com',
         category: "Full-Stack",
+        featured: true
+    },
+    {
+        title: "Financial Regression Pipeline",
+        description: "Data-driven foresight. This end-to-end ML pipeline forecasts earnings yield by integrating financial ratios with firm culture scores. Leveraging Pandas and scikit-learn for advanced feature engineering, it reduces model error by ~70%, turning complex market data into actionable predictions.",
+        tech_img: [SiPython, SiPandas, SiNumpy, SiScikitlearn],
+        technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
+        github: 'https://github.gatech.edu/vbhalla8/ML_project2025',
+        category: "AI/ML",
         featured: true
     },
     {
