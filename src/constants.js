@@ -6,5 +6,5 @@ export const CONTACT_INFO = {
 };
 
 export const CAROUSEL_PHRASES = {
-    words: ['Product Engineer.', 'Full Stack Developer.', 'AI/ML Enthusiast.', 'Tech Innovator.', 'Clean Code Advocate.', 'Software Engineer.'],
+    words: ['Software Engineer.', 'Product-Minded Builder.', 'Full-Stack Developer.', 'AI/ML-Focused Learner.', 'Cloud-Oriented Engineer.', 'Clean Code Advocate.'],
 };
