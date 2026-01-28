@@ -8,7 +8,7 @@ import {
 export const projects = [
     {
         title: "Infinite Story Universe",
-        description: "A collaborative, AI-powered storytelling platform where users vote on the narrative's direction. It uses Vertex AI to generate unique story chapters and cover art, creating an ever-expanding multiverse of user-driven fiction.",
+        description: "Collaborative storytelling evolved. This platform orchestrates generative AI pipelines via Vertex AI to build branching narratives based on real-time user consensus. It implements dynamic prompt-chaining to ensure narrative consistency across an ever-expanding multiverse.",
         tech_img: [SiReact, SiTypescript, SiFirebase],
         technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
         github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
@@ -56,7 +56,7 @@ export const projects = [
     },
     {
         title: "DreamCatcher",
-        description: "Turn your dreams into visuals. Using OpenAI and HuggingFace, DreamCatcher analyzes your dream journals and generates unique AI imagery to represent them. It’s a surreal exploration of your subconscious, powered by a modern React and Flask stack.",
+        description: "Subconscious visualization. This application leverages NLP and diffusion model orchestration to translate personal journals into generative art. Powered by a Flask-React architecture, it processes complex semantic inputs to create unique, high-fidelity dream representations.",
         tech_img: [SiReact, SiFlask, SiFirebase],
         technologies: ["React", "Flask", "Firebase"],
         github: 'https://github.com/jamesrm67/hacklytics-2025',
@@ -65,7 +65,7 @@ export const projects = [
     },
     {
         title: "AdaLens",
-        description: "Making the web visible to everyone. AdaLens is an AI-powered browser extension that automatically generates descriptive alt text for images missing accessibility tags. By leveraging Google's Gemini API, it bridges the gap between visual content and screen readers.",
+        description: "Vision for everyone. AdaLens integrates multimodal LLMs to perform real-time semantic analysis on web imagery. It automates web accessibility by transforming visual assets into WCAG-compliant metadata, bridging the gap between visual content and screen readers.",
         tech_img: [SiTypescript, SiFlask, SiPython],
         technologies: ["TypeScript", "Flask", "Python"],
         github: 'https://github.com/sijun-kevin-hu/AdaLens',
