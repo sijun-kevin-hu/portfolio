@@ -1,11 +1,18 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
+import NavbarLite from './components/NavbarLite';
+import HeroLite from './components/HeroLite';
 import './index.css';
-const Introduction = lazy(() => import("./components/Introduction"));
-const TechStack = lazy(() => import("./components/TechStack"));
-const Projects = lazy(() => import("./components/Projects"));
-const Footer = lazy(() => import("./components/Footer"));
+
+const NavbarDesktop = lazy(() => import('./components/Navbar'));
+const HeroDesktop = lazy(() => import('./components/Hero'));
+const IntroductionDesktop = lazy(() => import('./components/Introduction'));
+const IntroductionLite = lazy(() => import('./components/IntroductionLite'));
+const TechStackDesktop = lazy(() => import('./components/TechStack'));
+const TechStackLite = lazy(() => import('./components/TechStackLite'));
+const ProjectsDesktop = lazy(() => import('./components/Projects'));
+const ProjectsLite = lazy(() => import('./components/ProjectsLite'));
+const FooterDesktop = lazy(() => import('./components/Footer'));
+const FooterLite = lazy(() => import('./components/FooterLite'));
 
 const MOBILE_VISUALS_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
 
@@ -76,6 +83,7 @@ const DeferredSection = ({
 
 function App() {
   const [useLiteVisuals, setUseLiteVisuals] = useState(shouldUseLiteVisuals);
+  const [shouldLoadDesktopExperience, setShouldLoadDesktopExperience] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
@@ -99,11 +107,53 @@ function App() {
     return () => mediaQuery.removeListener(handleVisualMode);
   }, []);
 
+  useEffect(() => {
+    if (useLiteVisuals) {
+      setShouldLoadDesktopExperience(false);
+      return undefined;
+    }
+
+    if (typeof window === 'undefined') {
+      setShouldLoadDesktopExperience(true);
+      return undefined;
+    }
+
+    let cancelled = false;
+    const setDesktopExperience = () => {
+      if (!cancelled) {
+        setShouldLoadDesktopExperience(true);
+      }
+    };
+
+    if (typeof window.requestIdleCallback === 'function') {
+      const idleHandle = window.requestIdleCallback(setDesktopExperience, { timeout: 1200 });
+      return () => {
+        cancelled = true;
+        if (typeof window.cancelIdleCallback === 'function') {
+          window.cancelIdleCallback(idleHandle);
+        }
+      };
+    }
+
+    const timeoutHandle = window.setTimeout(setDesktopExperience, 320);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutHandle);
+    };
+  }, [useLiteVisuals]);
+
   const sectionFallback = (
     <div className="deferred-placeholder py-16 text-center text-gray-400 font-mono text-sm tracking-[0.15em] uppercase">
       Loading...
     </div>
   );
+
+  const NavbarComponent = useLiteVisuals || !shouldLoadDesktopExperience ? NavbarLite : NavbarDesktop;
+  const HeroComponent = useLiteVisuals || !shouldLoadDesktopExperience ? HeroLite : HeroDesktop;
+  const IntroductionComponent = useLiteVisuals ? IntroductionLite : IntroductionDesktop;
+  const TechStackComponent = useLiteVisuals ? TechStackLite : TechStackDesktop;
+  const ProjectsComponent = useLiteVisuals ? ProjectsLite : ProjectsDesktop;
+  const FooterComponent = useLiteVisuals ? FooterLite : FooterDesktop;
 
   return (
     <div className="min-h-screen bg-[#05060c] text-white overflow-x-hidden" style={{
@@ -129,9 +179,13 @@ function App() {
       </div>
 
       <div className="relative z-10">
-        <Navbar />
+        <Suspense fallback={<NavbarLite />}>
+          <NavbarComponent />
+        </Suspense>
         <main className="relative">
-          <Hero />
+          <Suspense fallback={<HeroLite />}>
+            <HeroComponent />
+          </Suspense>
           <div className="section-divider" aria-hidden="true" />
 
           <DeferredSection
@@ -141,7 +195,7 @@ function App() {
           >
             <Suspense fallback={sectionFallback}>
               <div className="section-shell">
-                <Introduction />
+                <IntroductionComponent />
               </div>
             </Suspense>
           </DeferredSection>
@@ -154,7 +208,7 @@ function App() {
           >
             <Suspense fallback={sectionFallback}>
               <div className="section-shell">
-                <TechStack />
+                <TechStackComponent />
               </div>
             </Suspense>
           </DeferredSection>
@@ -167,7 +221,7 @@ function App() {
           >
             <Suspense fallback={sectionFallback}>
               <div className="section-shell">
-                <Projects />
+                <ProjectsComponent />
               </div>
             </Suspense>
           </DeferredSection>
@@ -179,7 +233,7 @@ function App() {
           placeholderClassName="min-h-[30vh]"
         >
           <Suspense fallback={null}>
-            <Footer />
+            <FooterComponent />
           </Suspense>
         </DeferredSection>
       </div>
