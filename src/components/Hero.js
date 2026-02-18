@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import '../index.css';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
 import gmailLogo from '../images/gmail-logo.png';
 import { CONTACT_INFO, CAROUSEL_PHRASES } from '../constants';
-import InteractiveBackground from './InteractiveBackground';
+
+const InteractiveBackground = lazy(() => import('./InteractiveBackground'));
 
 const MOBILE_HERO_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
 
@@ -34,6 +35,7 @@ const Hero = () => {
 
     const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : -120]);
     const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 1, 0.8]);
+    const shouldAnimateIntro = !useLiteVisuals && !prefersReducedMotion;
 
     useEffect(() => {
         const currentWord = words[wordIndex];
@@ -110,7 +112,11 @@ const Hero = () => {
             ref={containerRef}
             className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-            {!useLiteVisuals && <InteractiveBackground />}
+            {!useLiteVisuals && (
+                <Suspense fallback={null}>
+                    <InteractiveBackground />
+                </Suspense>
+            )}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className={`absolute inset-0 grid-overlay-tight ${useLiteVisuals ? 'opacity-[0.12]' : 'opacity-20'}`} />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.09),transparent_50%),linear-gradient(to_bottom,rgba(3,5,9,0.05),rgba(5,6,12,0.88))]" />
@@ -126,7 +132,7 @@ const Hero = () => {
                 className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28"
                 style={{ y, opacity }}
                 variants={containerVariants}
-                initial="hidden"
+                initial={shouldAnimateIntro ? 'hidden' : false}
                 animate="visible"
             >
                 <div className="text-center space-y-10">

@@ -3,6 +3,7 @@ import App from './App';
 
 // Mock framer-motion
 jest.mock('framer-motion', () => {
+  const React = jest.requireActual('react');
   const filteredProps = (props) => {
     const {
       initial, animate, exit, variants, transition,
@@ -13,21 +14,20 @@ jest.mock('framer-motion', () => {
     return validProps;
   };
 
+  const motion = new Proxy({}, {
+    get: (_target, element) => ({ children, ...props }) => (
+      React.createElement(typeof element === 'string' ? element : 'div', filteredProps(props), children)
+    ),
+  });
+
   return {
-    motion: {
-      div: ({ children, ...props }) => <div {...filteredProps(props)}>{children}</div>,
-      span: ({ children, ...props }) => <span {...filteredProps(props)}>{children}</span>,
-      h1: ({ children, ...props }) => <h1 {...filteredProps(props)}>{children}</h1>,
-      h2: ({ children, ...props }) => <h2 {...filteredProps(props)}>{children}</h2>,
-      p: ({ children, ...props }) => <p {...filteredProps(props)}>{children}</p>,
-      a: ({ children, ...props }) => <a {...filteredProps(props)}>{children}</a>,
-      svg: ({ children, ...props }) => <svg {...filteredProps(props)}>{children}</svg>,
-      path: ({ children, ...props }) => <path {...filteredProps(props)}>{children}</path>,
-    },
+    motion,
+    MotionConfig: ({ children }) => <>{children}</>,
     useScroll: () => ({ scrollYProgress: { get: () => 0 } }),
     useSpring: () => ({ get: () => 0 }),
     useTransform: () => ({ get: () => 0 }),
     useInView: () => true,
+    useReducedMotion: () => false,
     useAnimation: () => ({ start: () => Promise.resolve() }),
     useMotionValue: () => ({ set: () => {}, get: () => 0 }),
     useMotionTemplate: () => '',

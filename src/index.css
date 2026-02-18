@@ -107,6 +107,23 @@ html {
   opacity: 0.65;
 }
 
+/* Offscreen sections should stay cheap until they approach viewport */
+@media (hover: none) and (pointer: coarse) {
+  .section-shell {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 920px;
+  }
+}
+
+.deferred-placeholder {
+  position: relative;
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 243, 255, 0.08), transparent 44%),
+    linear-gradient(140deg, rgba(12, 18, 32, 0.78), rgba(8, 12, 24, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .section-divider {
   position: relative;
   height: 96px;
