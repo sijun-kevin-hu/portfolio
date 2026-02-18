@@ -50,12 +50,18 @@ const InteractiveBackground = () => {
             return undefined;
         }
 
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (typeof window.matchMedia !== 'function') {
+            return undefined;
+        }
+
+        const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const prefersReducedMotion = Boolean(reducedMotionQuery && reducedMotionQuery.matches);
         if (prefersReducedMotion) {
             return undefined;
         }
 
-        const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+        const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
+        const hasCoarsePointer = Boolean(coarsePointerQuery && coarsePointerQuery.matches);
         if (hasCoarsePointer) {
             return undefined;
         }

@@ -10,7 +10,8 @@ const shouldUseLiteProjectMode = () => {
         return false;
     }
 
-    return window.matchMedia(MOBILE_PROJECTS_MEDIA_QUERY).matches;
+    const mediaQuery = window.matchMedia(MOBILE_PROJECTS_MEDIA_QUERY);
+    return Boolean(mediaQuery && mediaQuery.matches);
 };
 
 const getTagTone = (category) => {
@@ -280,6 +281,10 @@ const Projects = () => {
         }
 
         const mediaQuery = window.matchMedia(MOBILE_PROJECTS_MEDIA_QUERY);
+        if (!mediaQuery) {
+            return undefined;
+        }
+
         const updateMode = () => setLiteMode(mediaQuery.matches);
 
         updateMode();

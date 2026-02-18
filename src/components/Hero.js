@@ -15,7 +15,8 @@ const shouldUseLiteHeroVisuals = () => {
         return false;
     }
 
-    return window.matchMedia(MOBILE_HERO_MEDIA_QUERY).matches;
+    const mediaQuery = window.matchMedia(MOBILE_HERO_MEDIA_QUERY);
+    return Boolean(mediaQuery && mediaQuery.matches);
 };
 
 const Hero = () => {
@@ -71,6 +72,10 @@ const Hero = () => {
         }
 
         const mediaQuery = window.matchMedia(MOBILE_HERO_MEDIA_QUERY);
+        if (!mediaQuery) {
+            return undefined;
+        }
+
         const handleVisualMode = () => setUseLiteVisuals(mediaQuery.matches);
 
         handleVisualMode();

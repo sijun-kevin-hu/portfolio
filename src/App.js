@@ -1,8 +1,9 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
+import HeroLite from "./components/HeroLite";
+import NavbarLite from "./components/NavbarLite";
 import './index.css';
+const NavbarDesktop = lazy(() => import("./components/Navbar"));
+const HeroDesktop = lazy(() => import("./components/Hero"));
 const Introduction = lazy(() => import("./components/Introduction"));
 const TechStack = lazy(() => import("./components/TechStack"));
 const Projects = lazy(() => import("./components/Projects"));
@@ -15,7 +16,8 @@ const shouldUseLiteVisuals = () => {
     return false;
   }
 
-  return window.matchMedia(MOBILE_VISUALS_MEDIA_QUERY).matches;
+  const mediaQuery = window.matchMedia(MOBILE_VISUALS_MEDIA_QUERY);
+  return Boolean(mediaQuery && mediaQuery.matches);
 };
 
 const DeferredSection = ({
@@ -75,12 +77,6 @@ const DeferredSection = ({
 };
 
 function App() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 170,
-    damping: 34,
-    restDelta: 0.001
-  });
   const [useLiteVisuals, setUseLiteVisuals] = useState(shouldUseLiteVisuals);
 
   useEffect(() => {
@@ -89,6 +85,10 @@ function App() {
     }
 
     const mediaQuery = window.matchMedia(MOBILE_VISUALS_MEDIA_QUERY);
+    if (!mediaQuery) {
+      return undefined;
+    }
+
     const handleVisualMode = () => setUseLiteVisuals(mediaQuery.matches);
 
     handleVisualMode();
@@ -108,92 +108,96 @@ function App() {
   );
 
   return (
-    <MotionConfig reducedMotion={useLiteVisuals ? 'always' : 'user'}>
-      <div className="min-h-screen bg-[#05060c] text-white overflow-x-hidden" style={{
-        minHeight: '100dvh'
+    <div className="min-h-screen bg-[#05060c] text-white overflow-x-hidden" style={{
+      minHeight: '100dvh'
+    }}>
+
+      <div className="fixed inset-0 z-0" style={{
+        top: 'env(safe-area-inset-top, 0)',
+        bottom: 'env(safe-area-inset-bottom, 0)',
+        left: 'env(safe-area-inset-left, 0)',
+        right: 'env(safe-area-inset-right, 0)'
       }}>
-        {!useLiteVisuals && (
-          <motion.div
-            className="scroll-progress"
-            style={{ scaleX }}
-          />
+        <div className="absolute inset-0 bg-[linear-gradient(165deg,#05060c_0%,#0c1222_52%,#0a1224_100%)]" />
+        <div
+          className={`absolute inset-0 ${
+            useLiteVisuals
+              ? 'opacity-[0.28] bg-[radial-gradient(circle_at_20%_14%,rgba(0,243,255,0.14),transparent_48%),radial-gradient(circle_at_82%_74%,rgba(65,105,225,0.08),transparent_44%)]'
+              : 'opacity-40 bg-[radial-gradient(circle_at_20%_14%,rgba(0,243,255,0.18),transparent_42%),radial-gradient(circle_at_82%_74%,rgba(188,19,254,0.16),transparent_40%)]'
+          }`}
+        />
+        <div className={`absolute inset-0 grid-overlay-tight ${useLiteVisuals ? 'opacity-[0.1]' : 'opacity-[0.16]'}`} />
+        {!useLiteVisuals && <div className="ambient-scan opacity-60" />}
+      </div>
+
+      <div className="relative z-10">
+        {useLiteVisuals ? (
+          <NavbarLite />
+        ) : (
+          <Suspense fallback={<NavbarLite />}>
+            <NavbarDesktop />
+          </Suspense>
         )}
-
-        <div className="fixed inset-0 z-0" style={{
-          top: 'env(safe-area-inset-top, 0)',
-          bottom: 'env(safe-area-inset-bottom, 0)',
-          left: 'env(safe-area-inset-left, 0)',
-          right: 'env(safe-area-inset-right, 0)'
-        }}>
-          <div className="absolute inset-0 bg-[linear-gradient(165deg,#05060c_0%,#0c1222_52%,#0a1224_100%)]" />
-          <div
-            className={`absolute inset-0 ${
-              useLiteVisuals
-                ? 'opacity-[0.28] bg-[radial-gradient(circle_at_20%_14%,rgba(0,243,255,0.14),transparent_48%),radial-gradient(circle_at_82%_74%,rgba(65,105,225,0.08),transparent_44%)]'
-                : 'opacity-40 bg-[radial-gradient(circle_at_20%_14%,rgba(0,243,255,0.18),transparent_42%),radial-gradient(circle_at_82%_74%,rgba(188,19,254,0.16),transparent_40%)]'
-            }`}
-          />
-          <div className={`absolute inset-0 grid-overlay-tight ${useLiteVisuals ? 'opacity-[0.1]' : 'opacity-[0.16]'}`} />
-          {!useLiteVisuals && <div className="ambient-scan opacity-60" />}
-        </div>
-
-        <div className="relative z-10">
-          <Navbar />
-          <main className="relative">
-            <Hero />
-            <div className="section-divider" aria-hidden="true" />
-
-            <DeferredSection
-              enabled={useLiteVisuals}
-              rootMargin="260px 0px"
-              placeholderClassName="min-h-[86vh]"
-            >
-              <Suspense fallback={sectionFallback}>
-                <div className="section-shell">
-                  <Introduction />
-                </div>
-              </Suspense>
-            </DeferredSection>
-
-            <div className="section-divider" aria-hidden="true" />
-            <DeferredSection
-              enabled={useLiteVisuals}
-              rootMargin="220px 0px"
-              placeholderClassName="min-h-[84vh]"
-            >
-              <Suspense fallback={sectionFallback}>
-                <div className="section-shell">
-                  <TechStack />
-                </div>
-              </Suspense>
-            </DeferredSection>
-
-            <div className="section-divider" aria-hidden="true" />
-            <DeferredSection
-              enabled={useLiteVisuals}
-              rootMargin="180px 0px"
-              placeholderClassName="min-h-[115vh]"
-            >
-              <Suspense fallback={sectionFallback}>
-                <div className="section-shell">
-                  <Projects />
-                </div>
-              </Suspense>
-            </DeferredSection>
-          </main>
+        <main className="relative">
+          {useLiteVisuals ? (
+            <HeroLite />
+          ) : (
+            <Suspense fallback={<HeroLite />}>
+              <HeroDesktop />
+            </Suspense>
+          )}
+          <div className="section-divider" aria-hidden="true" />
 
           <DeferredSection
             enabled={useLiteVisuals}
-            rootMargin="160px 0px"
-            placeholderClassName="min-h-[30vh]"
+            rootMargin="260px 0px"
+            placeholderClassName="min-h-[86vh]"
           >
-            <Suspense fallback={null}>
-              <Footer />
+            <Suspense fallback={sectionFallback}>
+              <div className="section-shell">
+                <Introduction />
+              </div>
             </Suspense>
           </DeferredSection>
-        </div>
+
+          <div className="section-divider" aria-hidden="true" />
+          <DeferredSection
+            enabled={useLiteVisuals}
+            rootMargin="220px 0px"
+            placeholderClassName="min-h-[84vh]"
+          >
+            <Suspense fallback={sectionFallback}>
+              <div className="section-shell">
+                <TechStack />
+              </div>
+            </Suspense>
+          </DeferredSection>
+
+          <div className="section-divider" aria-hidden="true" />
+          <DeferredSection
+            enabled={useLiteVisuals}
+            rootMargin="180px 0px"
+            placeholderClassName="min-h-[115vh]"
+          >
+            <Suspense fallback={sectionFallback}>
+              <div className="section-shell">
+                <Projects />
+              </div>
+            </Suspense>
+          </DeferredSection>
+        </main>
+
+        <DeferredSection
+          enabled={useLiteVisuals}
+          rootMargin="160px 0px"
+          placeholderClassName="min-h-[30vh]"
+        >
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+        </DeferredSection>
       </div>
-    </MotionConfig>
+    </div>
   );
 }
 
