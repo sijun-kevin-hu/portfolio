@@ -1,9 +1,7 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import HeroLite from "./components/HeroLite";
-import NavbarLite from "./components/NavbarLite";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
 import './index.css';
-const NavbarDesktop = lazy(() => import("./components/Navbar"));
-const HeroDesktop = lazy(() => import("./components/Hero"));
 const Introduction = lazy(() => import("./components/Introduction"));
 const TechStack = lazy(() => import("./components/TechStack"));
 const Projects = lazy(() => import("./components/Projects"));
@@ -131,21 +129,9 @@ function App() {
       </div>
 
       <div className="relative z-10">
-        {useLiteVisuals ? (
-          <NavbarLite />
-        ) : (
-          <Suspense fallback={<NavbarLite />}>
-            <NavbarDesktop />
-          </Suspense>
-        )}
+        <Navbar />
         <main className="relative">
-          {useLiteVisuals ? (
-            <HeroLite />
-          ) : (
-            <Suspense fallback={<HeroLite />}>
-              <HeroDesktop />
-            </Suspense>
-          )}
+          <Hero />
           <div className="section-divider" aria-hidden="true" />
 
           <DeferredSection
