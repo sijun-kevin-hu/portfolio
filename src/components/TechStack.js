@@ -1,120 +1,97 @@
-import React, { useState, useRef, useMemo } from 'react';
-import { motion, useInView, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion';
+import React, { useMemo, useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { technicalLanguages, technicalFrameworks, technicalTools } from '../data/techStack';
 
-const SpotlightCard = React.memo(({ skill }) => {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+const TAB_CONFIG = [
+    { id: 'Languages', label: 'LANGUAGES', data: technicalLanguages },
+    { id: 'Frameworks', label: 'FRAMEWORKS', data: technicalFrameworks },
+    { id: 'Tools', label: 'TOOLS', data: technicalTools }
+];
 
-    function handleMouseMove({ currentTarget, clientX, clientY }) {
-        const { left, top } = currentTarget.getBoundingClientRect();
-        mouseX.set(clientX - left);
-        mouseY.set(clientY - top);
-    }
+const SpotlightCard = React.memo(({ skill, prefersReducedMotion }) => (
+    <motion.article
+        layout
+        variants={{
+            hidden: { opacity: 0, scale: 0.94, y: 8 },
+            visible: { opacity: 1, scale: 1, y: 0 },
+            exit: { opacity: 0, scale: 0.94, y: -6 }
+        }}
+        transition={{ duration: prefersReducedMotion ? 0.1 : 0.3, ease: [0.2, 0.88, 0.23, 1] }}
+        className="group relative panel-surface rounded-xl p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[128px]"
+    >
+        <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-r from-cyan-400/22 via-transparent to-purple-400/22 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-    return (
-        <motion.div
-            variants={{
-                hidden: { opacity: 0, scale: 0.9 },
-                visible: { opacity: 1, scale: 1 },
-                exit: { opacity: 0, scale: 0.9 }
-            }}
-            transition={{ duration: 0.3 }}
-            className="group relative border border-white/10 bg-gray-900/50 overflow-hidden rounded-xl"
-            onMouseMove={handleMouseMove}
-        >
-            <motion.div
-                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
-                style={{
-                    background: useMotionTemplate`
-                        radial-gradient(
-                        650px circle at ${mouseX}px ${mouseY}px,
-                        rgba(255,255,255,0.1),
-                        transparent 80%
-                        )
-                    `,
-                }}
-            />
-            <div className="relative h-full flex flex-col items-center justify-center p-6 gap-4">
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    {/* Glow effect behind icon */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`} />
-                    <skill.icon 
-                        className="w-full h-full object-contain relative z-10 drop-shadow-lg text-gray-300 group-hover:text-white transition-colors duration-300" 
-                    />
-                </div>
-                <h3 className="text-gray-400 font-medium text-sm tracking-wider uppercase group-hover:text-white transition-colors duration-300">
-                    {skill.name}
-                </h3>
+        <div className="relative z-10 flex flex-col items-center gap-3">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${skill.color} opacity-0 blur-xl group-hover:opacity-35 transition-opacity duration-300`} />
+                <skill.icon className="w-full h-full text-gray-200 drop-shadow-md group-hover:text-white transition-colors duration-300" />
             </div>
-        </motion.div>
-    );
-});
+            <h3 className="text-xs sm:text-sm text-gray-300 font-semibold tracking-wide uppercase group-hover:text-white transition-colors">
+                {skill.name}
+            </h3>
+        </div>
+    </motion.article>
+));
 
 const TechStack = () => {
     const [activeTab, setActiveTab] = useState('Languages');
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: 0.1 });
+    const prefersReducedMotion = useReducedMotion();
 
-    const tabs = useMemo(() => [
-        { id: 'Languages', label: 'LANGUAGES', data: technicalLanguages },
-        { id: 'Frameworks', label: 'FRAMEWORKS', data: technicalFrameworks },
-        { id: 'Tools', label: 'TOOLS', data: technicalTools },
-    ], []);
-
-    const activeData = useMemo(() => tabs.find(t => t.id === activeTab)?.data || [], [activeTab, tabs]);
+    const activeData = useMemo(
+        () => TAB_CONFIG.find((tab) => tab.id === activeTab)?.data || [],
+        [activeTab]
+    );
 
     return (
-        <section ref={ref} className='section-padding relative overflow-hidden py-24' id='skills'>
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/90 to-gray-900 pointer-events-none" />
-            
-            <div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-                <motion.div 
-                    className='text-center mb-16'
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                    transition={{ duration: 0.6 }}
+        <section ref={ref} className="section-padding relative overflow-hidden py-24 sm:py-28" id="skills">
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#070c17]/45 to-[#060a14]/70" />
+                <div className="absolute inset-0 grid-overlay-tight opacity-[0.08]" />
+                <div className="absolute -top-8 right-0 w-[420px] h-[420px] bg-cyan-400/10 rounded-full blur-[80px]" />
+                <div className="absolute bottom-0 left-0 w-[420px] h-[420px] bg-purple-400/10 rounded-full blur-[80px]" />
+            </div>
+
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    className="text-center mb-14 sm:mb-16"
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+                    transition={{ duration: prefersReducedMotion ? 0.1 : 0.55 }}
                 >
-                    <motion.h2 
-                        className='text-cyan-400 uppercase font-bold text-xs tracking-[0.2em] mb-4'
-                    >
-                        Capabilities
-                    </motion.h2>
-                    <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight'>
-                        Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Stack</span>
+                    <h2 className="text-cyan-300 uppercase font-mono text-xs sm:text-sm tracking-[0.2em] mb-4">Capabilities</h2>
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
+                        Tech <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Stack</span>
                     </h1>
                 </motion.div>
 
-                {/* Cyberpunk Tabs */}
-                <div className="flex justify-center mb-12">
-                    <div className="flex flex-wrap justify-center gap-4 sm:gap-8 border-b border-white/10 pb-4 px-8">
-                        {tabs.map((tab) => (
+                <div className="flex justify-center mb-10 sm:mb-12">
+                    <div className="panel-surface rounded-full p-1.5 sm:p-2 inline-flex flex-wrap justify-center gap-1.5 sm:gap-2">
+                        {TAB_CONFIG.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`relative pb-4 text-sm font-bold tracking-wider transition-colors duration-300 ${
-                                    activeTab === tab.id ? 'text-cyan-400' : 'text-gray-500 hover:text-gray-300'
+                                className={`relative px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-colors ${
+                                    activeTab === tab.id ? 'text-[#041120]' : 'text-gray-300 hover:text-white'
                                 }`}
                             >
-                                {tab.label}
                                 {activeTab === tab.id && (
-                                    <motion.div
-                                        layoutId="activeTabIndicator"
-                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
-                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                    <motion.span
+                                        layoutId="activeTabPill"
+                                        className="absolute inset-0 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(0,243,255,0.32)]"
+                                        transition={{ type: 'spring', stiffness: 260, damping: 28 }}
                                     />
                                 )}
+                                <span className="relative z-10">{tab.label}</span>
                             </button>
                         ))}
                     </div>
                 </div>
 
-                {/* Grid */}
-                <div className="min-h-[400px]"> {/* Added min-height to prevent collapse during transition */}
-                    <AnimatePresence mode='wait'>
-                        <motion.div 
+                <div className="min-h-[320px] sm:min-h-[360px]">
+                    <AnimatePresence mode="wait">
+                        <motion.div
                             key={activeTab}
                             initial="hidden"
                             animate="visible"
@@ -124,29 +101,26 @@ const TechStack = () => {
                                 visible: {
                                     opacity: 1,
                                     transition: {
-                                        staggerChildren: 0.03
+                                        staggerChildren: 0.035
                                     }
                                 },
-                                exit: { 
+                                exit: {
                                     opacity: 0,
-                                    transition: {
-                                        duration: 0.15
-                                    }
+                                    transition: { duration: 0.16 }
                                 }
                             }}
                             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
                         >
                             {activeData.map((skill) => (
-                                <SpotlightCard key={skill.name} skill={skill} />
+                                <SpotlightCard key={skill.name} skill={skill} prefersReducedMotion={prefersReducedMotion} />
                             ))}
                         </motion.div>
                     </AnimatePresence>
                 </div>
 
-                {/* Decorative Elements */}
-                <div className="mt-20 flex justify-between items-center opacity-30 text-[10px] text-cyan-400 font-mono tracking-widest uppercase">
+                <div className="mt-14 sm:mt-16 flex justify-between items-center opacity-45 text-[10px] sm:text-xs text-cyan-200 font-mono tracking-[0.14em] uppercase">
                     <span>Sys.Ver.2.0.24</span>
-                    <div className="h-px w-32 bg-cyan-400/50" />
+                    <div className="h-px w-24 sm:w-32 bg-cyan-300/60" />
                     <span>Status: Online</span>
                 </div>
             </div>

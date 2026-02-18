@@ -10,10 +10,10 @@ const Navbar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 10;
-            setScrolled(isScrolled);
+            setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
     
@@ -56,7 +56,7 @@ const Navbar = () => {
         <>
             <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
                 scrolled 
-                    ? 'bg-gray-900/80 backdrop-blur-md shadow-lg border-b border-cyan-500/20' 
+                    ? 'bg-gray-900/95 shadow-lg border-b border-cyan-500/20' 
                     : 'bg-transparent'
             }`}>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -75,18 +75,7 @@ const Navbar = () => {
                                     transition={{ duration: 0.6 }}
                                 >
                                     <img src={codeLogo} alt='code-logo' className='w-8 h-8 lg:w-10 lg:h-10' />
-                                    <motion.div
-                                        className="absolute inset-0 bg-cyan-400/30 rounded-full filter blur-md"
-                                        animate={{
-                                            opacity: [0.5, 0.8, 0.5],
-                                            scale: [1, 1.2, 1],
-                                        }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            ease: "easeInOut"
-                                        }}
-                                    />
+                                    <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                 </motion.div>
                                 <motion.span 
                                     className='text-xl lg:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300'
@@ -166,7 +155,7 @@ const Navbar = () => {
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div
-                            className='fixed inset-0 z-40 md:hidden bg-gray-900/98 backdrop-blur-xl flex flex-col items-center justify-center'
+                            className='fixed inset-0 z-40 md:hidden bg-gray-900/98 flex flex-col items-center justify-center'
                             initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
                             animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
                             exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
@@ -192,8 +181,8 @@ const Navbar = () => {
                             
                             {/* Decorative background elements for mobile menu */}
                             <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-                                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full filter blur-3xl animate-pulse" />
-                                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+                                <div className="absolute top-1/4 left-1/4 w-56 h-56 bg-cyan-500/10 rounded-full blur-2xl" />
+                                <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-purple-500/10 rounded-full blur-2xl" />
                             </div>
                         </motion.div>
                     )}

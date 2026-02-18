@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import '../index.css';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
@@ -8,48 +8,25 @@ import { CONTACT_INFO, CAROUSEL_PHRASES } from '../constants';
 import InteractiveBackground from './InteractiveBackground';
 
 const Hero = () => {
+    const prefersReducedMotion = useReducedMotion();
     const [displayedText, setDisplayedText] = useState('');
     const [wordIndex, setWordIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [typingSpeed, setTypingSpeed] = useState(100);
     const words = CAROUSEL_PHRASES.words;
     const containerRef = useRef(null);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start start", "end start"]
+        offset: ['start start', 'end start']
     });
 
-    // Parallax transforms
-    const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
-    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
-
-    // Magnetic hover effect - Optimized with useMotionValue
-    const buttonX = useMotionValue(0);
-    const buttonY = useMotionValue(0);
-    const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
-    const buttonXSpring = useSpring(buttonX, springConfig);
-    const buttonYSpring = useSpring(buttonY, springConfig);
-    const buttonRef = useRef(null);
-
-    const handleMouseMove = (e) => {
-        if (buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            buttonX.set(x * 0.3);
-            buttonY.set(y * 0.3);
-        }
-    };
-
-    const handleMouseLeave = () => {
-        buttonX.set(0);
-        buttonY.set(0);
-    };
+    const y = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : -120]);
+    const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [1, 1, 0.8]);
 
     useEffect(() => {
-        const handleTyping = () => {
-            const currentWord = words[wordIndex];
+        const currentWord = words[wordIndex];
+        const timeout = setTimeout(() => {
             const nextText = isDeleting
                 ? currentWord.slice(0, displayedText.length - 1)
                 : currentWord.slice(0, displayedText.length + 1);
@@ -58,225 +35,155 @@ const Hero = () => {
 
             if (!isDeleting && nextText === currentWord) {
                 setIsDeleting(true);
-                setTypingSpeed(2000);
-            } else if (isDeleting && nextText === '') {
-                setIsDeleting(false);
-                setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-                setTypingSpeed(100); // Faster typing
-            } else {
-                setTypingSpeed(isDeleting ? 50 : 100); // Faster deleting
+                setTypingSpeed(1700);
+                return;
             }
-        };
 
-        const timer = setTimeout(handleTyping, typingSpeed);
-        return () => clearTimeout(timer);
+            if (isDeleting && nextText === '') {
+                setIsDeleting(false);
+                setWordIndex((prev) => (prev + 1) % words.length);
+                setTypingSpeed(120);
+                return;
+            }
+
+            setTypingSpeed(isDeleting ? 60 : 95);
+        }, typingSpeed);
+
+        return () => clearTimeout(timeout);
     }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
 
-    // Animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2
+                staggerChildren: 0.08,
+                delayChildren: 0.12
             }
         }
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, y: 26, filter: 'blur(8px)' },
         visible: {
             opacity: 1,
             y: 0,
+            filter: 'blur(0px)',
             transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 10
-            }
-        }
-    };
-
-    const floatingVariants = {
-        animate: {
-            y: [0, -15, 0],
-            transition: {
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
+                duration: 0.62,
+                ease: [0.2, 0.88, 0.23, 1]
             }
         }
     };
 
     return (
-        <section ref={containerRef} className='relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900'>
-            {/* Interactive Background */}
+        <section
+            ref={containerRef}
+            className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        >
             <InteractiveBackground />
-
-            {/* Optimized background effects */}
-            <motion.div
-                className='absolute inset-0 overflow-hidden pointer-events-none'
-                style={{ opacity, scale }}
-            >
-                {/* Grid overlay */}
-                <div className='absolute inset-0 grid-overlay opacity-20'></div>
-
-                {/* Floating geometric shapes with animation - Optimized */}
-                <motion.div
-                    className='absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full filter blur-[100px]'
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                        duration: 10,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                ></motion.div>
-                <motion.div
-                    className='absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full filter blur-[100px]'
-                    animate={{
-                        scale: [1, 1.3, 1],
-                        opacity: [0.3, 0.5, 0.3],
-                    }}
-                    transition={{
-                        duration: 12,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                ></motion.div>
-            </motion.div>
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 grid-overlay-tight opacity-20" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.09),transparent_50%),linear-gradient(to_bottom,rgba(3,5,9,0.05),rgba(5,6,12,0.88))]" />
+                <div className="absolute -top-36 left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-cyan-400/20 blur-[110px]" />
+                <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-purple-500/16 blur-[110px]" />
+            </div>
 
             <motion.div
-                className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-32'
-                style={{ y }}
+                className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28"
+                style={{ y, opacity }}
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                <div className='text-center space-y-8 sm:space-y-10'>
-                    {/* Main heading */}
-                    <motion.div className='space-y-6' variants={itemVariants}>
-                        <div className='space-y-2'>
-                            <motion.h2
-                                className='text-cyan-400 font-mono text-sm sm:text-base tracking-[0.2em] uppercase'
-                                variants={itemVariants}
-                            >
-                                Welcome to my digital space
-                            </motion.h2>
-                            <motion.h1
-                                className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight'
-                                variants={itemVariants}
-                            >
-                                Hi, I'm{' '}
-                                <motion.span
-                                    className='relative inline-block'
-                                    whileHover={{
-                                        scale: 1.05,
-                                        rotate: [0, -2, 2, -2, 0],
-                                        transition: { duration: 0.4 }
-                                    }}
-                                >
-                                    <span className='absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 blur-2xl opacity-30 animate-pulse'></span>
-                                    <span className='relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-gradient-x'>
-                                        Kevin
-                                    </span>
-                                </motion.span>
-                            </motion.h1>
-
-                            <motion.div
-                                className='h-16 sm:h-20 flex items-center justify-center overflow-hidden'
-                                variants={itemVariants}
-                            >
-                                <div className='text-2xl sm:text-3xl md:text-4xl text-gray-300 font-light'>
-                                    I am a{' '}
-                                    <span className='text-cyan-400 font-semibold inline-block text-left min-w-[140px] sm:min-w-[280px]'>
-                                        <span className="inline-block relative">
-                                            {displayedText}
-                                            <motion.span
-                                                className='absolute -right-1 top-0 bottom-0 w-0.5 bg-cyan-400'
-                                                animate={{ opacity: [1, 0, 1] }}
-                                                transition={{ duration: 0.8, repeat: Infinity }}
-                                            />
-                                        </span>
-                                    </span>
-                                </div>
-                            </motion.div>
-                        </div>
-
-                        <motion.p
-                            className='text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light'
+                <div className="text-center space-y-10">
+                    <motion.div className="space-y-7" variants={itemVariants}>
+                        <motion.h2
+                            className="text-cyan-400 font-mono text-sm sm:text-base tracking-[0.2em] uppercase"
                             variants={itemVariants}
                         >
-                            AI/ML engineer & full-stack builder. Crafting <span className="text-white font-medium">intelligent solutions</span> and <span className="text-white font-medium">immersive experiences</span> for the web of tomorrow.
-                        </motion.p>
+                            Welcome to my digital space
+                        </motion.h2>
+
+                        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight">
+                            Hi, I&apos;m{' '}
+                            <span className="relative inline-block">
+                                <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">
+                                    Kevin
+                                </span>
+                                <span className="absolute -inset-x-5 -inset-y-2 blur-2xl bg-gradient-to-r from-cyan-400/25 to-purple-500/20" />
+                            </span>
+                        </h1>
+
+                        <div className="h-16 sm:h-20 flex items-center justify-center overflow-hidden">
+                            <p className="text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
+                                I am a{' '}
+                                <span className="text-cyan-300 font-semibold inline-block text-left min-w-[190px] sm:min-w-[370px]">
+                                    {displayedText}
+                                    <span className="blink-cursor ml-1 align-middle" />
+                                </span>
+                            </p>
+                        </div>
                     </motion.div>
 
-                    {/* CTA Buttons */}
+                    <motion.p
+                        className="text-base sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed"
+                        variants={itemVariants}
+                    >
+                        AI/ML engineer & full-stack builder. Crafting <span className="text-white font-medium">intelligent solutions</span> and <span className="text-white font-medium">immersive experiences</span> for the web of tomorrow.
+                    </motion.p>
+
                     <motion.div
-                        className='flex flex-col sm:flex-row gap-5 justify-center items-center pt-4'
+                        className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center"
                         variants={itemVariants}
                     >
                         <motion.a
-                            href='/resume.pdf'
-                            download='kevin-hu-resume.pdf'
-                            className='btn-primary group relative overflow-hidden px-8 py-4 rounded-full font-semibold tracking-wide text-white shadow-[0_0_20px_rgba(0,243,255,0.3)] hover:shadow-[0_0_30px_rgba(0,243,255,0.5)] transition-all duration-300'
-                            ref={buttonRef}
-                            onMouseMove={handleMouseMove}
-                            onMouseLeave={handleMouseLeave}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            style={{
-                                x: buttonXSpring,
-                                y: buttonYSpring,
-                            }}
+                            href="/resume.pdf"
+                            download="kevin-hu-resume.pdf"
+                            className="button-sheen relative inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)]"
+                            whileHover={{ y: -2, scale: 1.01 }}
+                            whileTap={{ scale: 0.98 }}
                         >
-                            <span className='relative z-10 flex items-center gap-2'>
-                                Download Resume
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                            </span>
-                            <div className='absolute inset-0 bg-gradient-to-r from-cyan-600 to-purple-600 opacity-100' />
-                            <div className='absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+                            Download Resume
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
                         </motion.a>
 
                         <motion.a
-                            href='#projects'
-                            className='group relative px-8 py-4 rounded-full font-semibold tracking-wide text-cyan-400 border border-cyan-500/30 hover:border-cyan-400 transition-all duration-300 bg-gray-900/50 backdrop-blur-sm'
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            href="#projects"
+                            className="button-sheen inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-cyan-200 border border-cyan-400/40 bg-[#0b1120]/80 hover:bg-[#0f1830]"
+                            whileHover={{ y: -2, scale: 1.01 }}
+                            whileTap={{ scale: 0.98 }}
                         >
-                            <span className="relative z-10 flex items-center gap-2">
-                                View Projects
-                                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                            </span>
-                            <div className="absolute inset-0 bg-cyan-500/5 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                            View Projects
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
                         </motion.a>
                     </motion.div>
 
-                    {/* Social Links */}
                     <motion.div
-                        className='flex flex-col sm:flex-row items-center justify-center gap-6 pt-8'
+                        className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4"
                         variants={itemVariants}
                     >
-                        <span className='text-gray-500 text-sm font-mono tracking-widest uppercase'>Connect with me</span>
-                        <div className='flex gap-4'>
+                        <span className="text-gray-500 text-[11px] font-mono tracking-[0.22em] uppercase">Connect with me</span>
+                        <div className="flex gap-3">
                             {[
-                                { href: CONTACT_INFO.linkedin, logo: linkedInLogo, alt: "LinkedIn" },
-                                { href: CONTACT_INFO.github, logo: githubLogo, alt: "GitHub" },
-                                { href: `mailto:${CONTACT_INFO.email}`, logo: gmailLogo, alt: "Gmail" }
-                            ].map((social, index) => (
+                                { href: CONTACT_INFO.linkedin, logo: linkedInLogo, alt: 'LinkedIn' },
+                                { href: CONTACT_INFO.github, logo: githubLogo, alt: 'GitHub' },
+                                { href: `mailto:${CONTACT_INFO.email}`, logo: gmailLogo, alt: 'Gmail' }
+                            ].map((social) => (
                                 <motion.a
-                                    key={index}
+                                    key={social.alt}
                                     href={social.href}
-                                    className='p-3 bg-gray-800/50 rounded-xl border border-white/5 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,243,255,0.15)] relative overflow-hidden group'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    whileHover={{ y: -3 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    className="panel-surface rounded-xl p-3"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    whileHover={{ y: -3, scale: 1.02 }}
+                                    whileTap={{ scale: 0.96 }}
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    <img src={social.logo} alt={social.alt} className='w-6 h-6 relative z-10 opacity-70 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0' />
+                                    <img src={social.logo} alt={social.alt} className="w-6 h-6 opacity-90 grayscale hover:grayscale-0 transition-all duration-300" />
                                 </motion.a>
                             ))}
                         </div>
@@ -284,34 +191,17 @@ const Hero = () => {
                 </div>
             </motion.div>
 
-            {/* Enhanced Scroll indicator */}
-            <div className='absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20'>
-                <motion.div
-                    variants={floatingVariants}
-                    animate="animate"
-                >
-                    <div
-                        className='flex flex-col items-center gap-3 cursor-pointer group opacity-50 hover:opacity-100 transition-opacity duration-300'
-                        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                    >
-                        <span className="text-[10px] text-cyan-400 font-mono tracking-[0.2em] uppercase">Scroll</span>
-                        <div className='w-5 h-9 border border-cyan-500/30 rounded-full flex justify-center p-1'>
-                            <motion.div
-                                className='w-1 h-1.5 bg-cyan-400 rounded-full'
-                                animate={{
-                                    y: [0, 12, 0],
-                                    opacity: [1, 0.5, 1]
-                                }}
-                                transition={{
-                                    duration: 1.5,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                            />
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
+            <motion.button
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-cyan-200/85 hover:text-white transition-colors"
+                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                animate={prefersReducedMotion ? {} : { y: [0, 4, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
+                <span className="text-[10px] font-mono tracking-[0.24em] uppercase">Scroll</span>
+                <span className="text-2xl leading-none">↓</span>
+            </motion.button>
         </section>
     );
 };

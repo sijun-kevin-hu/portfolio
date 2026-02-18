@@ -1,93 +1,102 @@
-import React, { useState, useRef, useMemo } from 'react';
-import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
+import React, { useEffect, useMemo, useState } from 'react';
+import { motion, AnimatePresence, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
 import { projects } from '../data/projects';
-import github_img from '../images/github.png';
+import githubImg from '../images/github.png';
+
+const getTagTone = (category) => {
+    if (category === 'AI/ML') {
+        return 'bg-purple-500/12 text-purple-300 border-purple-400/35';
+    }
+
+    if (category === 'Mobile') {
+        return 'bg-cyan-500/12 text-cyan-200 border-cyan-300/35';
+    }
+
+    return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
+};
 
 const FeaturedProjectCard = React.memo(({ project, index }) => {
-    const cardRef = useRef(null);
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    const prefersReducedMotion = useReducedMotion();
+    const mouseX = useMotionValue(50);
+    const mouseY = useMotionValue(50);
+    const spotlight = useMotionTemplate`radial-gradient(560px circle at ${mouseX}% ${mouseY}%, rgba(0, 243, 255, 0.24), rgba(188, 19, 254, 0.12) 34%, rgba(8, 12, 21, 0) 62%)`;
 
-    const handleMouseMove = (e) => {
-        if (cardRef.current) {
-            const rect = cardRef.current.getBoundingClientRect();
-            mouseX.set(e.clientX - rect.left);
-            mouseY.set(e.clientY - rect.top);
-        }
+    const onPointerMove = (event) => {
+        const bounds = event.currentTarget.getBoundingClientRect();
+        const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+        const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+        mouseX.set(x);
+        mouseY.set(y);
     };
 
-    const background = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(0, 243, 255, 0.15), transparent 40%)`;
-    const border = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(0, 243, 255, 0.3), transparent 40%)`;
+    const onPointerLeave = () => {
+        mouseX.set(50);
+        mouseY.set(50);
+    };
 
     return (
-        <motion.div
-            ref={cardRef}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20px" }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            onMouseMove={handleMouseMove}
-            className="relative w-full mb-16 group perspective-1000"
+        <motion.article
+            layout
+            initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 16, scale: 0.98, filter: 'blur(6px)' }}
+            transition={{ duration: prefersReducedMotion ? 0.1 : 0.55, ease: [0.2, 0.88, 0.23, 1] }}
+            className="relative group"
+            onPointerMove={onPointerMove}
+            onPointerLeave={onPointerLeave}
         >
-            {/* Holographic Border */}
+            <div className="absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-cyan-400/30 via-white/10 to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <motion.div
-                className="absolute -inset-[1px] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: border }}
+                className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ background: spotlight }}
             />
 
-            <div className="relative bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 overflow-hidden transform-3d transition-transform duration-500 group-hover:scale-[1.01]">
-                {/* Spotlight Effect */}
-                <motion.div
-                    className="absolute inset-0 z-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 pointer-events-none"
-                    style={{ background }}
-                />
-
-                {/* Large Number Watermark */}
-                <div className="absolute -right-4 -top-4 text-[12rem] font-bold text-white/[0.02] select-none pointer-events-none z-0 font-mono leading-none">
-                    0{index + 1}
+            <div className="panel-surface relative rounded-[2rem] p-6 md:p-10 lg:p-12">
+                <div className="absolute top-4 right-4 md:top-5 md:right-7 text-[5.8rem] md:text-[8rem] font-bold text-white/[0.035] leading-none pointer-events-none select-none">
+                    {String(index + 1).padStart(2, '0')}
                 </div>
 
-                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    {/* Content Side */}
-                    <div className="lg:col-span-7 space-y-8">
-                        <div className="flex items-center gap-4">
-                            <span className="px-4 py-1.5 bg-cyan-500/10 text-cyan-400 text-sm font-medium rounded-full border border-cyan-500/20 shadow-[0_0_10px_rgba(0,243,255,0.1)]">
+                <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-12 items-center">
+                    <div className="lg:col-span-7 space-y-6">
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span className={`px-4 py-1.5 rounded-full text-xs sm:text-sm border font-semibold tracking-wide ${getTagTone(project.category)}`}>
                                 {project.category}
                             </span>
-                            <span className="px-4 py-1.5 bg-purple-500/10 text-purple-400 text-sm font-medium rounded-full border border-purple-500/20 flex items-center gap-2">
-                                <span className="animate-pulse">⭐</span> Featured
+                            <span className="px-4 py-1.5 rounded-full text-xs sm:text-sm border border-cyan-300/30 bg-cyan-400/10 text-cyan-200 font-semibold tracking-wide">
+                                ⭐ Featured
                             </span>
                         </div>
 
-                        <h3 className="text-4xl md:text-5xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 transition-all duration-300">
+                        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
                             {project.title}
                         </h3>
 
-                        <p className="text-gray-400 text-lg leading-relaxed font-light">
+                        <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
                             {project.description}
                         </p>
 
-                        <div className="flex flex-wrap gap-3 pt-2">
+                        <div className="flex flex-wrap gap-2.5 pt-1">
                             {project.tech_img.map((TechIcon, i) => (
-                                <div key={i} className="p-3 bg-gray-800/50 rounded-xl border border-white/5 hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-300 group/icon" title="Tech Stack">
-                                    <TechIcon className="w-6 h-6 text-gray-400 group-hover/icon:text-cyan-400 transition-colors" />
+                                <div
+                                    key={i}
+                                    className="h-11 w-11 rounded-lg border border-white/10 bg-[#111729]/70 flex items-center justify-center hover:border-cyan-300/45 hover:bg-cyan-400/10 transition-all duration-300"
+                                    title={project.technologies[i] || 'Tech stack'}
+                                >
+                                    <TechIcon className="w-5 h-5 text-gray-300" />
                                 </div>
                             ))}
                         </div>
 
-                        <div className="flex gap-5 pt-4">
+                        <div className="flex flex-wrap gap-3 pt-2">
                             {project.github && (
                                 <a
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full hover:bg-cyan-50 transition-all duration-300 font-semibold group/btn shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(0,243,255,0.3)]"
+                                    className="button-sheen inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold bg-white text-black hover:bg-cyan-100 shadow-[0_8px_24px_rgba(255,255,255,0.18)]"
                                 >
-                                    <img src={github_img} alt="GitHub" className="w-6 h-6" />
+                                    <img src={githubImg} alt="GitHub" className="w-5 h-5" />
                                     <span>View Code</span>
-                                    <svg className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
                                 </a>
                             )}
                             {project.liveSite && (
@@ -95,143 +104,131 @@ const FeaturedProjectCard = React.memo(({ project, index }) => {
                                     href={project.liveSite}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 px-8 py-4 bg-transparent text-white rounded-full hover:bg-white/5 transition-all duration-300 border border-white/20 hover:border-cyan-400 font-semibold group/btn"
+                                    className="button-sheen inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold border border-cyan-300/35 bg-[#0f1629]/90 text-cyan-100 hover:border-cyan-200/60 hover:bg-[#111d36]"
                                 >
-                                    <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <span>Live Demo</span>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
-                                    <span>Live Demo</span>
                                 </a>
                             )}
                         </div>
                     </div>
 
-                    {/* Visual Side - Generative Abstract Pattern */}
-                    <div className="lg:col-span-5 relative h-full min-h-[400px] rounded-2xl overflow-hidden bg-gray-900 border border-white/5 group-hover:border-cyan-500/30 transition-all duration-500 shadow-2xl">
-                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black" />
-
-                        {/* Animated Grid */}
-                        <div className="absolute inset-0 grid-overlay opacity-30" />
-
-                        {/* Floating Elements */}
+                    <div className="lg:col-span-5 h-full min-h-[320px] sm:min-h-[360px] relative overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020]">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,243,255,0.16),transparent_42%),radial-gradient(circle_at_80%_80%,rgba(188,19,254,0.16),transparent_42%),linear-gradient(160deg,#121a30,#0a0f1c)]" />
+                        <div className="absolute inset-0 grid-overlay-tight opacity-30" />
                         <motion.div
-                            className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl"
-                            animate={{
-                                scale: [1, 1.2, 1],
-                                x: [0, 20, 0],
-                                y: [0, -20, 0],
-                            }}
-                            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                        />
-                        <motion.div
-                            className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl"
-                            animate={{
-                                scale: [1, 1.3, 1],
-                                x: [0, -30, 0],
-                                y: [0, 30, 0],
-                            }}
-                            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -inset-12 bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent"
+                            animate={prefersReducedMotion ? {} : { x: ['-40%', '40%'] }}
+                            transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
                         />
 
-                        {/* Code Window UI */}
-                        <div className="absolute inset-6 bg-gray-900/90 backdrop-blur-md rounded-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col">
-                            <div className="h-8 bg-gray-800/50 border-b border-white/5 flex items-center px-4 gap-2">
-                                <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                        <div className="absolute inset-5 rounded-xl border border-white/10 bg-[#0a1122]/90 shadow-2xl overflow-hidden flex flex-col">
+                            <div className="h-9 border-b border-white/10 bg-[#10192d]/70 flex items-center px-4 gap-2">
+                                <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                                <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                                <span className="ml-auto text-[10px] uppercase tracking-[0.18em] text-gray-500">preview.ts</span>
                             </div>
-                            <div className="p-6 font-mono text-sm overflow-hidden relative flex-grow">
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/90 z-10" />
-                                <div className="space-y-2 opacity-80">
-                                    <p><span className="text-purple-400">const</span> <span className="text-blue-400">Project</span> <span className="text-white">=</span> <span className="text-yellow-400">{'{'}</span></p>
-                                    <p className="pl-4"><span className="text-blue-300">title</span>: <span className="text-green-400">"{project.title}"</span>,</p>
-                                    <p className="pl-4"><span className="text-blue-300">category</span>: <span className="text-green-400">"{project.category}"</span>,</p>
-                                    <p className="pl-4"><span className="text-blue-300">technologies</span>: <span className="text-yellow-400">{'['}</span></p>
-                                    {project.technologies.slice(0, 3).map((tech, i) => (
-                                        <p key={i} className="pl-8"><span className="text-green-400">"{tech}"</span>,</p>
-                                    ))}
-                                    <p className="pl-4"><span className="text-yellow-400">{']'}</span></p>
-                                    <p><span className="text-yellow-400">{'}'}</span>;</p>
-                                    <p className="text-gray-600 mt-4">{'// Innovation in progress...'}</p>
-                                </div>
+                            <div className="p-5 font-mono text-[12px] sm:text-sm text-gray-300 leading-relaxed overflow-hidden">
+                                <p><span className="text-purple-300">const</span> <span className="text-cyan-300">Project</span> = {'{'}</p>
+                                <p className="pl-4"><span className="text-blue-200">title</span>: <span className="text-emerald-300">"{project.title}"</span>,</p>
+                                <p className="pl-4"><span className="text-blue-200">category</span>: <span className="text-emerald-300">"{project.category}"</span>,</p>
+                                <p className="pl-4"><span className="text-blue-200">technologies</span>: [</p>
+                                {project.technologies.slice(0, 3).map((tech) => (
+                                    <p key={tech} className="pl-8 text-emerald-300">"{tech}",</p>
+                                ))}
+                                <p className="pl-4">],</p>
+                                <p>{'}'};</p>
+                                <p className="text-gray-600 mt-4">{'// Innovation in progress...'}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </motion.article>
     );
 });
 
-const SmallProjectCard = React.memo(({ project, index }) => {
+const SmallProjectCard = React.memo(({ project }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const shouldTruncate = project.description.length > 130;
+    const shouldTruncate = project.description.length > 135;
 
     return (
-        <motion.div
+        <motion.article
             layout
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            whileHover={{ y: -8 }}
-            className="group relative bg-gray-900/40 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 flex flex-col h-full hover:shadow-[0_0_30px_rgba(0,243,255,0.1)]"
+            initial={{ opacity: 0, y: 18, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.97 }}
+            whileHover={{ y: -4 }}
+            transition={{ duration: 0.35, ease: [0.2, 0.88, 0.23, 1] }}
+            className="group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full"
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/22 via-transparent to-purple-400/22 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-            <div className="p-8 flex flex-col h-full relative z-10">
-                <div className="flex justify-between items-start mb-6">
-                    <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-medium rounded-full border border-cyan-500/20">
-                        {project.category}
-                    </span>
-                    <div className="flex gap-3">
-                        {project.github && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800/80 hover:bg-white text-white hover:text-black rounded-lg border border-white/10 transition-all group/link">
-                                <img src={github_img} alt="GitHub" className="w-4 h-4 opacity-70 group-hover/link:opacity-100 group-hover/link:invert transition-all" />
-                            </a>
-                        )}
-                        {project.liveSite && (
-                            <a href={project.liveSite} target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800/80 hover:bg-cyan-500 text-cyan-400 hover:text-black rounded-lg border border-white/10 hover:border-cyan-500 transition-all group/link">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                            </a>
-                        )}
-                    </div>
-                </div>
-
-                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
-                    {project.title}
-                </h3>
-
-                <div className="mb-6 flex-grow">
-                    <p className={`text-gray-400 text-sm leading-relaxed font-light ${!isExpanded ? 'line-clamp-3' : ''}`}>
-                        {project.description}
-                    </p>
-                    {shouldTruncate && (
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsExpanded(!isExpanded);
-                            }}
-                            className="mt-2 text-xs font-medium text-cyan-400 hover:text-cyan-300 transition-colors focus:outline-none flex items-center gap-1"
+            <div className="relative z-10 flex justify-between items-start gap-3 mb-5">
+                <span className={`px-3 py-1 rounded-full text-[11px] border font-semibold tracking-wide ${getTagTone(project.category)}`}>
+                    {project.category}
+                </span>
+                <div className="flex items-center gap-2">
+                    {project.github && (
+                        <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="h-9 w-9 rounded-lg border border-white/10 bg-[#121829]/80 flex items-center justify-center hover:bg-white hover:text-black transition-all"
+                            aria-label={`${project.title} source code`}
                         >
-                            {isExpanded ? 'Show Less' : 'Read More'}
-                        </button>
+                            <img src={githubImg} alt="GitHub" className="w-4 h-4 opacity-80" />
+                        </a>
                     )}
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-white/5">
-                    {project.tech_img.slice(0, 4).map((TechIcon, i) => (
-                        <div key={i} className="p-1.5 bg-gray-800/50 rounded-md border border-white/5" title="Tech">
-                            <TechIcon className="w-4 h-4 opacity-60 text-gray-300 group-hover:opacity-100 group-hover:text-cyan-400 transition-all" />
-                        </div>
-                    ))}
-                    {project.tech_img.length > 4 && (
-                        <span className="text-xs text-gray-500 self-center px-2">+{project.tech_img.length - 4}</span>
+                    {project.liveSite && (
+                        <a
+                            href={project.liveSite}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="h-9 w-9 rounded-lg border border-cyan-300/30 bg-cyan-400/10 text-cyan-200 flex items-center justify-center hover:bg-cyan-300 hover:text-[#051022] transition-all"
+                            aria-label={`${project.title} live site`}
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </a>
                     )}
                 </div>
             </div>
-        </motion.div>
+
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 tracking-tight">{project.title}</h3>
+
+            <div className="mb-5 flex-grow">
+                <p className={`text-sm text-gray-300 leading-relaxed ${!isExpanded ? 'line-clamp-4' : ''}`}>
+                    {project.description}
+                </p>
+                {shouldTruncate && (
+                    <button
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            setIsExpanded((prev) => !prev);
+                        }}
+                        className="mt-2 text-xs font-semibold text-cyan-200 hover:text-white"
+                    >
+                        {isExpanded ? 'Show Less' : 'Read More'}
+                    </button>
+                )}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-white/10">
+                {project.tech_img.slice(0, 4).map((TechIcon, index) => (
+                    <div key={index} className="h-8 w-8 rounded-md border border-white/10 bg-[#111729]/80 flex items-center justify-center">
+                        <TechIcon className="w-4 h-4 text-gray-300" />
+                    </div>
+                ))}
+                {project.tech_img.length > 4 && (
+                    <span className="text-xs text-gray-500">+{project.tech_img.length - 4}</span>
+                )}
+            </div>
+        </motion.article>
     );
 });
 
@@ -240,137 +237,142 @@ const Projects = () => {
     const [showAll, setShowAll] = useState(false);
 
     const categories = useMemo(() => {
-        const uniqueCategories = new Set(projects.map(p => p.category));
-        const orderedCategories = ['AI/ML', 'Full-Stack', 'Mobile'];
-        return ['All', ...orderedCategories.filter(cat => uniqueCategories.has(cat))];
+        const uniqueCategories = new Set(projects.map((project) => project.category));
+        const preferredOrder = ['AI/ML', 'Full-Stack', 'Mobile'];
+        return ['All', ...preferredOrder.filter((category) => uniqueCategories.has(category))];
     }, []);
 
-    // Filter logic
-    const filteredProjects = useMemo(() => projects.filter(project =>
-        filter === 'All' ? true : project.category === filter
+    const filteredProjects = useMemo(() => (
+        projects.filter((project) => (filter === 'All' ? true : project.category === filter))
     ), [filter]);
 
-    const featuredProjects = useMemo(() => filteredProjects.filter(p => p.featured), [filteredProjects]);
-    const otherProjects = useMemo(() => filteredProjects.filter(p => !p.featured), [filteredProjects]);
+    const featuredProjects = useMemo(() => filteredProjects.filter((project) => project.featured), [filteredProjects]);
+    const otherProjects = useMemo(() => filteredProjects.filter((project) => !project.featured), [filteredProjects]);
+
+    useEffect(() => {
+        setShowAll(false);
+    }, [filter]);
 
     return (
-        <section className="section-padding relative overflow-hidden py-32 bg-gray-900" id="projects">
-            {/* Background Effects */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] opacity-20" />
-                <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px] opacity-20" />
+        <section className="section-padding relative overflow-hidden py-28 sm:py-32" id="projects">
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 right-0 w-[560px] h-[560px] bg-cyan-500/8 rounded-full blur-[90px] opacity-35" />
+                <div className="absolute bottom-0 left-0 w-[560px] h-[560px] bg-purple-500/8 rounded-full blur-[90px] opacity-35" />
             </div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
                 <motion.div
-                    className="text-center mb-24"
-                    initial={{ opacity: 0, y: 30 }}
+                    className="text-center mb-16 sm:mb-20"
+                    initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-20px" }}
-                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.6, ease: [0.2, 0.88, 0.23, 1] }}
                 >
-                    <h2 className="text-cyan-400 font-mono text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
-                    <h1 className="text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
-                        Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Projects</span>
+                    <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+                        Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Projects</span>
                     </h1>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
+                    <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
                         A curated collection of my technical endeavors, ranging from AI systems to full-stack applications.
                     </p>
 
-                    {/* Filter Buttons */}
-                    <div className="flex flex-wrap justify-center gap-4 mt-12">
+                    <div className="mt-10 flex flex-wrap justify-center gap-3">
                         {categories.map((category) => (
-                            <button
+                            <motion.button
                                 key={category}
                                 onClick={() => setFilter(category)}
-                                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${filter === category
-                                    ? 'bg-cyan-500 text-black border-cyan-500 shadow-[0_0_20px_rgba(0,243,255,0.3)]'
-                                    : 'bg-transparent text-gray-400 border-gray-800 hover:border-gray-600 hover:text-white'
-                                    }`}
+                                whileTap={{ scale: 0.97 }}
+                                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-all duration-300 ${
+                                    filter === category
+                                        ? 'bg-cyan-300 text-[#041122] border-cyan-200 shadow-[0_0_24px_rgba(0,243,255,0.28)]'
+                                        : 'bg-[#101728]/70 text-gray-300 border-white/10 hover:border-cyan-300/35 hover:text-white'
+                                }`}
                             >
                                 {category}
-                            </button>
+                            </motion.button>
                         ))}
                     </div>
                 </motion.div>
 
-                {/* Featured Projects Stack */}
-                <div className="space-y-12 mb-32">
-                    {featuredProjects.map((project, index) => (
-                        <FeaturedProjectCard key={project.title} project={project} index={index} />
-                    ))}
+                <motion.div layout className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
+                    <AnimatePresence mode="popLayout">
+                        {featuredProjects.map((project, index) => (
+                            <FeaturedProjectCard key={project.title} project={project} index={index} />
+                        ))}
+                    </AnimatePresence>
                     {featuredProjects.length === 0 && (
-                        <div className="text-center text-gray-500 py-20 font-mono">
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-center text-gray-500 py-14 font-mono text-sm tracking-[0.12em] uppercase"
+                        >
                             {'// No featured projects found in this category'}
-                        </div>
+                        </motion.p>
                     )}
-                </div>
+                </motion.div>
 
-                {/* Other Projects Grid */}
                 {otherProjects.length > 0 && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-60px' }}
+                        transition={{ duration: 0.55, ease: [0.2, 0.88, 0.23, 1] }}
                     >
-                        <div className="flex items-center justify-between mb-12">
-                            <h3 className="text-3xl font-bold text-white">More Projects</h3>
-                            <div className="h-px bg-gradient-to-r from-gray-800 to-transparent flex-grow ml-8"></div>
+                        <div className="flex items-center gap-6 mb-9">
+                            <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">More Projects</h3>
+                            <div className="h-px bg-gradient-to-r from-white/20 to-transparent flex-grow" />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <AnimatePresence mode='popLayout'>
-                                {(showAll ? otherProjects : otherProjects.slice(0, 3)).map((project, index) => (
-                                    <SmallProjectCard key={project.title} project={project} index={index} />
+                        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <AnimatePresence mode="popLayout">
+                                {(showAll ? otherProjects : otherProjects.slice(0, 3)).map((project) => (
+                                    <SmallProjectCard key={project.title} project={project} />
                                 ))}
                             </AnimatePresence>
-                        </div>
+                        </motion.div>
 
                         {otherProjects.length > 3 && (
-                            <div className="text-center mt-16">
-                                <button
-                                    onClick={() => setShowAll(!showAll)}
-                                    className="inline-flex items-center gap-3 px-8 py-3 bg-gray-800/50 hover:bg-gray-800 text-white rounded-full transition-all duration-300 border border-white/10 hover:border-cyan-500/30 group"
+                            <div className="text-center mt-12">
+                                <motion.button
+                                    onClick={() => setShowAll((prev) => !prev)}
+                                    whileTap={{ scale: 0.97 }}
+                                    className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a]"
                                 >
                                     <span>{showAll ? 'Show Less' : 'View More Projects'}</span>
                                     <svg
-                                        className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''} group-hover:text-cyan-400`}
+                                        className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
                                     >
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
-                                </button>
+                                </motion.button>
                             </div>
                         )}
                     </motion.div>
                 )}
 
-                {/* Contact CTA */}
                 <motion.div
-                    className="mt-40 text-center"
-                    initial={{ opacity: 0, y: 40 }}
+                    className="mt-28 sm:mt-36"
+                    initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.6, ease: [0.2, 0.88, 0.23, 1] }}
                 >
-                    <div className="p-12 md:p-20 bg-gradient-to-b from-gray-800/50 to-gray-900/50 rounded-[3rem] border border-white/5 relative overflow-hidden max-w-5xl mx-auto">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] transform translate-x-1/3 -translate-y-1/3" />
-                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] transform -translate-x-1/3 translate-y-1/3" />
-
-                        <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 relative z-10 tracking-tight">
+                    <div className="panel-surface rounded-[2rem] p-10 sm:p-14 md:p-16 text-center max-w-5xl mx-auto relative overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,243,255,0.14),transparent_44%),radial-gradient(circle_at_88%_78%,rgba(188,19,254,0.14),transparent_42%)] pointer-events-none" />
+                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight relative z-10">
                             Ready to start a project?
                         </h3>
-                        <p className="text-gray-400 mb-10 max-w-xl mx-auto relative z-10 text-lg font-light">
+                        <p className="text-gray-300 mt-5 mb-9 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed relative z-10">
                             Connect with me if you're interested in working together or just want to connect.
                         </p>
                         <a
                             href="mailto:kevinhu91846@gmail.com"
-                            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-bold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] relative z-10"
+                            className="button-sheen relative z-10 inline-flex items-center gap-3 px-9 py-4 rounded-full font-semibold bg-white text-black hover:bg-cyan-100 shadow-[0_10px_28px_rgba(255,255,255,0.2)]"
                         >
-                            <span>Let's Talk</span>
+                            <span>Let&apos;s Talk</span>
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>

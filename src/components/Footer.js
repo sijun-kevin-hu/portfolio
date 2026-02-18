@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900/80 backdrop-blur-md text-white py-12 border-t border-cyan-500/20 relative overflow-hidden">
+    <footer className="bg-gray-900/95 text-white py-12 border-t border-cyan-500/20 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50 blur-sm"></div>
       
@@ -112,7 +112,7 @@ const Footer = () => {
             © 2025 Sijun Kevin Hu. All rights reserved.
           </p>
           <p className="text-gray-500 text-sm mt-2 flex items-center justify-center gap-1">
-            Designed and developed with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1.5 }}>❤️</motion.span> by Sijun Kevin Hu
+            Designed and developed with <span>❤️</span> by Sijun Kevin Hu
           </p>
           <p className="text-gray-600 text-xs mt-4">
             Icons by <a href="https://icons8.com" target="_blank" rel="noopener noreferrer" className="text-cyan-500/70 hover:text-cyan-400 transition-colors duration-300">Icons8</a>
