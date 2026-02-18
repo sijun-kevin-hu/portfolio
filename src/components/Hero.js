@@ -191,17 +191,19 @@ const Hero = () => {
                 </div>
             </motion.div>
 
-            <motion.button
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-cyan-200/85 hover:text-white transition-colors"
-                onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                animate={prefersReducedMotion ? {} : { y: [0, 4, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-            >
-                <span className="text-[10px] font-mono tracking-[0.24em] uppercase">Scroll</span>
-                <span className="text-2xl leading-none">↓</span>
-            </motion.button>
+            <div className="absolute inset-x-0 bottom-8 z-20 flex justify-center pointer-events-none">
+                <motion.button
+                    className="pointer-events-auto flex flex-col items-center gap-2 text-cyan-200/85 hover:text-white transition-colors"
+                    onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    animate={prefersReducedMotion ? {} : { y: [0, 4, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                >
+                    <span className="text-[10px] font-mono tracking-[0.24em] uppercase">Scroll</span>
+                    <span className="text-2xl leading-none">↓</span>
+                </motion.button>
+            </div>
         </section>
     );
 };
