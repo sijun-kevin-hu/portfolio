@@ -80,7 +80,7 @@ const FeaturedProjectCard = React.memo(({ project, index }) => {
                                 <div
                                     key={i}
                                     className="h-11 w-11 rounded-lg border border-white/10 bg-[#111729]/70 flex items-center justify-center hover:border-cyan-300/45 hover:bg-cyan-400/10 transition-all duration-300"
-                                    title={project.technologies[i] || 'Tech stack'}
+                                    title={project.technologies[i] || 'Tech Stack'}
                                 >
                                     <TechIcon className="w-5 h-5 text-gray-300" />
                                 </div>
@@ -129,7 +129,6 @@ const FeaturedProjectCard = React.memo(({ project, index }) => {
                                 <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
                                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
                                 <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
-                                <span className="ml-auto text-[10px] uppercase tracking-[0.18em] text-gray-500">preview.ts</span>
                             </div>
                             <div className="p-5 font-mono text-[12px] sm:text-sm text-gray-300 leading-relaxed overflow-hidden">
                                 <p><span className="text-purple-300">const</span> <span className="text-cyan-300">Project</span> = {'{'}</p>
