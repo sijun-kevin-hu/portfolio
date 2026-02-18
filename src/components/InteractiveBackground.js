@@ -55,6 +55,11 @@ const InteractiveBackground = () => {
             return undefined;
         }
 
+        const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+        if (hasCoarsePointer) {
+            return undefined;
+        }
+
         const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) {
             return undefined;

@@ -7,12 +7,23 @@ import gmailLogo from '../images/gmail-logo.png';
 import { CONTACT_INFO, CAROUSEL_PHRASES } from '../constants';
 import InteractiveBackground from './InteractiveBackground';
 
+const MOBILE_HERO_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
+
+const shouldUseLiteHeroVisuals = () => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+        return false;
+    }
+
+    return window.matchMedia(MOBILE_HERO_MEDIA_QUERY).matches;
+};
+
 const Hero = () => {
     const prefersReducedMotion = useReducedMotion();
     const [displayedText, setDisplayedText] = useState('');
     const [wordIndex, setWordIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [typingSpeed, setTypingSpeed] = useState(100);
+    const [useLiteVisuals, setUseLiteVisuals] = useState(shouldUseLiteHeroVisuals);
     const words = CAROUSEL_PHRASES.words;
     const containerRef = useRef(null);
 
@@ -52,6 +63,24 @@ const Hero = () => {
         return () => clearTimeout(timeout);
     }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
 
+    useEffect(() => {
+        if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+            return undefined;
+        }
+
+        const mediaQuery = window.matchMedia(MOBILE_HERO_MEDIA_QUERY);
+        const handleVisualMode = () => setUseLiteVisuals(mediaQuery.matches);
+
+        handleVisualMode();
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', handleVisualMode);
+            return () => mediaQuery.removeEventListener('change', handleVisualMode);
+        }
+
+        mediaQuery.addListener(handleVisualMode);
+        return () => mediaQuery.removeListener(handleVisualMode);
+    }, []);
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -81,12 +110,16 @@ const Hero = () => {
             ref={containerRef}
             className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-            <InteractiveBackground />
+            {!useLiteVisuals && <InteractiveBackground />}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 grid-overlay-tight opacity-20" />
+                <div className={`absolute inset-0 grid-overlay-tight ${useLiteVisuals ? 'opacity-[0.12]' : 'opacity-20'}`} />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.09),transparent_50%),linear-gradient(to_bottom,rgba(3,5,9,0.05),rgba(5,6,12,0.88))]" />
                 <div className="absolute -top-36 left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-cyan-400/20 blur-[110px]" />
-                <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-purple-500/16 blur-[110px]" />
+                <div
+                    className={`absolute -bottom-24 right-0 h-72 w-72 rounded-full blur-[110px] ${
+                        useLiteVisuals ? 'bg-blue-400/10' : 'bg-purple-500/16'
+                    }`}
+                />
             </div>
 
             <motion.div
@@ -109,10 +142,22 @@ const Hero = () => {
                         <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight">
                             Hi, I&apos;m{' '}
                             <span className="relative inline-block">
-                                <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">
+                                <span
+                                    className={`relative z-10 bg-clip-text text-transparent ${
+                                        useLiteVisuals
+                                            ? 'bg-gradient-to-r from-cyan-300 via-white to-blue-200'
+                                            : 'bg-gradient-to-r from-cyan-300 via-white to-purple-300'
+                                    }`}
+                                >
                                     Kevin
                                 </span>
-                                <span className="absolute -inset-x-5 -inset-y-2 blur-2xl bg-gradient-to-r from-cyan-400/25 to-purple-500/20" />
+                                <span
+                                    className={`absolute -inset-x-5 -inset-y-2 blur-2xl ${
+                                        useLiteVisuals
+                                            ? 'bg-gradient-to-r from-cyan-400/22 to-blue-400/16'
+                                            : 'bg-gradient-to-r from-cyan-400/25 to-purple-500/20'
+                                    }`}
+                                />
                             </span>
                         </h1>
 

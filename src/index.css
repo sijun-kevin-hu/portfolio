@@ -24,6 +24,7 @@ html, body {
   min-height: 100dvh; /* Dynamic viewport height for mobile */
   font-family: var(--font-sans);
   color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
@@ -42,6 +43,12 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+
+a,
+button,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Cyberpunk scrollbar */
