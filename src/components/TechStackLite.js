@@ -52,20 +52,25 @@ const TechStackLite = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 min-h-[320px] sm:min-h-[360px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[320px] sm:min-h-[360px]">
           {activeData.map((skill) => (
             <article
               key={skill.name}
-              className="group relative panel-surface rounded-xl p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[128px]"
+              className="group relative panel-surface rounded-xl p-4 sm:p-5 flex items-center gap-4 min-h-[88px]"
             >
-              <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-                  <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${skill.color} opacity-35 blur-xl`} />
+              <div className="relative z-10 flex items-center gap-4 w-full">
+                <div className="relative w-12 h-12 shrink-0 flex items-center justify-center">
+                  <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${skill.color} opacity-35 blur-lg`} />
                   <skill.icon className="w-full h-full text-gray-200 drop-shadow-md" />
                 </div>
-                <h3 className="text-xs sm:text-sm text-gray-300 font-semibold tracking-wide uppercase">
-                  {skill.name}
-                </h3>
+                <div className="text-left">
+                  <h3 className="text-sm sm:text-base text-gray-100 font-semibold tracking-wide">
+                    {skill.name}
+                  </h3>
+                  <p className="text-[11px] text-cyan-200/75 font-mono uppercase tracking-[0.14em]">
+                    {activeTab}
+                  </p>
+                </div>
               </div>
             </article>
           ))}

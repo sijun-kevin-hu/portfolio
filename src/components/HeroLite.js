@@ -33,7 +33,7 @@ const HeroLite = () => (
           </h1>
 
           <p className="text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
-            I build as a
+            I am a
             {' '}
             <span className="hero-lite-rotator text-cyan-200 font-semibold">
               <span>Software Engineer.</span>

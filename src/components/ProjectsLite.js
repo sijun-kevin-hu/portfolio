@@ -14,6 +14,21 @@ const getTagTone = (category) => {
   return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
 };
 
+const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
+  <span
+    className={`inline-flex items-center gap-2 rounded-lg border border-white/10 bg-[#111729]/75 ${
+      compact ? 'px-2.5 py-1.5 text-[11px]' : 'px-3 py-2 text-xs sm:text-sm'
+    } text-gray-200`}
+  >
+    {TechIcon ? (
+      <span className={`${compact ? 'h-4 w-4' : 'h-5 w-5'} shrink-0`}>
+        <TechIcon className="w-full h-full" />
+      </span>
+    ) : null}
+    <span className="leading-none">{label}</span>
+  </span>
+);
+
 const FeaturedProjectCardLite = ({ project, index }) => (
   <article className="relative group">
     <div className="panel-surface relative rounded-[2rem] p-6 md:p-10 lg:p-12">
@@ -40,15 +55,13 @@ const FeaturedProjectCardLite = ({ project, index }) => (
             {project.description}
           </p>
 
-          <div className="flex flex-wrap gap-2.5 pt-1">
-            {project.tech_img.map((TechIcon, i) => (
-              <div
-                key={i}
-                className="h-11 w-11 rounded-lg border border-white/10 bg-[#111729]/70 flex items-center justify-center"
-                title={project.technologies[i] || 'Tech Stack'}
-              >
-                <TechIcon className="w-5 h-5 text-gray-300" />
-              </div>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {project.technologies.map((technology, i) => (
+              <TechBadgeLite
+                key={`${project.title}-${technology}`}
+                icon={project.tech_img[i]}
+                label={technology}
+              />
             ))}
           </div>
 
@@ -165,13 +178,16 @@ const SmallProjectCardLite = ({ project }) => {
       </div>
 
       <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-white/10">
-        {project.tech_img.slice(0, 4).map((TechIcon, index) => (
-          <div key={index} className="h-8 w-8 rounded-md border border-white/10 bg-[#111729]/80 flex items-center justify-center">
-            <TechIcon className="w-4 h-4 text-gray-300" />
-          </div>
+        {project.technologies.slice(0, 4).map((technology, index) => (
+          <TechBadgeLite
+            key={`${project.title}-${technology}`}
+            icon={project.tech_img[index]}
+            label={technology}
+            compact
+          />
         ))}
-        {project.tech_img.length > 4 && (
-          <span className="text-xs text-gray-500">+{project.tech_img.length - 4}</span>
+        {project.technologies.length > 4 && (
+          <span className="text-xs text-gray-500">+{project.technologies.length - 4}</span>
         )}
       </div>
     </article>
