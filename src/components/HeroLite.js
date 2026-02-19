@@ -4,19 +4,21 @@ import gmailLogo from '../images/gmail-logo.png';
 import { CONTACT_INFO } from '../constants';
 
 const HeroLite = () => (
-  <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <section className="hero-lite relative min-h-screen flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <div className="absolute inset-0 grid-overlay-tight opacity-[0.12]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.08),transparent_50%),linear-gradient(to_bottom,rgba(3,5,9,0.05),rgba(5,6,12,0.88))]" />
-      <div className="absolute -top-36 left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-cyan-400/16 blur-[100px]" />
-      <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-blue-400/10 blur-[100px]" />
+      <div className="hero-lite-orb hero-lite-orb-a absolute -top-36 left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-cyan-400/16 blur-[100px]" />
+      <div className="hero-lite-orb hero-lite-orb-b absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-blue-400/10 blur-[100px]" />
+      <div className="hero-lite-orb hero-lite-orb-c absolute top-1/3 -left-16 h-56 w-56 rounded-full bg-purple-400/10 blur-[95px]" />
+      <div className="hero-lite-ring" aria-hidden="true" />
     </div>
 
     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 text-center">
       <div className="space-y-8">
         <div className="space-y-5">
           <div className="flex justify-center">
-            <span className="inline-flex items-center rounded-full border border-cyan-300/40 bg-[#0b1427]/80 px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.15),0_12px_34px_rgba(4,14,26,0.5)] backdrop-blur-md whitespace-nowrap">
+            <span className="hero-lite-pill inline-flex items-center rounded-full border border-cyan-300/40 bg-[#0b1427]/80 px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.15),0_12px_34px_rgba(4,14,26,0.5)] backdrop-blur-md whitespace-nowrap">
               AI/ML ENGINEER
               <span className="mx-2 sm:mx-4 text-cyan-300/90">•</span>
               FULL-STACK BUILDER
@@ -31,11 +33,17 @@ const HeroLite = () => (
           </h1>
 
           <p className="text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
-            Software Engineer.
+            I build as a
+            {' '}
+            <span className="hero-lite-rotator text-cyan-200 font-semibold">
+              <span>Software Engineer.</span>
+              <span>Product Builder.</span>
+              <span>AI/ML Creator.</span>
+            </span>
           </p>
         </div>
 
-        <p className="text-base sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed hero-lite-copy">
           AI/ML engineer & full-stack builder. Crafting
           {' '}
           <span className="text-white font-medium">intelligent solutions</span>
