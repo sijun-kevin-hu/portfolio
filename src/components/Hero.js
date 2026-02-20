@@ -172,14 +172,14 @@ const Hero = () => {
                             </span>
                         </h1>
 
-                        <div className="h-16 sm:h-20 flex items-center justify-center overflow-hidden">
-                            <p className="text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
-                                I am a{' '}
-                                <span className="text-cyan-300 font-semibold inline-block text-left min-w-[190px] sm:min-w-[370px]">
-                                    {displayedText}
-                                    <span className="blink-cursor ml-1 align-middle" />
+                        <div className="min-h-[4rem] sm:min-h-[5rem] flex items-center justify-center overflow-hidden w-full">
+                            <div className="flex flex-col sm:flex-row items-center sm:items-baseline justify-center text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
+                                <span className="mb-2 sm:mb-0 sm:mr-3">I am a</span>
+                                <span className="text-cyan-300 font-semibold inline-flex items-center text-center sm:text-left justify-center sm:justify-start min-w-[280px] sm:min-w-[370px]">
+                                    <span>{displayedText}</span>
+                                    <span className="blink-cursor ml-1" />
                                 </span>
-                            </p>
+                            </div>
                         </div>
                     </motion.div>
 
