@@ -19,7 +19,7 @@ const SpotlightCard = React.memo(({ skill, prefersReducedMotion }) => (
         transition={{ duration: prefersReducedMotion ? 0.1 : 0.3, ease: [0.2, 0.88, 0.23, 1] }}
         className="group relative panel-surface rounded-xl p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[128px]"
     >
-        <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-r from-cyan-400/22 via-transparent to-purple-400/22 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-r from-cyan-400/28 via-white/6 to-purple-400/28 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center gap-3">
             <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">

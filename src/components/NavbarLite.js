@@ -11,7 +11,7 @@ const NavbarLite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-cyan-500/20 bg-[#070b15]/95 backdrop-blur-md">
+    <nav className="fixed top-0 w-full z-50 border-b border-white/8 bg-[#070b15]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <a href="/" className="flex items-center gap-2">
@@ -54,7 +54,7 @@ const NavbarLite = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden border-t border-cyan-500/20 bg-[#070b15]/98">
+        <div className="md:hidden border-t border-white/8 bg-[#070b15]/98">
           <div className="px-4 py-4 space-y-2">
             {NAV_LINKS.map((link) => (
               <a

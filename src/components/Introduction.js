@@ -9,7 +9,7 @@ const IntroCard = ({ prefersReducedMotion }) => (
         transition={{ duration: prefersReducedMotion ? 0.12 : 0.62, ease: [0.2, 0.88, 0.23, 1] }}
         className="relative w-full mb-8 group"
     >
-        <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-cyan-400/24 via-white/8 to-purple-400/24 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-cyan-400/30 via-white/12 to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         <div className="panel-surface relative rounded-3xl p-7 md:p-10 lg:p-12">
             <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -76,7 +76,7 @@ const InfoCard = ({ title, content, icon, delay, prefersReducedMotion }) => (
         whileHover={{ y: -4 }}
         className="group relative panel-surface rounded-2xl overflow-hidden flex flex-col h-full"
     >
-        <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/20 via-transparent to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+        <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/28 via-white/6 to-purple-400/28 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
         <div className="p-7 sm:p-8 relative z-10 flex flex-col h-full">
             <div className="w-12 h-12 rounded-lg border border-white/15 bg-[#131b2e]/80 flex items-center justify-center mb-5 text-cyan-200">

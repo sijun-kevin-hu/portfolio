@@ -56,7 +56,7 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
             onPointerMove={liteMode ? undefined : onPointerMove}
             onPointerLeave={liteMode ? undefined : onPointerLeave}
         >
-            <div className="absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-cyan-400/30 via-white/10 to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-cyan-400/36 via-white/14 to-purple-400/36 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {!liteMode && (
                 <motion.div
                     className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -179,7 +179,7 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
             transition={{ duration: liteMode ? 0.2 : 0.35, ease: [0.2, 0.88, 0.23, 1] }}
             className="group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full"
         >
-            <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/22 via-transparent to-purple-400/22 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/28 via-white/6 to-purple-400/28 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
             <div className="relative z-10 flex justify-between items-start gap-3 mb-5">
                 <span className={`px-3 py-1 rounded-full text-[11px] border font-semibold tracking-wide ${getTagTone(project.category)}`}>

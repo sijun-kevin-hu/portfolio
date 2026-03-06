@@ -1,7 +1,7 @@
 import { CONTACT_INFO } from '../constants';
 
 const FooterLite = () => (
-  <footer className="bg-gray-900/95 text-white py-12 border-t border-cyan-500/20 relative overflow-hidden">
+  <footer className="bg-[#070b15]/95 backdrop-blur-md text-white py-12 border-t border-white/8 relative overflow-hidden">
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50 blur-sm" />
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -10,7 +10,7 @@ const FooterLite = () => (
           <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">Get In Touch</h3>
           <div className="space-y-3">
             <a href={`mailto:${CONTACT_INFO.email}`} className="flex items-center group text-gray-300 hover:text-white transition-colors">
-              <div className="p-2 rounded-full bg-gray-800/50 group-hover:bg-cyan-500/20 mr-3 transition-colors">
+              <div className="p-2 rounded-full bg-[#111729]/70 group-hover:bg-cyan-500/20 mr-3 transition-colors">
                 <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" />
                 </svg>
@@ -18,7 +18,7 @@ const FooterLite = () => (
               {CONTACT_INFO.email}
             </a>
             <div className="flex items-center group text-gray-300">
-              <div className="p-2 rounded-full bg-gray-800/50 group-hover:bg-purple-500/20 mr-3 transition-colors">
+              <div className="p-2 rounded-full bg-[#111729]/70 group-hover:bg-purple-500/20 mr-3 transition-colors">
                 <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657 13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -62,7 +62,7 @@ const FooterLite = () => (
               href={CONTACT_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-800/50 rounded-full hover:bg-cyan-600/20 transition-colors duration-300 border border-cyan-500/30 hover:border-cyan-400 group"
+              className="p-3 bg-[#111729]/70 rounded-full hover:bg-cyan-400/10 transition-colors duration-300 border border-white/10 hover:border-cyan-300/45 group"
               aria-label="LinkedIn"
             >
               <svg className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
@@ -73,7 +73,7 @@ const FooterLite = () => (
               href={CONTACT_INFO.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-800/50 rounded-full hover:bg-cyan-600/20 transition-colors duration-300 border border-cyan-500/30 hover:border-cyan-400 group"
+              className="p-3 bg-[#111729]/70 rounded-full hover:bg-cyan-400/10 transition-colors duration-300 border border-white/10 hover:border-cyan-300/45 group"
               aria-label="GitHub"
             >
               <svg className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
@@ -82,7 +82,7 @@ const FooterLite = () => (
             </a>
             <a
               href={`mailto:${CONTACT_INFO.email}`}
-              className="p-3 bg-gray-800/50 rounded-full hover:bg-cyan-600/20 transition-colors duration-300 border border-cyan-500/30 hover:border-cyan-400 group"
+              className="p-3 bg-[#111729]/70 rounded-full hover:bg-cyan-400/10 transition-colors duration-300 border border-white/10 hover:border-cyan-300/45 group"
               aria-label="Email"
             >
               <svg className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,8 +93,8 @@ const FooterLite = () => (
         </div>
       </div>
 
-      <div className="border-t border-cyan-500/20 mt-12 pt-8 text-center relative">
-        <p className="text-gray-400">© 2025 Sijun Kevin Hu. All rights reserved.</p>
+      <div className="border-t border-white/8 mt-12 pt-8 text-center relative">
+        <p className="text-gray-400">© {new Date().getFullYear()} Sijun Kevin Hu. All rights reserved.</p>
         <p className="text-gray-500 text-sm mt-2 flex items-center justify-center gap-1">
           Designed and developed with
           <span>❤️</span>

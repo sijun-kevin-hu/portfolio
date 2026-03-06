@@ -227,6 +227,8 @@ function App() {
           </DeferredSection>
         </main>
 
+        <div className="section-divider" aria-hidden="true" />
+
         <DeferredSection
           enabled={useLiteVisuals}
           rootMargin="160px 0px"

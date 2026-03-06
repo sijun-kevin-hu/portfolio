@@ -116,7 +116,7 @@ html {
 
 .section-divider {
   position: relative;
-  height: 96px;
+  height: 64px;
   overflow: hidden;
   pointer-events: none;
 }
@@ -137,8 +137,8 @@ html {
       rgba(188, 19, 254, 0.18) 60%,
       rgba(188, 19, 254, 0)
     );
-  filter: blur(18px);
-  opacity: 0.48;
+  filter: blur(22px);
+  opacity: 0.32;
 }
 
 .section-divider::after {
@@ -149,7 +149,7 @@ html {
   transform: translate(-50%, -50%);
   width: min(820px, 72vw);
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.36), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.24), transparent);
 }
 
 .panel-surface {

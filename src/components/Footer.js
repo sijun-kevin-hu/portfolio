@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900/95 text-white py-12 border-t border-cyan-500/20 relative overflow-hidden">
+    <footer className="bg-[#070b15]/95 backdrop-blur-md text-white py-12 border-t border-white/8 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50 blur-sm"></div>
       
@@ -18,7 +18,7 @@ const Footer = () => {
                 className="flex items-center group text-gray-300 hover:text-white transition-colors"
                 whileHover={{ x: 5 }}
               >
-                <div className="p-2 rounded-full bg-gray-800/50 group-hover:bg-cyan-500/20 mr-3 transition-colors">
+                <div className="p-2 rounded-full bg-[#111729]/70 group-hover:bg-cyan-500/20 mr-3 transition-colors">
                     <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
@@ -29,7 +29,7 @@ const Footer = () => {
                 className="flex items-center group text-gray-300"
                 whileHover={{ x: 5 }}
               >
-                <div className="p-2 rounded-full bg-gray-800/50 group-hover:bg-purple-500/20 mr-3 transition-colors">
+                <div className="p-2 rounded-full bg-[#111729]/70 group-hover:bg-purple-500/20 mr-3 transition-colors">
                     <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -73,7 +73,7 @@ const Footer = () => {
                 href={CONTACT_INFO.linkedin}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 bg-gray-800/50 rounded-full hover:bg-cyan-600/20 transition-colors duration-300 border border-cyan-500/30 hover:border-cyan-400 group"
+                className="p-3 bg-[#111729]/70 rounded-full hover:bg-cyan-400/10 transition-colors duration-300 border border-white/10 hover:border-cyan-300/45 group"
                 whileHover={{ y: -5, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -85,7 +85,7 @@ const Footer = () => {
                 href={CONTACT_INFO.github}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 bg-gray-800/50 rounded-full hover:bg-cyan-600/20 transition-colors duration-300 border border-cyan-500/30 hover:border-cyan-400 group"
+                className="p-3 bg-[#111729]/70 rounded-full hover:bg-cyan-400/10 transition-colors duration-300 border border-white/10 hover:border-cyan-300/45 group"
                 whileHover={{ y: -5, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -95,7 +95,7 @@ const Footer = () => {
               </motion.a>
               <motion.a 
                 href={"mailto:" + CONTACT_INFO.email}
-                className="p-3 bg-gray-800/50 rounded-full hover:bg-cyan-600/20 transition-colors duration-300 border border-cyan-500/30 hover:border-cyan-400 group"
+                className="p-3 bg-[#111729]/70 rounded-full hover:bg-cyan-400/10 transition-colors duration-300 border border-white/10 hover:border-cyan-300/45 group"
                 whileHover={{ y: -5, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -107,9 +107,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-cyan-500/20 mt-12 pt-8 text-center relative">
+        <div className="border-t border-white/8 mt-12 pt-8 text-center relative">
           <p className="text-gray-400">
-            © 2025 Sijun Kevin Hu. All rights reserved.
+            © {new Date().getFullYear()} Sijun Kevin Hu. All rights reserved.
           </p>
           <p className="text-gray-500 text-sm mt-2 flex items-center justify-center gap-1">
             Designed and developed with <span>❤️</span> by Sijun Kevin Hu
