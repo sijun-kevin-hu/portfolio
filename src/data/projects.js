@@ -19,16 +19,6 @@ import {
 
 export const projects = [
     {
-        title: "Infinite Story Universe",
-        description: "Collaborative storytelling evolved. This platform orchestrates generative AI pipelines via Vertex AI to build branching narratives based on real-time user consensus. It implements dynamic prompt-chaining to ensure narrative consistency across an ever-expanding multiverse.",
-        tech_img: [IconReact, IconTypeScript, IconFirebase],
-        technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
-        github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
-        liveSite: 'https://infinitestoryuniverse.com',
-        category: "Full-Stack",
-        featured: true
-    },
-    {
         title: "Financial Regression Pipeline",
         description: "Data-driven foresight. This end-to-end ML pipeline forecasts earnings yield by integrating financial ratios with firm culture scores. Leveraging Pandas and scikit-learn for advanced feature engineering, it reduces model error by ~70%, turning complex market data into actionable predictions.",
         tech_img: [IconPython, IconPandas, IconNumpy, IconSklearn],
@@ -44,6 +34,16 @@ export const projects = [
         technologies: ["Next.js", "Firebase", "TypeScript", "Tailwind"],
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
         liveSite: 'https://tapdetail.com',
+        category: "Full-Stack",
+        featured: true
+    },
+    {
+        title: "Infinite Story Universe",
+        description: "Collaborative storytelling evolved. This platform orchestrates generative AI pipelines via Vertex AI to build branching narratives based on real-time user consensus. It implements dynamic prompt-chaining to ensure narrative consistency across an ever-expanding multiverse.",
+        tech_img: [IconReact, IconTypeScript, IconFirebase],
+        technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
+        github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
+        liveSite: 'https://infinitestoryuniverse.com',
         category: "Full-Stack",
         featured: true
     },
