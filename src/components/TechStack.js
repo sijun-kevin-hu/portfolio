@@ -24,7 +24,7 @@ const SpotlightCard = React.memo(({ skill, prefersReducedMotion }) => (
         <div className="relative z-10 flex flex-col items-center gap-3">
             <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
                 <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${skill.color} opacity-0 blur-xl group-hover:opacity-35 transition-opacity duration-300`} />
-                <skill.icon className="w-full h-full text-gray-200 drop-shadow-md group-hover:text-white transition-colors duration-300" />
+                <skill.icon className="w-full h-full drop-shadow-md" style={{ color: skill.iconColor }} />
             </div>
             <h3 className="text-xs sm:text-sm text-gray-300 font-semibold tracking-wide uppercase group-hover:text-white transition-colors">
                 {skill.name}

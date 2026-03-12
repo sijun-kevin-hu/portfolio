@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install react-icons --save)",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const names = [''SiC'',''SiCplusplus'',''SiCsharp'',''SiJava'',''SiPython'',''SiJavascript'',''SiTypescript'',''SiHtml5'',''SiCss3'',''SiMysql'',''SiReact'',''SiAngular'',''SiNextdotjs'',''SiTailwindcss'',''SiFlask'',''SiDjango'',''SiNodedotjs'',''SiExpress'',''SiGit'',''SiFirebase'',''SiSupabase'',''SiAmazonwebservices'',''SiDocker'']; names.forEach\\(n => console.log\\(n, si[n] ? ''OK'' : ''MISSING''\\)\\);\")",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const keys = Object.keys\\(si\\); const matches = keys.filter\\(k => /csharp|java|css3|amazon|aws/i.test\\(k\\)\\); console.log\\(matches.slice\\(0,30\\).join\\(''\\\\n''\\)\\);\")",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => /^SiJ/.test\\(k\\)\\).join\\(''\\\\n''\\)\\);\")",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => /^SiC/.test\\(k\\) && k.length < 12\\).join\\(''\\\\n''\\)\\);\")",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const keys = Object.keys\\(si\\); console.log\\(''CSS:'', keys.filter\\(k => /css/i.test\\(k\\)\\).slice\\(0,5\\).join\\('', ''\\)\\); console.log\\(''AWS/Amazon:'', keys.filter\\(k => /amazon|aws/i.test\\(k\\)\\).slice\\(0,10\\).join\\('', ''\\)\\); console.log\\(''Dotnet/CSharp:'', keys.filter\\(k => /dotnet|csharp|sharp|micro|msn/i.test\\(k\\)\\).slice\\(0,10\\).join\\('', ''\\)\\);\")",
+      "Bash(node -e \"const di = require\\(''react-icons/di''\\); const keys = Object.keys\\(di\\); console.log\\(''Di keys sample:'', keys.filter\\(k => /java|css|csharp|dotnet|aws/i.test\\(k\\)\\).join\\('', ''\\)\\);\")",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const keys = Object.keys\\(si\\); console.log\\(''Css options:'', keys.filter\\(k => /^SiCss/.test\\(k\\)\\).join\\('', ''\\)\\); console.log\\(''SiSharp:'', si.SiSharp ? ''OK'' : ''N/A''\\); console.log\\(''SiDotnet:'', si.SiDotnet ? ''OK'' : ''N/A''\\);\")",
+      "Bash(node -e \"const di = require\\(''react-icons/di''\\); const fa = require\\(''react-icons/fa''\\); console.log\\(''di.DiJava:'', di.DiJava ? ''OK'' : ''missing''\\); console.log\\(''di.DiCss3:'', di.DiCss3 ? ''OK'' : ''missing''\\); console.log\\(''fa.FaAws:'', fa.FaAws ? ''OK'' : ''missing''\\); const bs = require\\(''react-icons/bs''\\); keys = Object.keys\\(bs\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''sharp''\\)\\); console.log\\(''bs sharp:'', keys.slice\\(0,5\\)\\);\")",
+      "Bash(node -e \"const si = require\\(''react-icons/si''\\); const keys = Object.keys\\(si\\); keys.filter\\(k => k.includes\\(''C''\\) || k.includes\\(''c#''\\) || k.includes\\(''Cs''\\)\\).filter\\(k => k.length < 12\\).forEach\\(k => console.log\\(k\\)\\);\")",
+      "Bash(node -e \"const di = require\\(''react-icons/di''\\); const keys = Object.keys\\(di\\); keys.filter\\(k => k.toLowerCase\\(\\).includes\\(''c#''\\) || k.toLowerCase\\(\\).includes\\(''csharp''\\) || k.toLowerCase\\(\\).includes\\(''java''\\)\\).forEach\\(k => console.log\\(k\\)\\);\")"
+    ]
+  }
+}

@@ -61,7 +61,7 @@ const TechStackLite = () => {
               <div className="relative z-10 flex items-center gap-4 w-full">
                 <div className="relative w-12 h-12 shrink-0 flex items-center justify-center">
                   <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${skill.color} opacity-35 blur-lg`} />
-                  <skill.icon className="w-full h-full text-gray-200 drop-shadow-md" />
+                  <skill.icon className="w-full h-full drop-shadow-md" style={{ color: skill.iconColor }} />
                 </div>
                 <div className="text-left">
                   <h3 className="text-sm sm:text-base text-gray-100 font-semibold tracking-wide">
