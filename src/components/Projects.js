@@ -139,23 +139,26 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                             />
                         )}
 
-                        <div className="absolute inset-5 rounded-xl border border-white/10 bg-[#0a1122]/90 shadow-2xl overflow-hidden flex flex-col">
-                            <div className="h-9 border-b border-white/10 bg-[#10192d]/70 flex items-center px-4 gap-2">
-                                <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
-                                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
-                                <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
-                            </div>
-                            <div className="p-5 font-mono text-[12px] sm:text-sm text-gray-300 leading-relaxed overflow-hidden">
-                                <p><span className="text-purple-300">const</span> <span className="text-cyan-300">Project</span> = {'{'}</p>
-                                <p className="pl-4"><span className="text-blue-200">title</span>: <span className="text-emerald-300">"{project.title}"</span>,</p>
-                                <p className="pl-4"><span className="text-blue-200">category</span>: <span className="text-emerald-300">"{project.category}"</span>,</p>
-                                <p className="pl-4"><span className="text-blue-200">technologies</span>: [</p>
-                                {project.technologies.slice(0, 3).map((tech) => (
-                                    <p key={tech} className="pl-8 text-emerald-300">"{tech}",</p>
+                        <div className="absolute inset-5 rounded-xl border border-white/10 bg-[#0a1122]/90 shadow-2xl overflow-hidden flex flex-col items-center justify-center gap-5 p-6">
+                            <p className="text-[10px] font-mono tracking-[0.28em] uppercase text-cyan-200/55 relative z-10">
+                                {project.category}
+                            </p>
+                            <div className="relative z-10 grid grid-cols-3 gap-2.5">
+                                {project.tech_img.slice(0, 6).map((TechIcon, i) => (
+                                    <div
+                                        key={i}
+                                        className="h-12 w-12 rounded-xl border border-white/10 bg-[#0c1525]/80 flex items-center justify-center"
+                                    >
+                                        <TechIcon className="w-6 h-6 text-gray-300" />
+                                    </div>
                                 ))}
-                                <p className="pl-4">],</p>
-                                <p>{'}'};</p>
-                                <p className="text-gray-600 mt-4">{'// Innovation in progress...'}</p>
+                            </div>
+                            <div className="relative z-10 text-center">
+                                <p className="text-[10px] font-mono text-gray-500 tracking-[0.16em] uppercase mb-1">Stack</p>
+                                <p className="text-white font-semibold text-sm">{project.title}</p>
+                            </div>
+                            <div className="absolute bottom-3 right-4 text-[5rem] font-bold text-white/[0.04] leading-none select-none pointer-events-none">
+                                {String(index + 1).padStart(2, '0')}
                             </div>
                         </div>
                     </div>
