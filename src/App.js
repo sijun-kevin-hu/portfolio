@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import NavbarLite from './components/NavbarLite';
 import HeroLite from './components/HeroLite';
+import Marquee from './components/Marquee';
 import './index.css';
 
 const NavbarDesktop = lazy(() => import('./components/Navbar'));
@@ -176,6 +177,7 @@ function App() {
         />
         <div className={`absolute inset-0 grid-overlay-tight ${useLiteVisuals ? 'opacity-[0.1]' : 'opacity-[0.16]'}`} />
         {!useLiteVisuals && <div className="ambient-scan opacity-60" />}
+        <div className="absolute inset-0 grain-overlay" aria-hidden="true" />
       </div>
 
       <div className="relative z-10">
@@ -186,6 +188,7 @@ function App() {
           <Suspense fallback={<HeroLite />}>
             <HeroComponent />
           </Suspense>
+          <Marquee />
           <div className="section-divider" aria-hidden="true" />
 
           <DeferredSection

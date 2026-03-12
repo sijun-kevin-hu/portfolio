@@ -40,26 +40,29 @@ const IntroCard = ({ prefersReducedMotion }) => (
                     </p>
                 </div>
 
-                <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[360px] rounded-2xl overflow-hidden border border-white/10 bg-[#0a1120]">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,243,255,0.18),transparent_42%),radial-gradient(circle_at_86%_78%,rgba(188,19,254,0.2),transparent_40%),linear-gradient(160deg,#121a2d,#0a0f1e)]" />
-                    <div className="absolute inset-0 grid-overlay-tight opacity-30" />
+                <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[360px] rounded-2xl overflow-hidden border border-white/10 bg-[#0a1120] p-7 sm:p-8 flex flex-col justify-center">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,243,255,0.12),transparent_42%),radial-gradient(circle_at_86%_78%,rgba(188,19,254,0.12),transparent_40%),linear-gradient(160deg,#121a2d,#0a0f1e)]" />
+                    <div className="absolute inset-0 grid-overlay-tight opacity-[0.18]" />
 
-                    <div className="absolute inset-4 rounded-xl border border-white/10 bg-[#0a1122]/90 p-5 sm:p-6 font-mono text-xs sm:text-sm text-gray-300 overflow-hidden">
-                        <div className="flex gap-1.5 mb-4">
-                            <div className="w-3 h-3 rounded-full bg-red-500/60" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                            <div className="w-3 h-3 rounded-full bg-green-500/60" />
-                        </div>
-                        <div className="space-y-2">
-                            <p><span className="text-purple-300">const</span> <span className="text-cyan-300">kevin</span> = {'{'}</p>
-                            <p className="pl-4"><span className="text-blue-200">university</span>: <span className="text-emerald-300">"Georgia Tech"</span>,</p>
-                            <p className="pl-4"><span className="text-blue-200">major</span>: <span className="text-emerald-300">"Computer Science"</span>,</p>
-                            <p className="pl-4"><span className="text-blue-200">year</span>: <span className="text-orange-300">4</span>,</p>
-                            <p className="pl-4"><span className="text-blue-200">passion</span>: <span className="text-emerald-300">"Building cool stuff"</span>,</p>
-                            <p className="pl-4"><span className="text-blue-200">coffee</span>: <span className="text-purple-300">true</span>,</p>
-                            <p className="pl-4"><span className="text-blue-200">sleep</span>: <span className="text-purple-300">false</span></p>
-                            <p>{'}'};</p>
-                        </div>
+                    <div className="relative z-10 grid grid-cols-2 gap-3 sm:gap-4">
+                        {[
+                            { value: '10+', label: 'Projects Built', accent: 'text-cyan-300' },
+                            { value: '3+', label: 'Years Coding', accent: 'text-purple-300' },
+                            { value: '5+', label: 'Live Products', accent: 'text-cyan-300' },
+                            { value: "'26", label: 'Graduating', accent: 'text-purple-300' },
+                        ].map(({ value, label, accent }) => (
+                            <div
+                                key={label}
+                                className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-4 sm:p-5 hover:border-white/[0.14] transition-colors duration-300"
+                            >
+                                <div className={`display-heading text-3xl sm:text-4xl font-bold mb-1 ${accent}`}>{value}</div>
+                                <div className="text-[10px] sm:text-[11px] text-gray-400 font-mono tracking-[0.16em] uppercase">{label}</div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="relative z-10 mt-5 pt-5 border-t border-white/[0.07]">
+                        <p className="text-[10px] sm:text-xs font-mono text-gray-500 tracking-[0.18em] uppercase">Georgia Tech · Computer Science</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +118,7 @@ const Introduction = () => {
                     transition={{ duration: prefersReducedMotion ? 0.1 : 0.55 }}
                 >
                     <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">DISCOVER</h2>
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">
+                    <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">
                         About <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Me</span>
                     </h1>
                     <div className="w-24 h-[2px] bg-gradient-to-r from-cyan-400 via-white to-purple-400 mx-auto rounded-full" />

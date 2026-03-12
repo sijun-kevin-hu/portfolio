@@ -318,7 +318,7 @@ const Projects = () => {
                     transition={{ duration: 0.6, ease: [0.2, 0.88, 0.23, 1] }}
                 >
                     <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+                    <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
                         Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Projects</span>
                     </h1>
                     <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">

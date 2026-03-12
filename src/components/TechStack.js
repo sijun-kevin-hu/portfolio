@@ -61,7 +61,7 @@ const TechStack = () => {
                     transition={{ duration: prefersReducedMotion ? 0.1 : 0.55 }}
                 >
                     <h2 className="text-cyan-300 uppercase font-mono text-xs sm:text-sm tracking-[0.2em] mb-4">Capabilities</h2>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
+                    <h1 className="display-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
                         Tech <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Stack</span>
                     </h1>
                 </motion.div>

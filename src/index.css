@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --font-sans: 'Avenir Next', 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-display: 'Syne', sans-serif;
   --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
   --color-neon-cyan: #00f3ff;
   --color-neon-purple: #bc13fe;
@@ -410,6 +413,27 @@ p,
     opacity: 0;
     transform: translateY(-100%);
   }
+}
+
+.display-heading {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.032;
+  mix-blend-mode: overlay;
+}
+
+.marquee-scroll {
+  animation: marqueeScroll 36s linear infinite;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

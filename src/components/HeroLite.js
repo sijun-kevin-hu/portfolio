@@ -17,15 +17,22 @@ const HeroLite = () => (
     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 text-center">
       <div className="space-y-8">
         <div className="space-y-5">
-          <div className="flex justify-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
             <span className="hero-lite-pill inline-flex items-center rounded-full border border-cyan-300/40 bg-[#0b1427]/80 px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.15),0_12px_34px_rgba(4,14,26,0.5)] backdrop-blur-md whitespace-nowrap">
               AI/ML ENGINEER
               <span className="mx-2 sm:mx-4 text-cyan-300/90">•</span>
               FULL-STACK BUILDER
             </span>
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/[0.08] text-green-300 text-[10px] sm:text-xs font-mono tracking-[0.14em] uppercase whitespace-nowrap">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+              </span>
+              Available
+            </span>
           </div>
 
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight">
+          <h1 className="display-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight">
             Hi, I&apos;m{' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-blue-200">
               Kevin

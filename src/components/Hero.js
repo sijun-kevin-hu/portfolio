@@ -142,15 +142,22 @@ const Hero = () => {
             >
                 <div className="text-center space-y-10">
                     <motion.div className="space-y-6" variants={itemVariants}>
-                        <motion.div className="flex justify-center" variants={itemVariants}>
+                        <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-2.5" variants={itemVariants}>
                             <span className="inline-flex items-center rounded-full border border-cyan-300/45 bg-[linear-gradient(100deg,rgba(19,60,78,0.44)_0%,rgba(8,18,34,0.84)_52%,rgba(8,16,29,0.96)_100%)] px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.16),0_12px_34px_rgba(4,14,26,0.52)] backdrop-blur-md whitespace-nowrap">
                                 AI/ML ENGINEER
                                 <span className="mx-2 sm:mx-4 text-cyan-300/90">•</span>
                                 FULL-STACK BUILDER
                             </span>
+                            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/[0.08] text-green-300 text-[10px] sm:text-xs font-mono tracking-[0.14em] uppercase whitespace-nowrap">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+                                </span>
+                                Available
+                            </span>
                         </motion.div>
 
-                        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight">
+                        <h1 className="display-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tight">
                             Hi, I&apos;m{' '}
                             <span className="relative inline-block">
                                 <span
