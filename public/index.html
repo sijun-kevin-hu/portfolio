@@ -8,36 +8,52 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta
       name="description"
-      content="Personal Portfolio of a Georgia Tech Student"
+      content="Kevin Hu — full-stack engineer & AI/ML builder. Georgia Tech CS '26. Building intelligent web products with React, Python, and cloud-native tools."
     />
+    <link rel="canonical" href="https://sijunkevinhu.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Kevin Hu — Full-Stack Engineer & AI/ML Builder" />
+    <meta property="og:description" content="Georgia Tech CS '26. Building intelligent web products with React, Python, and cloud-native tools." />
+    <meta property="og:url" content="https://sijunkevinhu.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kevin Hu — Full-Stack Engineer & AI/ML Builder" />
+    <meta name="twitter:description" content="Georgia Tech CS '26. Building intelligent web products with React, Python, and cloud-native tools." />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kevin Hu",
+      "url": "https://sijunkevinhu.com",
+      "jobTitle": "Full-Stack Engineer & AI/ML Builder",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Georgia Institute of Technology"
+      },
+      "knowsAbout": ["React", "Python", "TypeScript", "Machine Learning", "Full-Stack Development"],
+      "sameAs": [
+        "https://linkedin.com/in/sijunkevinhu",
+        "https://github.com/sijun-kevin-hu"
+      ]
+    }
+    </script>
+
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>Kevin Hu's Portfolio</title>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

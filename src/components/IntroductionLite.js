@@ -9,13 +9,13 @@ const IntroductionLite = () => (
     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-14 sm:mb-16">
         <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">DISCOVER</h2>
-        <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">
+        <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">
           About
           {' '}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">
             Me
           </span>
-        </h1>
+        </h2>
         <div className="w-24 h-[2px] bg-gradient-to-r from-cyan-400 via-white to-purple-400 mx-auto rounded-full" />
       </div>
 
@@ -52,7 +52,7 @@ const IntroductionLite = () => (
               <div className="relative z-10 grid grid-cols-2 gap-3">
                 {[
                   { value: '10+', label: 'Projects Built', accent: 'text-cyan-300' },
-                  { value: '3+', label: 'Years Coding', accent: 'text-purple-300' },
+                  { value: '5+', label: 'Years Coding', accent: 'text-purple-300' },
                   { value: '5+', label: 'Live Products', accent: 'text-cyan-300' },
                   { value: "'26", label: 'Graduating', accent: 'text-purple-300' },
                 ].map(({ value, label, accent }) => (

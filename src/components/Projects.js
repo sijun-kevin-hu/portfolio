@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
 import { projects } from '../data/projects';
 import githubImg from '../images/github.png';
+import { CONTACT_INFO } from '../constants';
 
 const MOBILE_PROJECTS_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
 
@@ -111,6 +112,14 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                                     <img src={githubImg} alt="GitHub" className="w-5 h-5" />
                                     <span>View Code</span>
                                 </a>
+                            )}
+                            {project.repoNote && (
+                                <span className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs sm:text-sm border border-amber-400/30 bg-amber-500/10 text-amber-200 font-medium">
+                                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m0 0v2m0-2h2m-2 0H10m2-10V4m0 0a8 8 0 108 8" />
+                                    </svg>
+                                    {project.repoNote}
+                                </span>
                             )}
                             {project.liveSite && (
                                 <a
@@ -321,9 +330,9 @@ const Projects = () => {
                     transition={{ duration: 0.6, ease: [0.2, 0.88, 0.23, 1] }}
                 >
                     <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
-                    <h1 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+                    <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
                         Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Projects</span>
-                    </h1>
+                    </h2>
                     <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
                         A curated collection of my technical endeavors, ranging from AI systems to full-stack applications.
                     </p>
@@ -332,6 +341,8 @@ const Projects = () => {
                         {categories.map((category) => (
                             <motion.button
                                 key={category}
+                                type="button"
+                                aria-label={`Filter projects by ${category}`}
                                 onClick={() => setFilter(category)}
                                 whileTap={{ scale: 0.97 }}
                                 className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-all duration-300 ${
@@ -440,7 +451,7 @@ const Projects = () => {
                             Connect with me if you're interested in working together or just want to connect.
                         </p>
                         <a
-                            href="mailto:kevinhu91846@gmail.com"
+                            href={`mailto:${CONTACT_INFO.email}`}
                             className="button-sheen relative z-10 inline-flex items-center gap-3 px-9 py-4 rounded-full font-semibold bg-white text-black hover:bg-cyan-100 shadow-[0_10px_28px_rgba(255,255,255,0.2)]"
                         >
                             <span>Let&apos;s Talk</span>

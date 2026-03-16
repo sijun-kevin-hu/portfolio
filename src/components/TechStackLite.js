@@ -27,13 +27,13 @@ const TechStackLite = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14 sm:mb-16">
           <h2 className="text-cyan-300 uppercase font-mono text-xs sm:text-sm tracking-[0.2em] mb-4">Capabilities</h2>
-          <h1 className="display-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
+          <h2 className="display-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
             Tech
             {' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">
               Stack
             </span>
-          </h1>
+          </h2>
         </div>
 
         <div className="flex justify-center mb-10 sm:mb-12">
@@ -41,6 +41,8 @@ const TechStackLite = () => {
             {TAB_CONFIG.map((tab) => (
               <button
                 key={tab.id}
+                type="button"
+                aria-label={`Filter skills by ${tab.id}`}
                 onClick={() => setActiveTab(tab.id)}
                 className={`relative px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-colors ${
                   activeTab === tab.id ? 'bg-cyan-300 text-[#041120]' : 'text-gray-300 hover:text-white'

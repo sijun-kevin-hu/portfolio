@@ -144,8 +144,8 @@ function App() {
   }, [useLiteVisuals]);
 
   const sectionFallback = (
-    <div className="deferred-placeholder py-16 text-center text-gray-400 font-mono text-sm tracking-[0.15em] uppercase">
-      Loading...
+    <div className="deferred-placeholder py-16 flex justify-center">
+      <div className="skeleton h-6 w-40" />
     </div>
   );
 
@@ -184,7 +184,7 @@ function App() {
         <Suspense fallback={<NavbarLite />}>
           <NavbarComponent />
         </Suspense>
-        <main className="relative">
+        <main id="main-content" className="relative">
           <Suspense fallback={<HeroLite />}>
             <HeroComponent />
           </Suspense>

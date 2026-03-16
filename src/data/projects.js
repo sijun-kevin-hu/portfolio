@@ -23,7 +23,8 @@ export const projects = [
         description: "Data-driven foresight. This end-to-end ML pipeline forecasts earnings yield by integrating financial ratios with firm culture scores. Leveraging Pandas and scikit-learn for advanced feature engineering, it reduces model error by ~70%, turning complex market data into actionable predictions.",
         tech_img: [IconPython, IconPandas, IconNumpy, IconSklearn],
         technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
-        github: 'https://github.gatech.edu/vbhalla8/ML_project2025',
+        github: null,
+        repoNote: 'Georgia Tech internal repo — code samples available on request',
         category: "AI/ML",
         featured: true
     },
