@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import '../index.css';
 import codeLogo from '../images/code-icon.png';
+import { NAV_LINKS } from '../constants';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,12 +17,6 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
     
-    const navLinks = [
-        { href: '#about', label: 'About' },
-        { href: '#skills', label: 'Skills' },
-        { href: '#projects', label: 'Projects' }
-    ];
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -91,7 +85,7 @@ const Navbar = () => {
                         {/* Desktop Navigation */}
                         <div className='hidden md:block'>
                             <div className='ml-10 flex items-baseline space-x-8'>
-                                {navLinks.map((link, index) => (
+                                {NAV_LINKS.map((link, index) => (
                                     <motion.a
                                         key={link.href}
                                         href={link.href}
@@ -162,7 +156,7 @@ const Navbar = () => {
                             transition={{ duration: 0.5, ease: "easeInOut" }}
                         >
                             <div className='space-y-8 text-center'>
-                                {navLinks.map((link, index) => (
+                                {NAV_LINKS.map((link, index) => (
                                     <motion.a
                                         key={link.href}
                                         href={link.href}

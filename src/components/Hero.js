@@ -1,23 +1,13 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import '../index.css';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
 import gmailLogo from '../images/gmail-logo.png';
-import { CONTACT_INFO, CAROUSEL_PHRASES } from '../constants';
+import { CONTACT_INFO, CAROUSEL_PHRASES, MOBILE_MEDIA_QUERY } from '../constants';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { containerVariants, itemVariants } from '../utils/animations';
 
 const InteractiveBackground = lazy(() => import('./InteractiveBackground'));
-
-const MOBILE_HERO_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
-
-const shouldUseLiteHeroVisuals = () => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-        return false;
-    }
-
-    const mediaQuery = window.matchMedia(MOBILE_HERO_MEDIA_QUERY);
-    return Boolean(mediaQuery && mediaQuery.matches);
-};
 
 const Hero = () => {
     const prefersReducedMotion = useReducedMotion();
@@ -25,7 +15,7 @@ const Hero = () => {
     const [wordIndex, setWordIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [typingSpeed, setTypingSpeed] = useState(100);
-    const [useLiteVisuals, setUseLiteVisuals] = useState(shouldUseLiteHeroVisuals);
+    const useLiteVisuals = useMediaQuery(MOBILE_MEDIA_QUERY);
     const words = CAROUSEL_PHRASES.words;
     const containerRef = useRef(null);
 
@@ -65,52 +55,6 @@ const Hero = () => {
 
         return () => clearTimeout(timeout);
     }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
-
-    useEffect(() => {
-        if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-            return undefined;
-        }
-
-        const mediaQuery = window.matchMedia(MOBILE_HERO_MEDIA_QUERY);
-        if (!mediaQuery) {
-            return undefined;
-        }
-
-        const handleVisualMode = () => setUseLiteVisuals(mediaQuery.matches);
-
-        handleVisualMode();
-        if (typeof mediaQuery.addEventListener === 'function') {
-            mediaQuery.addEventListener('change', handleVisualMode);
-            return () => mediaQuery.removeEventListener('change', handleVisualMode);
-        }
-
-        mediaQuery.addListener(handleVisualMode);
-        return () => mediaQuery.removeListener(handleVisualMode);
-    }, []);
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.08,
-                delayChildren: 0.12
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 26, filter: 'blur(8px)' },
-        visible: {
-            opacity: 1,
-            y: 0,
-            filter: 'blur(0px)',
-            transition: {
-                duration: 0.62,
-                ease: [0.2, 0.88, 0.23, 1]
-            }
-        }
-    };
 
     return (
         <section

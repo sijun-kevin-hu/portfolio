@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import codeLogo from '../images/code-icon.png';
-
-const NAV_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' }
-];
+import { NAV_LINKS } from '../constants';
 
 const NavbarLite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

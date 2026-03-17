@@ -1,12 +1,13 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { EASE_OUT_EXPO } from '../utils/animations';
 
 const IntroCard = ({ prefersReducedMotion }) => (
     <motion.div
         initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
         whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: prefersReducedMotion ? 0.12 : 0.62, ease: [0.2, 0.88, 0.23, 1] }}
+        transition={{ duration: prefersReducedMotion ? 0.12 : 0.62, ease: EASE_OUT_EXPO }}
         className="relative w-full mb-8 group"
     >
         <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-cyan-400/30 via-white/12 to-purple-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -75,7 +76,7 @@ const InfoCard = ({ title, content, icon, delay, prefersReducedMotion }) => (
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: prefersReducedMotion ? 0.12 : 0.48, delay, ease: [0.2, 0.88, 0.23, 1] }}
+        transition={{ duration: prefersReducedMotion ? 0.12 : 0.48, delay, ease: EASE_OUT_EXPO }}
         whileHover={{ y: -4 }}
         className="group relative panel-surface rounded-2xl overflow-hidden flex flex-col h-full"
     >

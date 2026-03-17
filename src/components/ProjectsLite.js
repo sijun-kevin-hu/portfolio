@@ -1,19 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { projects } from '../data/projects';
+import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
 import { CONTACT_INFO } from '../constants';
-
-const getTagTone = (category) => {
-  if (category === 'AI/ML') {
-    return 'bg-purple-500/12 text-purple-300 border-purple-400/35';
-  }
-
-  if (category === 'Mobile') {
-    return 'bg-cyan-500/12 text-cyan-200 border-cyan-300/35';
-  }
-
-  return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
-};
 
 const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
   <span
@@ -55,16 +43,6 @@ const FeaturedProjectCardLite = ({ project, index }) => (
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
             {project.description}
           </p>
-
-          <div className="flex flex-wrap gap-2 pt-1">
-            {project.technologies.map((technology, i) => (
-              <TechBadgeLite
-                key={`${project.title}-${technology}`}
-                icon={project.tech_img[i]}
-                label={technology}
-              />
-            ))}
-          </div>
 
           <div className="flex flex-wrap gap-3 pt-2">
             {project.github && (

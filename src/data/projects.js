@@ -18,6 +18,18 @@ import {
     IconTypeScript
 } from './techIcons';
 
+export function getTagTone(category) {
+    if (category === 'AI/ML') {
+        return 'bg-purple-500/12 text-purple-300 border-purple-400/35';
+    }
+
+    if (category === 'Mobile') {
+        return 'bg-cyan-500/12 text-cyan-200 border-cyan-300/35';
+    }
+
+    return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
+}
+
 export const projects = [
     {
         title: "Financial Regression Pipeline",

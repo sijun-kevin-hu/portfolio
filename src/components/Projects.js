@@ -1,31 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
-import { projects } from '../data/projects';
+import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
-import { CONTACT_INFO } from '../constants';
-
-const MOBILE_PROJECTS_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
-
-const shouldUseLiteProjectMode = () => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-        return false;
-    }
-
-    const mediaQuery = window.matchMedia(MOBILE_PROJECTS_MEDIA_QUERY);
-    return Boolean(mediaQuery && mediaQuery.matches);
-};
-
-const getTagTone = (category) => {
-    if (category === 'AI/ML') {
-        return 'bg-purple-500/12 text-purple-300 border-purple-400/35';
-    }
-
-    if (category === 'Mobile') {
-        return 'bg-cyan-500/12 text-cyan-200 border-cyan-300/35';
-    }
-
-    return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
-};
+import { CONTACT_INFO, MOBILE_MEDIA_QUERY } from '../constants';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { EASE_OUT_EXPO } from '../utils/animations';
 
 const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
     const prefersReducedMotion = useReducedMotion();
@@ -52,7 +31,7 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
             initial={liteMode ? { opacity: 0, y: 18 } : { opacity: 0, y: 42, filter: 'blur(10px)' }}
             animate={liteMode ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={liteMode ? { opacity: 0, y: 8 } : { opacity: 0, y: 16, scale: 0.98, filter: 'blur(6px)' }}
-            transition={{ duration: prefersReducedMotion || liteMode ? 0.16 : 0.55, ease: [0.2, 0.88, 0.23, 1] }}
+            transition={{ duration: prefersReducedMotion || liteMode ? 0.16 : 0.55, ease: EASE_OUT_EXPO }}
             className="relative group"
             onPointerMove={liteMode ? undefined : onPointerMove}
             onPointerLeave={liteMode ? undefined : onPointerLeave}
@@ -188,7 +167,7 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.97 }}
             whileHover={liteMode ? undefined : { y: -4 }}
-            transition={{ duration: liteMode ? 0.2 : 0.35, ease: [0.2, 0.88, 0.23, 1] }}
+            transition={{ duration: liteMode ? 0.2 : 0.35, ease: EASE_OUT_EXPO }}
             className="group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full"
         >
             <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/28 via-white/6 to-purple-400/28 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -262,7 +241,7 @@ const Projects = () => {
     const [filter, setFilter] = useState('All');
     const [showAll, setShowAll] = useState(false);
     const [showAllFeatured, setShowAllFeatured] = useState(false);
-    const [liteMode, setLiteMode] = useState(shouldUseLiteProjectMode);
+    const liteMode = useMediaQuery(MOBILE_MEDIA_QUERY);
 
     const categories = useMemo(() => {
         const uniqueCategories = new Set(projects.map((project) => project.category));
@@ -288,28 +267,6 @@ const Projects = () => {
     );
 
     useEffect(() => {
-        if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-            return undefined;
-        }
-
-        const mediaQuery = window.matchMedia(MOBILE_PROJECTS_MEDIA_QUERY);
-        if (!mediaQuery) {
-            return undefined;
-        }
-
-        const updateMode = () => setLiteMode(mediaQuery.matches);
-
-        updateMode();
-        if (typeof mediaQuery.addEventListener === 'function') {
-            mediaQuery.addEventListener('change', updateMode);
-            return () => mediaQuery.removeEventListener('change', updateMode);
-        }
-
-        mediaQuery.addListener(updateMode);
-        return () => mediaQuery.removeListener(updateMode);
-    }, []);
-
-    useEffect(() => {
         setShowAll(false);
         setShowAllFeatured(false);
     }, [filter]);
@@ -327,7 +284,7 @@ const Projects = () => {
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.6, ease: [0.2, 0.88, 0.23, 1] }}
+                    transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
                 >
                     <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
                     <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
@@ -398,7 +355,7 @@ const Projects = () => {
                         initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-60px' }}
-                        transition={{ duration: 0.55, ease: [0.2, 0.88, 0.23, 1] }}
+                        transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
                     >
                         <div className="flex items-center gap-6 mb-9">
                             <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">More Projects</h3>
@@ -440,7 +397,7 @@ const Projects = () => {
                     initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.6, ease: [0.2, 0.88, 0.23, 1] }}
+                    transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
                 >
                     <div className="panel-surface rounded-[2rem] p-10 sm:p-14 md:p-16 text-center max-w-5xl mx-auto relative overflow-hidden">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,243,255,0.14),transparent_44%),radial-gradient(circle_at_88%_78%,rgba(188,19,254,0.14),transparent_42%)] pointer-events-none" />

@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { technicalLanguages, technicalFrameworks, technicalTools } from '../data/techStack';
+import { EASE_OUT_EXPO } from '../utils/animations';
 
 const TAB_CONFIG = [
     { id: 'Languages', label: 'LANGUAGES', data: technicalLanguages },
@@ -16,7 +17,7 @@ const SpotlightCard = React.memo(({ skill, prefersReducedMotion }) => (
             visible: { opacity: 1, scale: 1, y: 0 },
             exit: { opacity: 0, scale: 0.94, y: -6 }
         }}
-        transition={{ duration: prefersReducedMotion ? 0.1 : 0.3, ease: [0.2, 0.88, 0.23, 1] }}
+        transition={{ duration: prefersReducedMotion ? 0.1 : 0.3, ease: EASE_OUT_EXPO }}
         className="group relative panel-surface rounded-xl p-5 sm:p-6 flex flex-col items-center justify-center text-center min-h-[128px]"
     >
         <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-r from-cyan-400/28 via-white/6 to-purple-400/28 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

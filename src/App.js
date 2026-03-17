@@ -1,7 +1,9 @@
-import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import NavbarLite from './components/NavbarLite';
 import HeroLite from './components/HeroLite';
 import Marquee from './components/Marquee';
+import { MOBILE_MEDIA_QUERY } from './constants';
+import { useMediaQuery } from './hooks/useMediaQuery';
 import './index.css';
 
 const NavbarDesktop = lazy(() => import('./components/Navbar'));
@@ -14,17 +16,6 @@ const ProjectsDesktop = lazy(() => import('./components/Projects'));
 const ProjectsLite = lazy(() => import('./components/ProjectsLite'));
 const FooterDesktop = lazy(() => import('./components/Footer'));
 const FooterLite = lazy(() => import('./components/FooterLite'));
-
-const MOBILE_VISUALS_MEDIA_QUERY = '(max-width: 767px), (pointer: coarse)';
-
-const shouldUseLiteVisuals = () => {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-    return false;
-  }
-
-  const mediaQuery = window.matchMedia(MOBILE_VISUALS_MEDIA_QUERY);
-  return Boolean(mediaQuery && mediaQuery.matches);
-};
 
 const DeferredSection = ({
   enabled,
@@ -83,30 +74,8 @@ const DeferredSection = ({
 };
 
 function App() {
-  const [useLiteVisuals, setUseLiteVisuals] = useState(shouldUseLiteVisuals);
+  const useLiteVisuals = useMediaQuery(MOBILE_MEDIA_QUERY);
   const [shouldLoadDesktopExperience, setShouldLoadDesktopExperience] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-      return undefined;
-    }
-
-    const mediaQuery = window.matchMedia(MOBILE_VISUALS_MEDIA_QUERY);
-    if (!mediaQuery) {
-      return undefined;
-    }
-
-    const handleVisualMode = () => setUseLiteVisuals(mediaQuery.matches);
-
-    handleVisualMode();
-    if (typeof mediaQuery.addEventListener === 'function') {
-      mediaQuery.addEventListener('change', handleVisualMode);
-      return () => mediaQuery.removeEventListener('change', handleVisualMode);
-    }
-
-    mediaQuery.addListener(handleVisualMode);
-    return () => mediaQuery.removeListener(handleVisualMode);
-  }, []);
 
   useEffect(() => {
     if (useLiteVisuals) {
