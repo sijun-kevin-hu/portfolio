@@ -13,6 +13,7 @@ import {
     IconPython,
     IconReact,
     IconSklearn,
+    IconStreamlit,
     IconTailwind,
     IconTypeScript
 } from './techIcons';
@@ -25,6 +26,16 @@ export const projects = [
         technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
         github: null,
         repoNote: 'Georgia Tech internal repo — code samples available on request',
+        category: "AI/ML",
+        featured: true
+    },
+    {
+        title: "Clash Royale Matchup Predictor",
+        description: "Predicting the unpredictable. This end-to-end ML pipeline forecasts 1v1 Clash Royale battle outcomes by integrating deck composition, card levels, and trophy differentials. Leveraging a custom BFS crawler, Optuna-tuned XGBoost, and a Streamlit dashboard with per-matchup explainability, it turns complex game state into actionable win/loss probabilities.",
+        tech_img: [IconPython, IconPandas, IconSklearn, IconStreamlit],
+        technologies: ["Python", "Pandas", "scikit-learn", "Clash Royale API"],
+        github: 'https://github.com/sijun-kevin-hu/clash_predict',
+        liveSite: 'https://clashpredict.streamlit.app',
         category: "AI/ML",
         featured: true
     },

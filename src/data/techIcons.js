@@ -24,6 +24,7 @@ export {
   SiPandas as IconPandas,
   SiNumpy as IconNumpy,
   SiScikitlearn as IconSklearn,
+  SiStreamlit as IconStreamlit,
 } from 'react-icons/si';
 
 export { DiJava as IconJava } from 'react-icons/di';
