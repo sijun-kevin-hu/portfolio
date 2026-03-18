@@ -1,11 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import codeLogo from '../images/code-icon.png';
 import { NAV_LINKS } from '../constants';
+import SearchModal from './SearchModal';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    const openSearch = useCallback(() => setIsSearchOpen(true), []);
+    const closeSearch = useCallback(() => setIsSearchOpen(false), []);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                setIsSearchOpen((prev) => !prev);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -84,7 +100,7 @@ const Navbar = () => {
 
                         {/* Desktop Navigation */}
                         <div className='hidden md:block'>
-                            <div className='ml-10 flex items-baseline space-x-8'>
+                            <div className='ml-10 flex items-center space-x-8'>
                                 {NAV_LINKS.map((link, index) => (
                                     <motion.a
                                         key={link.href}
@@ -112,6 +128,21 @@ const Navbar = () => {
                                         />
                                     </motion.a>
                                 ))}
+                                <motion.button
+                                    type="button"
+                                    onClick={openSearch}
+                                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 hover:text-cyan-400 hover:border-cyan-300/30 transition-all duration-300 text-sm"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: NAV_LINKS.length * 0.1 }}
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                    <span className="font-mono text-xs text-gray-500">⌘K</span>
+                                </motion.button>
                             </div>
                         </div>
 
@@ -182,6 +213,8 @@ const Navbar = () => {
                     )}
                 </AnimatePresence>
             </nav>
+
+            <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
         </>
     );
 };

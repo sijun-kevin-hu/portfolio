@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import codeLogo from '../images/code-icon.png';
 import { NAV_LINKS } from '../constants';
+import SearchModal from './SearchModal';
 
 const NavbarLite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const openSearch = useCallback(() => setIsSearchOpen(true), []);
+  const closeSearch = useCallback(() => setIsSearchOpen(false), []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
+  <>
     <nav className="fixed top-0 w-full z-50 border-b border-white/8 bg-[#070b15]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -26,11 +43,32 @@ const NavbarLite = () => {
                 {link.label}
               </a>
             ))}
+            <button
+              type="button"
+              onClick={openSearch}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 hover:text-cyan-400 hover:border-cyan-300/30 transition-all duration-300 text-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span className="font-mono text-xs text-gray-500">⌘K</span>
+            </button>
           </div>
 
+          <div className="md:hidden flex items-center gap-1">
+            <button
+              type="button"
+              onClick={openSearch}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-cyan-300 hover:bg-cyan-500/10"
+              aria-label="Search"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-cyan-300 hover:bg-cyan-500/10 focus:outline-none focus:ring-2 focus:ring-cyan-500/60"
+            className="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-cyan-300 hover:bg-cyan-500/10 focus:outline-none focus:ring-2 focus:ring-cyan-500/60"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
@@ -45,6 +83,7 @@ const NavbarLite = () => {
               </svg>
             )}
           </button>
+          </div>
         </div>
       </div>
 
@@ -65,6 +104,9 @@ const NavbarLite = () => {
         </div>
       )}
     </nav>
+
+    <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+  </>
   );
 };
 
