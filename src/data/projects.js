@@ -1,167 +1,124 @@
-import {
-    IconAndroid,
-    IconCss,
-    IconFirebase,
-    IconFlask,
-    IconHtml,
-    IconJava,
-    IconJavaScript,
-    IconMysql,
-    IconNext,
-    IconNumpy,
-    IconPandas,
-    IconPython,
-    IconReact,
-    IconSklearn,
-    IconStreamlit,
-    IconTailwind,
-    IconTypeScript
-} from './techIcons';
-
-export function getTagTone(category) {
-    if (category === 'AI/ML') {
-        return 'bg-purple-500/12 text-purple-300 border-purple-400/35';
-    }
-
-    if (category === 'Mobile') {
-        return 'bg-cyan-500/12 text-cyan-200 border-cyan-300/35';
-    }
-
-    return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
-}
-
 export const projects = [
-    {
-        title: "Financial Regression Pipeline",
-        description: "Data-driven foresight. This end-to-end ML pipeline forecasts earnings yield by integrating financial ratios with firm culture scores. Leveraging Pandas and scikit-learn for advanced feature engineering, it reduces model error by ~70%, turning complex market data into actionable predictions.",
-        tech_img: [IconPython, IconPandas, IconNumpy, IconSklearn],
-        technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
-        github: null,
-        repoNote: 'Georgia Tech internal repo — code samples available on request',
-        category: "AI/ML",
-        featured: true
-    },
-    {
-        title: "Clash Royale Matchup Predictor",
-        description: "Predicting the unpredictable. This end-to-end ML pipeline forecasts 1v1 Clash Royale battle outcomes by integrating deck composition, card levels, and trophy differentials. Leveraging a custom BFS crawler, Optuna-tuned XGBoost, and a Streamlit dashboard with per-matchup explainability, it turns complex game state into actionable win/loss probabilities.",
-        tech_img: [IconPython, IconPandas, IconSklearn, IconStreamlit],
-        technologies: ["Python", "Pandas", "scikit-learn", "Clash Royale API"],
-        github: 'https://github.com/sijun-kevin-hu/clash_predict',
-        liveSite: 'https://clashpredict.streamlit.app',
-        category: "AI/ML",
-        featured: true
-    },
-    {
-        title: "Tap Detail",
-        description: "A comprehensive business management platform for mobile auto detailers. It streamlines the entire workflow - from client booking and appointment management to automated reminders and earnings tracking - giving detailers a professional edge and clients a seamless experience.",
-        tech_img: [IconNext, IconFirebase, IconTypeScript, IconTailwind],
-        technologies: ["Next.js", "Firebase", "TypeScript", "Tailwind"],
-        github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
-        liveSite: 'https://tapdetail.com',
-        category: "Full-Stack",
-        featured: true
-    },
-    {
-        title: "Infinite Story Universe",
-        description: "Collaborative storytelling evolved. This platform orchestrates generative AI pipelines via Vertex AI to build branching narratives based on real-time user consensus. It implements dynamic prompt-chaining to ensure narrative consistency across an ever-expanding multiverse.",
-        tech_img: [IconReact, IconTypeScript, IconFirebase],
-        technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
-        github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
-        liveSite: 'https://infinitestoryuniverse.com',
-        category: "Full-Stack",
-        featured: true
-    },
-    {
-        title: "Spotistats",
-        description: "Why wait for December? Spotistats gives you your Spotify Wrapped insights year-round. Built with Android and Firebase, it visualizes your top artists and tracks, lets you add friends, and keeps your music stats synchronized in real-time.",
-        tech_img: [IconJava, IconFirebase, IconAndroid],
-        technologies: ["Java", "Firebase", "Android SDK"],
-        github: 'https://github.com/sijun-kevin-hu/SpotifyWrapped/tree/main',
-        category: "Mobile",
-        featured: true
-    },
-    {
-        title: "BubbledIn",
-        description: "Communicate clearly in the chaos. BubbledIn creates private 'audio bubbles' for teams in loud environments like hackathons. It combines WebRTC for crystal-clear voice streaming with AI-powered live transcription, ensuring you never miss a word.",
-        tech_img: [IconReact, IconTypeScript, IconFirebase],
-        technologies: ["React", "TypeScript", "Firebase"],
-        github: 'https://github.com/elenesturua/BubbledIn',
-        category: "Full-Stack",
-        liveSite: 'https://bubbled-in.vercel.app',
-        featured: true
-    },
-    {
-        title: "DreamCatcher",
-        description: "Subconscious visualization. This application leverages NLP and diffusion model orchestration to translate personal journals into generative art. Powered by a Flask-React architecture, it processes complex semantic inputs to create unique, high-fidelity dream representations.",
-        tech_img: [IconReact, IconFlask, IconFirebase],
-        technologies: ["React", "Flask", "Firebase"],
-        github: 'https://github.com/jamesrm67/hacklytics-2025',
-        category: "Full-Stack",
-        featured: false
-    },
-    {
-        title: "AdaLens",
-        description: "Vision for everyone. AdaLens integrates multimodal LLMs to perform real-time semantic analysis on web imagery. It automates web accessibility by transforming visual assets into WCAG-compliant metadata, bridging the gap between visual content and screen readers.",
-        tech_img: [IconTypeScript, IconFlask, IconPython],
-        technologies: ["TypeScript", "Flask", "Python"],
-        github: 'https://github.com/sijun-kevin-hu/AdaLens',
-        liveSite: 'https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod',
-        category: "AI/ML",
-        featured: true
-    },
-    {
-        title: "Book Club",
-        description: "A digital gathering place for bibliophiles. This full-stack app lets users log their reading journey, manage collections, and connect with a community of readers. Built with Flask and React, it’s designed to keep your reading life organized and social.",
-        tech_img: [IconReact, IconPython, IconFlask],
-        technologies: ["React", "Python", "Flask"],
-        github: "https://github.com/sijun-kevin-hu/BookClub",
-        category: "Full-Stack",
-        featured: false
-    },
-    {
-        title: "Poker Profit Tracker",
-        description: "Know your game. This tracker helps poker players log sessions, analyze win rates, and manage their bankroll. Built with a robust JavaEE backend, it provides the data-driven insights needed to take your game from gambling to investing.",
-        tech_img: [IconJava, IconMysql, IconHtml, IconCss],
-        technologies: ["Java", "MySQL", "HTML5", "CSS3"],
-        github: "https://github.com/sijun-kevin-hu/PokerProfitTracker",
-        category: "Full-Stack",
-        featured: false
-    },
-    {
-        title: "Course Scheduler",
-        description: "Your academic personal assistant. This Android app helps students juggle courses, assignments, and deadlines. With features for schedule planning and weekly task prioritization, it’s designed to keep your GPA high and your stress low.",
-        tech_img: [IconJava, IconAndroid],
-        technologies: ["Java", "Android SDK"],
-        github: 'https://github.com/sijun-kevin-hu/Scheduler',
-        category: "Mobile",
-        featured: false
-    },
-    {
-        title: "Atlanta News Scraper",
-        description: "Local news, aggregated. This Python-based scraper pulls the latest headlines from Fox 5 Atlanta, presenting them in a clean, readable format. It’s a custom-built tool for staying informed without the clutter.",
-        tech_img: [IconPython, IconFlask],
-        technologies: ["Python", "Flask"],
-        github: 'https://github.com/sijun-kevin-hu/Atlanta-News-Scraper',
-        category: "Full-Stack",
-        featured: false
-    },
-    {
-        title: "Restaurant Website",
-        description: "A digital storefront for a local favorite. This responsive website showcases the menu, location, and story of a Chinese buffet. It’s designed to drive foot traffic and reservations through an inviting and accessible online presence.",
-        tech_img: [IconHtml, IconCss, IconJavaScript],
-        technologies: ["HTML5", "CSS3", "JavaScript"],
-        github: 'https://github.com/sijun-kevin-hu/chinabuffet-website',
-        category: "Full-Stack",
-        liveSite: 'https://tnchinabuffet.com',
-        featured: false
-    },
-    {
-        title: "Portfolio Website",
-        description: "The site you're on right now! A showcase of my journey as a developer, built with React and Tailwind to be fast, responsive, and a little bit stylish.",
-        tech_img: [IconReact, IconJavaScript, IconTailwind, IconCss, IconHtml],
-        technologies: ["React", "JavaScript", "Tailwind", "CSS3", "HTML5"],
-        github: 'https://github.com/sijun-kevin-hu/portfolio',
-        category: "Full-Stack",
-        featured: false
-    }
+  {
+    title: "Financial Regression Pipeline",
+    description:
+      "End-to-end ML pipeline forecasting earnings yield by integrating financial ratios with firm culture scores. Reduces model error by ~70% through advanced feature engineering.",
+    technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
+    github: null,
+    liveSite: null,
+    repoNote: "Georgia Tech internal repo — code samples available on request",
+    category: "AI/ML",
+    featured: true,
+  },
+  {
+    title: "Clash Royale Matchup Predictor",
+    description:
+      "ML pipeline forecasting 1v1 battle outcomes using deck composition, card levels, and trophy differentials. Custom BFS crawler, Optuna-tuned XGBoost, and Streamlit dashboard with per-matchup explainability.",
+    technologies: ["Python", "Pandas", "scikit-learn", "Streamlit"],
+    github: "https://github.com/sijun-kevin-hu/clash_predict",
+    liveSite: "https://clashpredict.streamlit.app",
+    category: "AI/ML",
+    featured: true,
+  },
+  {
+    title: "Tap Detail",
+    description:
+      "Business management platform for mobile auto detailers. Streamlines client booking, appointment management, automated reminders, and earnings tracking.",
+    technologies: ["Next.js", "Firebase", "TypeScript", "Tailwind"],
+    github: "https://github.com/sijun-kevin-hu/tap-detail-app",
+    liveSite: "https://tapdetail.com",
+    category: "Full-Stack",
+    featured: true,
+  },
+  {
+    title: "Infinite Story Universe",
+    description:
+      "Collaborative storytelling platform orchestrating generative AI pipelines via Vertex AI to build branching narratives based on real-time user consensus.",
+    technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
+    github: "https://github.com/sijun-kevin-hu/infinite_story_universe",
+    liveSite: "https://infinitestoryuniverse.com",
+    category: "Full-Stack",
+    featured: true,
+  },
+  {
+    title: "AdaLens",
+    description:
+      "Chrome extension integrating multimodal LLMs for real-time web accessibility analysis. Automates WCAG-compliant metadata generation for screen readers.",
+    technologies: ["TypeScript", "Flask", "Python"],
+    github: "https://github.com/sijun-kevin-hu/AdaLens",
+    liveSite:
+      "https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod",
+    category: "AI/ML",
+    featured: true,
+  },
+  {
+    title: "Spotistats",
+    description:
+      "Spotify Wrapped insights year-round. Visualizes top artists and tracks, friend connections, and real-time music stats synchronization.",
+    technologies: ["Java", "Firebase", "Android SDK"],
+    github: "https://github.com/sijun-kevin-hu/SpotifyWrapped/tree/main",
+    liveSite: null,
+    category: "Mobile",
+    featured: true,
+  },
+  {
+    title: "BubbledIn",
+    description:
+      "Private 'audio bubbles' for teams in loud environments. Combines WebRTC voice streaming with AI-powered live transcription.",
+    technologies: ["React", "TypeScript", "Firebase"],
+    github: "https://github.com/elenesturua/BubbledIn",
+    liveSite: "https://bubbled-in.vercel.app",
+    category: "Full-Stack",
+    featured: true,
+  },
+  {
+    title: "DreamCatcher",
+    description:
+      "NLP and diffusion model orchestration translating personal journals into generative art. Flask-React architecture for high-fidelity dream representations.",
+    technologies: ["React", "Flask", "Firebase"],
+    github: "https://github.com/jamesrm67/hacklytics-2025",
+    liveSite: null,
+    category: "Full-Stack",
+    featured: false,
+  },
+  {
+    title: "Book Club",
+    description:
+      "Digital platform for readers to log their journey, manage collections, and connect with a community of bibliophiles.",
+    technologies: ["React", "Python", "Flask"],
+    github: "https://github.com/sijun-kevin-hu/BookClub",
+    liveSite: null,
+    category: "Full-Stack",
+    featured: false,
+  },
+  {
+    title: "Poker Profit Tracker",
+    description:
+      "Session logging, win rate analysis, and bankroll management for poker players with data-driven insights.",
+    technologies: ["Java", "MySQL", "HTML5", "CSS3"],
+    github: "https://github.com/sijun-kevin-hu/PokerProfitTracker",
+    liveSite: null,
+    category: "Full-Stack",
+    featured: false,
+  },
+  {
+    title: "Course Scheduler",
+    description:
+      "Android app helping students manage courses, assignments, and deadlines with schedule planning and task prioritization.",
+    technologies: ["Java", "Android SDK"],
+    github: "https://github.com/sijun-kevin-hu/Scheduler",
+    liveSite: null,
+    category: "Mobile",
+    featured: false,
+  },
+  {
+    title: "Restaurant Website",
+    description:
+      "Responsive website for a local Chinese buffet showcasing menu, location, and story to drive foot traffic.",
+    technologies: ["HTML5", "CSS3", "JavaScript"],
+    github: "https://github.com/sijun-kevin-hu/chinabuffet-website",
+    liveSite: "https://tnchinabuffet.com",
+    category: "Full-Stack",
+    featured: false,
+  },
 ];
