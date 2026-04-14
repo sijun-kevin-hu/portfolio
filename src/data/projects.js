@@ -8,7 +8,7 @@ export const projects = [
     liveSite: null,
     repoNote: "Georgia Tech internal repo — code samples available on request",
     category: "AI/ML",
-    featured: true,
+    featured: false,
   },
   {
     title: "Clash Royale Matchup Predictor",
@@ -38,7 +38,7 @@ export const projects = [
     github: "https://github.com/sijun-kevin-hu/infinite_story_universe",
     liveSite: "https://infinitestoryuniverse.com",
     category: "Full-Stack",
-    featured: true,
+    featured: false,
   },
   {
     title: "AdaLens",
@@ -59,7 +59,7 @@ export const projects = [
     github: "https://github.com/sijun-kevin-hu/SpotifyWrapped/tree/main",
     liveSite: null,
     category: "Mobile",
-    featured: true,
+    featured: false,
   },
   {
     title: "BubbledIn",
@@ -69,7 +69,7 @@ export const projects = [
     github: "https://github.com/elenesturua/BubbledIn",
     liveSite: "https://bubbled-in.vercel.app",
     category: "Full-Stack",
-    featured: true,
+    featured: false,
   },
   {
     title: "DreamCatcher",
