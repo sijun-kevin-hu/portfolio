@@ -12,7 +12,7 @@ module.exports = {
         gold: '#B3A369',
         'text-primary': '#e8e6e1',
         'text-secondary': '#9896a1',
-        'text-tertiary': '#5c5a66',
+        'text-tertiary': '#a0a0b0',
       },
       fontFamily: {
         sans: ['Outfit', 'system-ui', 'sans-serif'],
