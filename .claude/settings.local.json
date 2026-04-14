@@ -14,7 +14,9 @@
       "Bash(node -e \"const di = require\\(''react-icons/di''\\); const keys = Object.keys\\(di\\); keys.filter\\(k => k.toLowerCase\\(\\).includes\\(''c#''\\) || k.toLowerCase\\(\\).includes\\(''csharp''\\) || k.toLowerCase\\(\\).includes\\(''java''\\)\\).forEach\\(k => console.log\\(k\\)\\);\")",
       "Bash(find /Users/kevinhu/Programming/Portfolio/portfolio/src -type f \\\\\\(-name *.jsx -o -name *.tsx -o -name *.js -o -name *.ts \\\\\\))",
       "mcp__Claude_Preview__preview_start",
-      "Bash(npx react-scripts:*)"
+      "Bash(npx react-scripts:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)"
     ]
   }
 }
