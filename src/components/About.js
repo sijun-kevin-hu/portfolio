@@ -15,16 +15,17 @@ export default function About() {
           {/* Left column — bio */}
           <div className="space-y-5">
             <p className="text-text-secondary font-light leading-relaxed">
-              I&apos;m a senior Computer Science student at{' '}
+              Hey, I&apos;m Kevin — a CS senior at{' '}
               <span className="text-text-primary font-medium">Georgia Tech</span>,
-              passionate about building things that ship. From ML pipelines that
-              forecast financial markets to full-stack platforms that serve real
-              users — I care about the whole stack.
+              graduating &apos;26. I build full-stack apps and ML systems, from
+              real-time vision tools to business platforms with paying
+              customers. Obsessed with shipping.
             </p>
             <p className="text-text-secondary font-light leading-relaxed">
-              I write clean code and design UX that doesn&apos;t make you rage quit.
-              Obsessed with pixel-perfect interfaces, buttery smooth interactions,
-              and solutions that are simple, effective, and aesthetic.
+              My focus is full-stack development with AI/ML integration.
+              Comfortable across the stack — React, TypeScript, Python,
+              Firebase, and cloud-native infrastructure. I care about clean
+              code and interfaces that feel obvious to use.
             </p>
           </div>
 
