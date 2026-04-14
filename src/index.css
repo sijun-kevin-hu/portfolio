@@ -429,11 +429,138 @@ p,
 
 .marquee-scroll {
   animation: marqueeScroll 36s linear infinite;
+  will-change: transform;
 }
 
 @keyframes marqueeScroll {
   from { transform: translateX(0); }
   to { transform: translateX(-33.333%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-scroll {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* Entrance animations (replace framer-motion initial/animate) */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.anim-fade-in-down {
+  opacity: 0;
+  animation: fadeInDown 0.4s ease-out forwards;
+}
+.anim-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+.anim-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Staggered intro (replaces framer-motion itemVariants) */
+@keyframes introUp {
+  from { opacity: 0; transform: translateY(26px); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.anim-intro-up {
+  opacity: 0;
+  animation: introUp 0.62s cubic-bezier(0.2, 0.88, 0.23, 1) forwards;
+  animation-delay: var(--intro-delay, 0ms);
+}
+
+/* Spotlight card pop-in (staggered via nth-child delay) */
+@keyframes spotlightIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.anim-spotlight-in {
+  opacity: 0;
+  animation: spotlightIn 0.3s cubic-bezier(0.2, 0.88, 0.23, 1) forwards;
+}
+.anim-spotlight-in:nth-child(1) { animation-delay: 0ms; }
+.anim-spotlight-in:nth-child(2) { animation-delay: 35ms; }
+.anim-spotlight-in:nth-child(3) { animation-delay: 70ms; }
+.anim-spotlight-in:nth-child(4) { animation-delay: 105ms; }
+.anim-spotlight-in:nth-child(5) { animation-delay: 140ms; }
+.anim-spotlight-in:nth-child(6) { animation-delay: 175ms; }
+.anim-spotlight-in:nth-child(7) { animation-delay: 210ms; }
+.anim-spotlight-in:nth-child(8) { animation-delay: 245ms; }
+.anim-spotlight-in:nth-child(9) { animation-delay: 280ms; }
+.anim-spotlight-in:nth-child(10) { animation-delay: 315ms; }
+.anim-spotlight-in:nth-child(n+11) { animation-delay: 350ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-spotlight-in {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Featured project cursor spotlight */
+.card-spotlight {
+  background: radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(0, 243, 255, 0.24), rgba(188, 19, 254, 0.12) 34%, rgba(8, 12, 21, 0) 62%);
+}
+
+/* Subtle horizontal shimmer (replaces motion animate x) */
+@keyframes shimmerSlide {
+  0% { transform: translateX(-40%); }
+  50% { transform: translateX(40%); }
+  100% { transform: translateX(-40%); }
+}
+.anim-shimmer-slide {
+  animation: shimmerSlide 4.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-shimmer-slide { animation: none; }
+}
+
+/* Bounce arrow for hero scroll indicator */
+@keyframes bounceY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+.anim-bounce-y {
+  animation: bounceY 2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-bounce-y,
+  .anim-intro-up {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Mobile menu reveal */
+.mobile-menu-enter {
+  clip-path: circle(0% at 100% 0%);
+  opacity: 0;
+  transition: clip-path 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+.mobile-menu-enter-active {
+  clip-path: circle(150% at 100% 0%);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-in-down,
+  .anim-fade-in-up,
+  .anim-fade-in {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .skip-link {

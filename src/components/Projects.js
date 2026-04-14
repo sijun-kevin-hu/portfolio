@@ -1,46 +1,41 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
 import { CONTACT_INFO, MOBILE_MEDIA_QUERY } from '../constants';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import { EASE_OUT_EXPO } from '../utils/animations';
+import { useInViewOnce } from '../hooks/useInViewOnce';
 
 const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
-    const prefersReducedMotion = useReducedMotion();
-    const mouseX = useMotionValue(50);
-    const mouseY = useMotionValue(50);
-    const spotlight = useMotionTemplate`radial-gradient(560px circle at ${mouseX}% ${mouseY}%, rgba(0, 243, 255, 0.24), rgba(188, 19, 254, 0.12) 34%, rgba(8, 12, 21, 0) 62%)`;
+    const spotlightRef = useRef(null);
+    const [ref, inView] = useInViewOnce({ rootMargin: '-60px' });
 
     const onPointerMove = (event) => {
+        if (!spotlightRef.current) return;
         const bounds = event.currentTarget.getBoundingClientRect();
         const x = ((event.clientX - bounds.left) / bounds.width) * 100;
         const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-        mouseX.set(x);
-        mouseY.set(y);
+        spotlightRef.current.style.setProperty('--spotlight-x', `${x}%`);
+        spotlightRef.current.style.setProperty('--spotlight-y', `${y}%`);
     };
 
     const onPointerLeave = () => {
-        mouseX.set(50);
-        mouseY.set(50);
+        if (!spotlightRef.current) return;
+        spotlightRef.current.style.setProperty('--spotlight-x', '50%');
+        spotlightRef.current.style.setProperty('--spotlight-y', '50%');
     };
 
     return (
-        <motion.article
-            layout={!liteMode}
-            initial={liteMode ? { opacity: 0, y: 18 } : { opacity: 0, y: 42, filter: 'blur(10px)' }}
-            animate={liteMode ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={liteMode ? { opacity: 0, y: 8 } : { opacity: 0, y: 16, scale: 0.98, filter: 'blur(6px)' }}
-            transition={{ duration: prefersReducedMotion || liteMode ? 0.16 : 0.55, ease: EASE_OUT_EXPO }}
-            className="relative group"
+        <article
+            ref={ref}
+            className={`relative group ${inView ? 'anim-fade-in-up' : 'opacity-0'}`}
             onPointerMove={liteMode ? undefined : onPointerMove}
             onPointerLeave={liteMode ? undefined : onPointerLeave}
         >
             <div className="absolute -inset-[1px] rounded-[2rem] bg-gradient-to-r from-cyan-400/36 via-white/14 to-purple-400/36 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {!liteMode && (
-                <motion.div
-                    className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ background: spotlight }}
+                <div
+                    ref={spotlightRef}
+                    className="card-spotlight absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 />
             )}
 
@@ -120,11 +115,7 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,243,255,0.16),transparent_42%),radial-gradient(circle_at_80%_80%,rgba(188,19,254,0.16),transparent_42%),linear-gradient(160deg,#121a30,#0a0f1c)]" />
                         <div className="absolute inset-0 grid-overlay-tight opacity-30" />
                         {!liteMode && (
-                            <motion.div
-                                className="absolute -inset-12 bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent"
-                                animate={prefersReducedMotion ? {} : { x: ['-40%', '40%'] }}
-                                transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
-                            />
+                            <div className="absolute -inset-12 bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent anim-shimmer-slide" />
                         )}
 
                         <div className="absolute inset-5 rounded-xl border border-white/10 bg-[#0a1122]/90 shadow-2xl overflow-hidden flex flex-col items-center justify-center gap-5 p-6">
@@ -152,23 +143,19 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                     </div>
                 </div>
             </div>
-        </motion.article>
+        </article>
     );
 });
 
 const SmallProjectCard = React.memo(({ project, liteMode }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [ref, inView] = useInViewOnce({ rootMargin: '-40px' });
     const shouldTruncate = project.description.length > 135;
 
     return (
-        <motion.article
-            layout={!liteMode}
-            initial={{ opacity: 0, y: 18, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.97 }}
-            whileHover={liteMode ? undefined : { y: -4 }}
-            transition={{ duration: liteMode ? 0.2 : 0.35, ease: EASE_OUT_EXPO }}
-            className="group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full"
+        <article
+            ref={ref}
+            className={`group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full transition-transform duration-300 ${liteMode ? '' : 'hover:-translate-y-1'} ${inView ? 'anim-fade-in-up' : 'opacity-0'}`}
         >
             <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-cyan-400/28 via-white/6 to-purple-400/28 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -233,7 +220,7 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
                     <span className="text-xs text-gray-500">+{project.tech_img.length - 4}</span>
                 )}
             </div>
-        </motion.article>
+        </article>
     );
 });
 
@@ -242,6 +229,9 @@ const Projects = () => {
     const [showAll, setShowAll] = useState(false);
     const [showAllFeatured, setShowAllFeatured] = useState(false);
     const liteMode = useMediaQuery(MOBILE_MEDIA_QUERY);
+    const [headerRef, headerInView] = useInViewOnce({ rootMargin: '-80px' });
+    const [moreRef, moreInView] = useInViewOnce({ rootMargin: '-60px' });
+    const [ctaRef, ctaInView] = useInViewOnce({ rootMargin: '-80px' });
 
     const categories = useMemo(() => {
         const uniqueCategories = new Set(projects.map((project) => project.category));
@@ -279,12 +269,9 @@ const Projects = () => {
             </div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    className="text-center mb-16 sm:mb-20"
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+                <div
+                    ref={headerRef}
+                    className={`text-center mb-16 sm:mb-20 ${headerInView ? 'anim-fade-in-up' : 'opacity-0'}`}
                 >
                     <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
                     <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
@@ -296,45 +283,37 @@ const Projects = () => {
 
                     <div className="mt-10 flex flex-wrap justify-center gap-3">
                         {categories.map((category) => (
-                            <motion.button
+                            <button
                                 key={category}
                                 type="button"
                                 aria-label={`Filter projects by ${category}`}
                                 onClick={() => setFilter(category)}
-                                whileTap={{ scale: 0.97 }}
-                                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-all duration-300 ${
+                                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-all duration-300 active:scale-[0.97] ${
                                     filter === category
                                         ? 'bg-cyan-300 text-[#041122] border-cyan-200 shadow-[0_0_24px_rgba(0,243,255,0.28)]'
                                         : 'bg-[#101728]/70 text-gray-300 border-white/10 hover:border-cyan-300/35 hover:text-white'
                                 }`}
                             >
                                 {category}
-                            </motion.button>
+                            </button>
                         ))}
                     </div>
-                </motion.div>
+                </div>
 
-                <motion.div layout={!liteMode} className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
-                    <AnimatePresence mode={liteMode ? 'sync' : 'popLayout'}>
-                        {visibleFeaturedProjects.map((project, index) => (
-                            <FeaturedProjectCard key={project.title} project={project} index={index} liteMode={liteMode} />
-                        ))}
-                    </AnimatePresence>
+                <div className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
+                    {visibleFeaturedProjects.map((project, index) => (
+                        <FeaturedProjectCard key={project.title} project={project} index={index} liteMode={liteMode} />
+                    ))}
                     {featuredProjects.length === 0 && (
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-center text-gray-500 py-14 font-mono text-sm tracking-[0.12em] uppercase"
-                        >
+                        <p className="anim-fade-in text-center text-gray-500 py-14 font-mono text-sm tracking-[0.12em] uppercase">
                             {'// No featured projects found in this category'}
-                        </motion.p>
+                        </p>
                     )}
                     {liteMode && featuredProjects.length > featuredPreviewCount && (
                         <div className="text-center pt-1">
-                            <motion.button
+                            <button
                                 onClick={() => setShowAllFeatured((prev) => !prev)}
-                                whileTap={{ scale: 0.97 }}
-                                className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a]"
+                                className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a] active:scale-[0.97]"
                             >
                                 <span>{showAllFeatured ? 'Show Fewer Featured' : 'View More Featured'}</span>
                                 <svg
@@ -345,37 +324,32 @@ const Projects = () => {
                                 >
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
-                            </motion.button>
+                            </button>
                         </div>
                     )}
-                </motion.div>
+                </div>
 
                 {otherProjects.length > 0 && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 16 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-60px' }}
-                        transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
+                    <div
+                        ref={moreRef}
+                        className={moreInView ? 'anim-fade-in-up' : 'opacity-0'}
                     >
                         <div className="flex items-center gap-6 mb-9">
                             <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">More Projects</h3>
                             <div className="h-px bg-gradient-to-r from-white/20 to-transparent flex-grow" />
                         </div>
 
-                        <motion.div layout={!liteMode} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <AnimatePresence mode={liteMode ? 'sync' : 'popLayout'}>
-                                {visibleOtherProjects.map((project) => (
-                                    <SmallProjectCard key={project.title} project={project} liteMode={liteMode} />
-                                ))}
-                            </AnimatePresence>
-                        </motion.div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {visibleOtherProjects.map((project) => (
+                                <SmallProjectCard key={project.title} project={project} liteMode={liteMode} />
+                            ))}
+                        </div>
 
                         {otherProjects.length > otherPreviewCount && (
                             <div className="text-center mt-12">
-                                <motion.button
+                                <button
                                     onClick={() => setShowAll((prev) => !prev)}
-                                    whileTap={{ scale: 0.97 }}
-                                    className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a]"
+                                    className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a] active:scale-[0.97]"
                                 >
                                     <span>{showAll ? 'Show Less' : 'View More Projects'}</span>
                                     <svg
@@ -386,18 +360,15 @@ const Projects = () => {
                                     >
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
-                                </motion.button>
+                                </button>
                             </div>
                         )}
-                    </motion.div>
+                    </div>
                 )}
 
-                <motion.div
-                    className="mt-28 sm:mt-36"
-                    initial={{ opacity: 0, y: 28 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+                <div
+                    ref={ctaRef}
+                    className={`mt-28 sm:mt-36 ${ctaInView ? 'anim-fade-in-up' : 'opacity-0'}`}
                 >
                     <div className="panel-surface rounded-[2rem] p-10 sm:p-14 md:p-16 text-center max-w-5xl mx-auto relative overflow-hidden">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,243,255,0.14),transparent_44%),radial-gradient(circle_at_88%_78%,rgba(188,19,254,0.14),transparent_42%)] pointer-events-none" />
@@ -417,7 +388,7 @@ const Projects = () => {
                             </svg>
                         </a>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

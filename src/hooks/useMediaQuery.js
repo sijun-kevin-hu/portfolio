@@ -24,7 +24,7 @@ export function useMediaQuery(query) {
 
         const handleChange = () => setMatches(mediaQuery.matches);
 
-        handleChange();
+        setMatches(mediaQuery.matches);
         if (typeof mediaQuery.addEventListener === 'function') {
             mediaQuery.addEventListener('change', handleChange);
             return () => mediaQuery.removeEventListener('change', handleChange);

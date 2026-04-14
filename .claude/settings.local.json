@@ -14,7 +14,13 @@
       "Bash(node -e \"const di = require\\(''react-icons/di''\\); const keys = Object.keys\\(di\\); keys.filter\\(k => k.toLowerCase\\(\\).includes\\(''c#''\\) || k.toLowerCase\\(\\).includes\\(''csharp''\\) || k.toLowerCase\\(\\).includes\\(''java''\\)\\).forEach\\(k => console.log\\(k\\)\\);\")",
       "Bash(find /Users/kevinhu/Programming/Portfolio/portfolio/src -type f \\\\\\(-name *.jsx -o -name *.tsx -o -name *.js -o -name *.ts \\\\\\))",
       "mcp__Claude_Preview__preview_start",
-      "Bash(npx react-scripts:*)"
+      "Bash(npx react-scripts:*)",
+      "Bash(du -sh /Users/kevinhu/Programming/Portfolio/portfolio/public/*)",
+      "Bash(xargs ls:*)",
+      "Bash(npm run:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot"
     ]
   }
 }
