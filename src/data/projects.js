@@ -38,7 +38,8 @@ export const projects = [
         description: "Insurance is easier to understand when the roof is caving in. Break My House turns home-insurance risk into an interactive 3D strategy game where players trigger five disasters, buy protections with a $50,000 reserve, and see how each decision changes the damage, payout, and odds of staying solvent.",
         tech_img: [IconReact, IconThreejs, IconVite],
         technologies: ["React", "Three.js", "Vite"],
-        github: null,
+        github: 'https://github.com/sijun-kevin-hu/break-my-house',
+        liveSite: 'https://break-my-house.vercel.app',
         category: "Full-Stack",
         featured: true
     },
