@@ -15,7 +15,9 @@ import {
     IconSklearn,
     IconStreamlit,
     IconTailwind,
-    IconTypeScript
+    IconThreejs,
+    IconTypeScript,
+    IconVite
 } from './techIcons';
 
 export function getTagTone(category) {
@@ -32,8 +34,17 @@ export function getTagTone(category) {
 
 export const projects = [
     {
+        title: "Break My House",
+        description: "Insurance is easier to understand when the roof is caving in. Break My House turns home-insurance risk into an interactive 3D strategy game where players trigger five disasters, buy protections with a $50,000 reserve, and see how each decision changes the damage, payout, and odds of staying solvent.",
+        tech_img: [IconReact, IconThreejs, IconVite],
+        technologies: ["React", "Three.js", "Vite"],
+        github: null,
+        category: "Full-Stack",
+        featured: true
+    },
+    {
         title: "Financial Regression Pipeline",
-        description: "Data-driven foresight. This end-to-end ML pipeline forecasts earnings yield by integrating financial ratios with firm culture scores. Leveraging Pandas and scikit-learn for advanced feature engineering, it reduces model error by ~70%, turning complex market data into actionable predictions.",
+        description: "Can company culture help predict market value? This end-to-end ML pipeline combines financial ratios with firm culture scores to forecast earnings yield, using feature engineering and scikit-learn to cut model error by roughly 70%.",
         tech_img: [IconPython, IconPandas, IconNumpy, IconSklearn],
         technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
         github: null,
@@ -43,7 +54,7 @@ export const projects = [
     },
     {
         title: "Clash Royale Matchup Predictor",
-        description: "Predicting the unpredictable. This end-to-end ML pipeline forecasts 1v1 Clash Royale battle outcomes by integrating deck composition, card levels, and trophy differentials. Leveraging a custom BFS crawler, Optuna-tuned XGBoost, and a Streamlit dashboard with per-matchup explainability, it turns complex game state into actionable win/loss probabilities.",
+        description: "Bringing data science to the arena. This ML pipeline crawls live Clash Royale data and turns decks, card levels, and trophy gaps into explainable win probabilities through an Optuna-tuned XGBoost model and interactive Streamlit dashboard.",
         tech_img: [IconPython, IconPandas, IconSklearn, IconStreamlit],
         technologies: ["Python", "Pandas", "scikit-learn", "Clash Royale API"],
         github: 'https://github.com/sijun-kevin-hu/clash_predict',
@@ -53,7 +64,7 @@ export const projects = [
     },
     {
         title: "Tap Detail",
-        description: "A comprehensive business management platform for mobile auto detailers. It streamlines the entire workflow - from client booking and appointment management to automated reminders and earnings tracking - giving detailers a professional edge and clients a seamless experience.",
+        description: "The command center for mobile auto detailers. Tap Detail handles booking, scheduling, reminders, client management, and earnings in one polished workflow—helping independent operators spend less time on admin and more time growing their business.",
         tech_img: [IconNext, IconFirebase, IconTypeScript, IconTailwind],
         technologies: ["Next.js", "Firebase", "TypeScript", "Tailwind"],
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
@@ -63,7 +74,7 @@ export const projects = [
     },
     {
         title: "Infinite Story Universe",
-        description: "Collaborative storytelling evolved. This platform orchestrates generative AI pipelines via Vertex AI to build branching narratives based on real-time user consensus. It implements dynamic prompt-chaining to ensure narrative consistency across an ever-expanding multiverse.",
+        description: "What if every reader helped write the next chapter? Infinite Story Universe uses Vertex AI, live voting, and prompt chaining to create branching stories that stay coherent as the community builds an ever-expanding multiverse.",
         tech_img: [IconReact, IconTypeScript, IconFirebase],
         technologies: ["React", "TypeScript", "Firebase", "Vertex AI"],
         github: 'https://github.com/sijun-kevin-hu/infinite_story_universe',
@@ -73,7 +84,7 @@ export const projects = [
     },
     {
         title: "Spotistats",
-        description: "Why wait for December? Spotistats gives you your Spotify Wrapped insights year-round. Built with Android and Firebase, it visualizes your top artists and tracks, lets you add friends, and keeps your music stats synchronized in real-time.",
+        description: "Spotify Wrapped, minus the twelve-month wait. Spotistats turns listening history into year-round insights for top artists and tracks, with friend connections and real-time syncing powered by Android and Firebase.",
         tech_img: [IconJava, IconFirebase, IconAndroid],
         technologies: ["Java", "Firebase", "Android SDK"],
         github: 'https://github.com/sijun-kevin-hu/SpotifyWrapped/tree/main',
@@ -82,7 +93,7 @@ export const projects = [
     },
     {
         title: "BubbledIn",
-        description: "Communicate clearly in the chaos. BubbledIn creates private 'audio bubbles' for teams in loud environments like hackathons. It combines WebRTC for crystal-clear voice streaming with AI-powered live transcription, ensuring you never miss a word.",
+        description: "Built for conversations that refuse to wait for a quiet room. BubbledIn creates private WebRTC audio bubbles with AI-powered live transcription, helping teams hear and understand each other in noisy spaces like hackathons.",
         tech_img: [IconReact, IconTypeScript, IconFirebase],
         technologies: ["React", "TypeScript", "Firebase"],
         github: 'https://github.com/elenesturua/BubbledIn',
@@ -92,7 +103,7 @@ export const projects = [
     },
     {
         title: "DreamCatcher",
-        description: "Subconscious visualization. This application leverages NLP and diffusion model orchestration to translate personal journals into generative art. Powered by a Flask-React architecture, it processes complex semantic inputs to create unique, high-fidelity dream representations.",
+        description: "A journal that dreams in pictures. DreamCatcher uses NLP and diffusion models to turn personal entries into original artwork, with a Flask and React pipeline that transforms messy subconscious thoughts into something users can actually see.",
         tech_img: [IconReact, IconFlask, IconFirebase],
         technologies: ["React", "Flask", "Firebase"],
         github: 'https://github.com/jamesrm67/hacklytics-2025',
@@ -101,7 +112,7 @@ export const projects = [
     },
     {
         title: "AdaLens",
-        description: "Vision for everyone. AdaLens integrates multimodal LLMs to perform real-time semantic analysis on web imagery. It automates web accessibility by transforming visual assets into WCAG-compliant metadata, bridging the gap between visual content and screen readers.",
+        description: "The web has a vision problem. AdaLens uses multimodal LLMs to analyze images in real time and generate WCAG-ready metadata, helping screen-reader users access visual content that would otherwise remain invisible.",
         tech_img: [IconTypeScript, IconFlask, IconPython],
         technologies: ["TypeScript", "Flask", "Python"],
         github: 'https://github.com/sijun-kevin-hu/AdaLens',
@@ -111,7 +122,7 @@ export const projects = [
     },
     {
         title: "Book Club",
-        description: "A digital gathering place for bibliophiles. This full-stack app lets users log their reading journey, manage collections, and connect with a community of readers. Built with Flask and React, it’s designed to keep your reading life organized and social.",
+        description: "Good books deserve better than a forgotten notes app. Book Club lets readers log progress, organize collections, and connect with fellow readers through a full-stack Flask and React experience.",
         tech_img: [IconReact, IconPython, IconFlask],
         technologies: ["React", "Python", "Flask"],
         github: "https://github.com/sijun-kevin-hu/BookClub",
@@ -120,7 +131,7 @@ export const projects = [
     },
     {
         title: "Poker Profit Tracker",
-        description: "Know your game. This tracker helps poker players log sessions, analyze win rates, and manage their bankroll. Built with a robust JavaEE backend, it provides the data-driven insights needed to take your game from gambling to investing.",
+        description: "Know when you’re running hot—and when the math disagrees. Poker Profit Tracker logs sessions, win rates, and bankroll performance through a JavaEE backend, turning scattered results into a clearer picture of your game.",
         tech_img: [IconJava, IconMysql, IconHtml, IconCss],
         technologies: ["Java", "MySQL", "HTML5", "CSS3"],
         github: "https://github.com/sijun-kevin-hu/PokerProfitTracker",
@@ -129,7 +140,7 @@ export const projects = [
     },
     {
         title: "Course Scheduler",
-        description: "Your academic personal assistant. This Android app helps students juggle courses, assignments, and deadlines. With features for schedule planning and weekly task prioritization, it’s designed to keep your GPA high and your stress low.",
+        description: "Built for students whose deadlines all seem to land at once. This Android app organizes courses, assignments, schedules, and weekly priorities so users spend less time juggling tasks and more time finishing them.",
         tech_img: [IconJava, IconAndroid],
         technologies: ["Java", "Android SDK"],
         github: 'https://github.com/sijun-kevin-hu/Scheduler',
@@ -138,7 +149,7 @@ export const projects = [
     },
     {
         title: "Atlanta News Scraper",
-        description: "Local news, aggregated. This Python-based scraper pulls the latest headlines from Fox 5 Atlanta, presenting them in a clean, readable format. It’s a custom-built tool for staying informed without the clutter.",
+        description: "Atlanta headlines without the homepage clutter. This Python and Flask scraper collects the latest Fox 5 stories and presents them in one clean feed for a faster daily news check.",
         tech_img: [IconPython, IconFlask],
         technologies: ["Python", "Flask"],
         github: 'https://github.com/sijun-kevin-hu/Atlanta-News-Scraper',
@@ -147,7 +158,7 @@ export const projects = [
     },
     {
         title: "Restaurant Website",
-        description: "A digital storefront for a local favorite. This responsive website showcases the menu, location, and story of a Chinese buffet. It’s designed to drive foot traffic and reservations through an inviting and accessible online presence.",
+        description: "A neighborhood favorite needed a better front door. This responsive website brings a local Chinese buffet’s menu, story, and location online, giving customers a quick path from browsing to visiting.",
         tech_img: [IconHtml, IconCss, IconJavaScript],
         technologies: ["HTML5", "CSS3", "JavaScript"],
         github: 'https://github.com/sijun-kevin-hu/chinabuffet-website',
@@ -157,7 +168,7 @@ export const projects = [
     },
     {
         title: "Portfolio Website",
-        description: "The site you're on right now! A showcase of my journey as a developer, built with React and Tailwind to be fast, responsive, and a little bit stylish.",
+        description: "Yes, this project is a little recursive. I built this portfolio with React and Tailwind to showcase my work through a fast, responsive interface with polished motion, accessible interactions, and just enough personality.",
         tech_img: [IconReact, IconJavaScript, IconTailwind, IconCss, IconHtml],
         technologies: ["React", "JavaScript", "Tailwind", "CSS3", "HTML5"],
         github: 'https://github.com/sijun-kevin-hu/portfolio',

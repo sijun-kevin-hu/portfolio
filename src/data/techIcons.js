@@ -9,6 +9,8 @@ export {
   SiMysql as IconSql,
   SiMysql as IconMysql,
   SiReact as IconReact,
+  SiThreedotjs as IconThreejs,
+  SiVite as IconVite,
   SiAngular as IconAngular,
   SiNextdotjs as IconNext,
   SiTailwindcss as IconTailwind,
