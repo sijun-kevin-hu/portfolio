@@ -1,7 +1,8 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import NavbarLite from './components/NavbarLite';
 import HeroLite from './components/HeroLite';
 import Marquee from './components/Marquee';
+import ContactCTA from './components/ContactCTA';
 import { MOBILE_MEDIA_QUERY } from './constants';
 import { useMediaQuery } from './hooks/useMediaQuery';
 import './index.css';
@@ -16,62 +17,6 @@ const ProjectsDesktop = lazy(() => import('./components/Projects'));
 const ProjectsLite = lazy(() => import('./components/ProjectsLite'));
 const FooterDesktop = lazy(() => import('./components/Footer'));
 const FooterLite = lazy(() => import('./components/FooterLite'));
-
-const DeferredSection = ({
-  enabled,
-  rootMargin = '220px 0px',
-  placeholderClassName = 'min-h-[70vh]',
-  children
-}) => {
-  const [shouldRender, setShouldRender] = useState(!enabled);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    if (!enabled) {
-      setShouldRender(true);
-    }
-  }, [enabled]);
-
-  useEffect(() => {
-    if (!enabled || shouldRender) {
-      return undefined;
-    }
-
-    if (typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function') {
-      setShouldRender(true);
-      return undefined;
-    }
-
-    const target = sectionRef.current;
-    if (!target) {
-      setShouldRender(true);
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setShouldRender(true);
-          observer.disconnect();
-        }
-      },
-      {
-        root: null,
-        rootMargin,
-        threshold: 0.01
-      }
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [enabled, rootMargin, shouldRender]);
-
-  return (
-    <div ref={sectionRef}>
-      {shouldRender ? children : <div className={`deferred-placeholder w-full ${placeholderClassName}`} aria-hidden="true" />}
-    </div>
-  );
-};
 
 function App() {
   const useLiteVisuals = useMediaQuery(MOBILE_MEDIA_QUERY);
@@ -160,56 +105,34 @@ function App() {
           <Marquee />
           <div className="section-divider" aria-hidden="true" />
 
-          <DeferredSection
-            enabled={useLiteVisuals}
-            rootMargin="260px 0px"
-            placeholderClassName="min-h-[86vh]"
-          >
-            <Suspense fallback={sectionFallback}>
-              <div className="section-shell">
-                <IntroductionComponent />
-              </div>
-            </Suspense>
-          </DeferredSection>
+          <Suspense fallback={sectionFallback}>
+            <div className="section-shell">
+              <ProjectsComponent />
+            </div>
+          </Suspense>
 
           <div className="section-divider" aria-hidden="true" />
-          <DeferredSection
-            enabled={useLiteVisuals}
-            rootMargin="220px 0px"
-            placeholderClassName="min-h-[84vh]"
-          >
-            <Suspense fallback={sectionFallback}>
-              <div className="section-shell">
-                <TechStackComponent />
-              </div>
-            </Suspense>
-          </DeferredSection>
+          <Suspense fallback={sectionFallback}>
+            <div className="section-shell">
+              <IntroductionComponent />
+            </div>
+          </Suspense>
 
           <div className="section-divider" aria-hidden="true" />
-          <DeferredSection
-            enabled={useLiteVisuals}
-            rootMargin="180px 0px"
-            placeholderClassName="min-h-[115vh]"
-          >
-            <Suspense fallback={sectionFallback}>
-              <div className="section-shell">
-                <ProjectsComponent />
-              </div>
-            </Suspense>
-          </DeferredSection>
+          <Suspense fallback={sectionFallback}>
+            <div className="section-shell">
+              <TechStackComponent />
+            </div>
+          </Suspense>
+
+          <div className="section-divider" aria-hidden="true" />
+          <ContactCTA />
         </main>
 
         <div className="section-divider" aria-hidden="true" />
-
-        <DeferredSection
-          enabled={useLiteVisuals}
-          rootMargin="160px 0px"
-          placeholderClassName="min-h-[30vh]"
-        >
-          <Suspense fallback={null}>
-            <FooterComponent />
-          </Suspense>
-        </DeferredSection>
+        <Suspense fallback={null}>
+          <FooterComponent />
+        </Suspense>
       </div>
     </div>
   );

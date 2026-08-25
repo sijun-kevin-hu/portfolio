@@ -50,7 +50,11 @@ const TechStack = () => {
     }, [activeTab]);
 
     return (
-        <section className="section-padding relative overflow-hidden py-24 sm:py-28" id="skills">
+        <section
+            className="section-padding relative overflow-hidden py-24 sm:py-28"
+            id="skills"
+            aria-labelledby="skills-heading"
+        >
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#070c17]/45 to-[#060a14]/70" />
                 <div className="absolute inset-0 grid-overlay-tight opacity-[0.08]" />
@@ -64,7 +68,7 @@ const TechStack = () => {
                     className={`text-center mb-14 sm:mb-16 ${headerInView ? 'anim-fade-in-down' : 'opacity-0'}`}
                 >
                     <h2 className="text-cyan-300 uppercase font-mono text-xs sm:text-sm tracking-[0.2em] mb-4">Capabilities</h2>
-                    <h2 className="display-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
+                    <h2 id="skills-heading" className="display-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 tracking-tight">
                         Tech <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Stack</span>
                     </h2>
                 </div>

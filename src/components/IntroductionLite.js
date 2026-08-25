@@ -1,5 +1,9 @@
 const IntroductionLite = () => (
-  <section className="section-padding relative overflow-hidden py-24 sm:py-28" id="about">
+  <section
+    className="section-padding relative overflow-hidden py-24 sm:py-28"
+    id="about"
+    aria-labelledby="about-heading"
+  >
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-1/4 right-0 w-[420px] h-[420px] bg-cyan-500/10 rounded-full blur-[70px] opacity-30" />
       <div className="absolute bottom-0 left-0 w-[420px] h-[420px] bg-purple-500/10 rounded-full blur-[70px] opacity-30" />
@@ -9,7 +13,7 @@ const IntroductionLite = () => (
     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-14 sm:mb-16">
         <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">DISCOVER</h2>
-        <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">
+        <h2 id="about-heading" className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 tracking-tight">
           About
           {' '}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
-import { CONTACT_INFO, MOBILE_MEDIA_QUERY } from '../constants';
+import { MOBILE_MEDIA_QUERY } from '../constants';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useInViewOnce } from '../hooks/useInViewOnce';
 
@@ -227,11 +227,9 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
 const Projects = () => {
     const [filter, setFilter] = useState('All');
     const [showAll, setShowAll] = useState(false);
-    const [showAllFeatured, setShowAllFeatured] = useState(false);
     const liteMode = useMediaQuery(MOBILE_MEDIA_QUERY);
     const [headerRef, headerInView] = useInViewOnce({ rootMargin: '-80px' });
     const [moreRef, moreInView] = useInViewOnce({ rootMargin: '-60px' });
-    const [ctaRef, ctaInView] = useInViewOnce({ rootMargin: '-80px' });
 
     const categories = useMemo(() => {
         const uniqueCategories = new Set(projects.map((project) => project.category));
@@ -245,12 +243,7 @@ const Projects = () => {
 
     const featuredProjects = useMemo(() => filteredProjects.filter((project) => project.featured), [filteredProjects]);
     const otherProjects = useMemo(() => filteredProjects.filter((project) => !project.featured), [filteredProjects]);
-    const featuredPreviewCount = liteMode ? 2 : featuredProjects.length;
     const otherPreviewCount = liteMode ? 2 : 3;
-    const visibleFeaturedProjects = useMemo(
-        () => (showAllFeatured ? featuredProjects : featuredProjects.slice(0, featuredPreviewCount)),
-        [featuredProjects, featuredPreviewCount, showAllFeatured]
-    );
     const visibleOtherProjects = useMemo(
         () => (showAll ? otherProjects : otherProjects.slice(0, otherPreviewCount)),
         [otherProjects, otherPreviewCount, showAll]
@@ -258,11 +251,14 @@ const Projects = () => {
 
     useEffect(() => {
         setShowAll(false);
-        setShowAllFeatured(false);
     }, [filter]);
 
     return (
-        <section className="section-padding relative overflow-hidden py-28 sm:py-32" id="projects">
+        <section
+            className="section-padding relative overflow-hidden py-28 sm:py-32"
+            id="projects"
+            aria-labelledby="projects-heading"
+        >
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-0 right-0 w-[560px] h-[560px] bg-cyan-500/8 rounded-full blur-[90px] opacity-35" />
                 <div className="absolute bottom-0 left-0 w-[560px] h-[560px] bg-purple-500/8 rounded-full blur-[90px] opacity-35" />
@@ -274,7 +270,7 @@ const Projects = () => {
                     className={`text-center mb-16 sm:mb-20 ${headerInView ? 'anim-fade-in-up' : 'opacity-0'}`}
                 >
                     <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
-                    <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+                    <h2 id="projects-heading" className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
                         Featured <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">Projects</span>
                     </h2>
                     <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
@@ -301,31 +297,13 @@ const Projects = () => {
                 </div>
 
                 <div className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
-                    {visibleFeaturedProjects.map((project, index) => (
+                    {featuredProjects.map((project, index) => (
                         <FeaturedProjectCard key={project.title} project={project} index={index} liteMode={liteMode} />
                     ))}
                     {featuredProjects.length === 0 && (
                         <p className="anim-fade-in text-center text-gray-500 py-14 font-mono text-sm tracking-[0.12em] uppercase">
                             {'// No featured projects found in this category'}
                         </p>
-                    )}
-                    {liteMode && featuredProjects.length > featuredPreviewCount && (
-                        <div className="text-center pt-1">
-                            <button
-                                onClick={() => setShowAllFeatured((prev) => !prev)}
-                                className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a] active:scale-[0.97]"
-                            >
-                                <span>{showAllFeatured ? 'Show Fewer Featured' : 'View More Featured'}</span>
-                                <svg
-                                    className={`w-4 h-4 transition-transform duration-300 ${showAllFeatured ? 'rotate-180' : ''}`}
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                        </div>
                     )}
                 </div>
 
@@ -366,29 +344,6 @@ const Projects = () => {
                     </div>
                 )}
 
-                <div
-                    ref={ctaRef}
-                    className={`mt-28 sm:mt-36 ${ctaInView ? 'anim-fade-in-up' : 'opacity-0'}`}
-                >
-                    <div className="panel-surface rounded-[2rem] p-10 sm:p-14 md:p-16 text-center max-w-5xl mx-auto relative overflow-hidden">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,243,255,0.14),transparent_44%),radial-gradient(circle_at_88%_78%,rgba(188,19,254,0.14),transparent_42%)] pointer-events-none" />
-                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight relative z-10">
-                            Ready to start a project?
-                        </h3>
-                        <p className="text-gray-300 mt-5 mb-9 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed relative z-10">
-                            Connect with me if you're interested in working together or just want to connect.
-                        </p>
-                        <a
-                            href={`mailto:${CONTACT_INFO.email}`}
-                            className="button-sheen relative z-10 inline-flex items-center gap-3 px-9 py-4 rounded-full font-semibold bg-white text-black hover:bg-cyan-100 shadow-[0_10px_28px_rgba(255,255,255,0.2)]"
-                        >
-                            <span>Let&apos;s Talk</span>
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
             </div>
         </section>
     );

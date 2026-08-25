@@ -12,7 +12,7 @@ export const CAROUSEL_PHRASES = {
 };
 
 export const NAV_LINKS = [
+    { href: '#projects', label: 'Projects' },
     { href: '#about', label: 'About' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#projects', label: 'Projects' }
+    { href: '#skills', label: 'Skills' }
 ];
