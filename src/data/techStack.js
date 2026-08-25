@@ -26,12 +26,12 @@ import {
 
 export const technicalLanguages = [
     { name: "Python",     icon: IconPython,     color: "from-blue-500 to-blue-600",     iconColor: "#3776AB" },
-    { name: "Java",       icon: IconJava,       color: "from-orange-500 to-orange-600", iconColor: "#ED8B00" },
+    { name: "C#",         icon: IconCSharp,     color: "from-purple-600 to-purple-700", iconColor: "#9B59D0" },
     { name: "JavaScript", icon: IconJavaScript, color: "from-yellow-400 to-yellow-500", iconColor: "#F7DF1E" },
     { name: "TypeScript", icon: IconTypeScript, color: "from-blue-500 to-blue-600",     iconColor: "#3178C6" },
+    { name: "Java",       icon: IconJava,       color: "from-orange-500 to-orange-600", iconColor: "#ED8B00" },
     { name: "C",          icon: IconC,          color: "from-gray-400 to-gray-500",     iconColor: "#A8B9CC" },
     { name: "C++",        icon: IconCpp,        color: "from-blue-600 to-blue-700",     iconColor: "#00599C" },
-    { name: "C#",         icon: IconCSharp,     color: "from-purple-600 to-purple-700", iconColor: "#9B59D0" },
     { name: "HTML",       icon: IconHtml,       color: "from-orange-600 to-orange-700", iconColor: "#E34F26" },
     { name: "CSS",        icon: IconCss,        color: "from-blue-400 to-blue-500",     iconColor: "#1572B6" },
     { name: "SQL",        icon: IconSql,        color: "from-blue-500 to-blue-600",     iconColor: "#4479A1" },
