@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import App from './App';
+import { CONTACT_INFO } from './constants';
 import { projects } from './data/projects';
 import { technicalFrameworks, technicalLanguages, technicalTools } from './data/techStack';
 
@@ -61,7 +62,7 @@ test('keeps navigation targets mounted and orders proof before supporting contex
   const projectsSection = screen.getByRole('region', { name: /Featured Projects/i });
   const aboutSection = screen.getByRole('region', { name: /About Me/i });
   const skillsSection = screen.getByRole('region', { name: /How I Build/i });
-  const contactSection = screen.getByRole('region', { name: /Ready to start a project/i });
+  const contactSection = screen.getByRole('region', { name: /Let's work together/i });
 
   expect(projectsSection).toBeInTheDocument();
   expect(aboutSection).toBeInTheDocument();
@@ -79,7 +80,7 @@ test('keeps navigation targets mounted and orders proof before supporting contex
 test('matches the navigation to the page flow and keeps the hero action focused', async () => {
   render(<App />);
 
-  const navigation = screen.getByRole('navigation');
+  const navigation = screen.getByRole('navigation', { name: /Primary navigation/i });
   const navLinks = within(navigation).getAllByRole('link').filter((link) => (
     ['Projects', 'About', 'Skills'].includes(link.textContent.trim())
   ));
@@ -141,4 +142,26 @@ test('presents skills by capability without dropping the existing stack', async 
 
   expect(within(skillsSection).queryByRole('button', { name: /Filter skills/i })).not.toBeInTheDocument();
   expect(within(skillsSection).queryByText(/Sys\.Ver|Status: Online/i)).not.toBeInTheDocument();
+});
+
+test('ends with one focused contact invitation and a minimal footer', async () => {
+  render(<App />);
+
+  const contactSection = await screen.findByRole('region', { name: /Let's work together/i });
+  const footer = screen.getByRole('contentinfo');
+  const footerNavigation = within(footer).getByRole('navigation', { name: /Footer navigation/i });
+
+  expect(within(contactSection).getByRole('link', { name: /Email Kevin/i })).toHaveAttribute('href', `mailto:${CONTACT_INFO.email}`);
+  expect(within(contactSection).getByRole('link', { name: /LinkedIn/i })).toHaveAttribute('href', CONTACT_INFO.linkedin);
+  expect(within(contactSection).getByRole('link', { name: /GitHub/i })).toHaveAttribute('href', CONTACT_INFO.github);
+
+  expect(within(footer).queryByText(/Get In Touch|Connect/i)).not.toBeInTheDocument();
+  expect(within(footer).queryByRole('link', { name: CONTACT_INFO.email })).not.toBeInTheDocument();
+  expect(within(footer).getByText(CONTACT_INFO.location)).toBeInTheDocument();
+  expect(within(footerNavigation).getAllByRole('link').map((link) => link.textContent.trim())).toEqual([
+    'Projects',
+    'About',
+    'Skills',
+    'Resume',
+  ]);
 });
