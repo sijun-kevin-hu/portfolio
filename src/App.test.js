@@ -70,6 +70,9 @@ test('keeps navigation targets mounted and orders proof before supporting contex
   expect(projectsSection.compareDocumentPosition(aboutSection)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
   expect(aboutSection.compareDocumentPosition(skillsSection)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
   expect(skillsSection.compareDocumentPosition(contactSection)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+
+  expect(within(aboutSection).getByText(/turn ambiguous problems into software people can use/i)).toBeInTheDocument();
+  expect(within(aboutSection).queryByText(/Let(?:'|’)s Connect/i)).not.toBeInTheDocument();
 });
 
 test('matches the navigation to the page flow and keeps the hero action focused', async () => {
