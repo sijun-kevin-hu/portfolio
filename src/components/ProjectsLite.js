@@ -55,7 +55,7 @@ const FeaturedProjectCardLite = ({ project, index }) => (
                 rel="noopener noreferrer"
                 className="button-sheen inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold bg-white text-black hover:bg-cyan-100 shadow-[0_8px_24px_rgba(255,255,255,0.18)]"
               >
-                <img src={githubImg} alt="GitHub" className="w-5 h-5" />
+                <img src={githubImg} alt="GitHub" width="20" height="20" className="w-5 h-5" />
                 <span>View Code</span>
               </a>
             )}
@@ -106,7 +106,7 @@ const SmallProjectCardLite = ({ project }) => {
               className="h-9 w-9 rounded-lg border border-white/10 bg-[#121829]/80 flex items-center justify-center"
               aria-label={`${project.title} source code`}
             >
-              <img src={githubImg} alt="GitHub" className="w-4 h-4 opacity-80" />
+              <img src={githubImg} alt="GitHub" width="16" height="16" className="w-4 h-4 opacity-80" />
             </a>
           )}
           {project.liveSite && (

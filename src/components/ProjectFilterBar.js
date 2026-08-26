@@ -28,7 +28,7 @@ const ProjectFilterBar = ({ activeFilter, onFilterChange }) => (
           aria-label={`Filter projects by ${label}`}
           aria-pressed={isActive}
           onClick={() => onFilterChange(label)}
-          className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-all duration-300 active:scale-[0.97] ${
+          className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-[color,background-color,border-color,box-shadow,transform] duration-300 active:scale-[0.97] ${
             isActive
               ? 'bg-cyan-300 text-[#041122] border-cyan-200 shadow-[0_0_24px_rgba(0,243,255,0.28)]'
               : 'bg-[#101728]/70 text-gray-300 border-white/10 hover:border-cyan-300/35 hover:text-white'

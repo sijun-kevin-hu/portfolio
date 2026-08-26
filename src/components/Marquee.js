@@ -35,10 +35,12 @@ const Marquee = () => (
       className="absolute inset-y-0 right-0 w-20 sm:w-28 pointer-events-none z-10"
       style={{ background: 'linear-gradient(to left, #05060c, transparent)' }}
     />
-    <div className="flex marquee-scroll" aria-hidden="true">
-      <MarqueeTrack />
-      <MarqueeTrack />
-      <MarqueeTrack />
+    <div className="marquee-shell">
+      <div className="flex marquee-scroll" aria-hidden="true">
+        <MarqueeTrack />
+        <MarqueeTrack />
+        <MarqueeTrack />
+      </div>
     </div>
   </div>
 );

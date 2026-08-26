@@ -72,6 +72,8 @@ const InteractiveBackground = () => {
         }
 
         let animationFrameId = 0;
+        let resizeFrameId = 0;
+        let positionFrameId = 0;
         let isDestroyed = false;
         let isInView = true;
         let isHidden = document.hidden;
@@ -85,6 +87,7 @@ const InteractiveBackground = () => {
             frameInterval: 1000 / 30,
             connectionDistance: 95,
             connectionDistanceSq: 95 * 95,
+            canvasRect: null,
             mouse: { x: null, y: null, radius: 90 },
             pointerClient: { x: null, y: null },
             particles: [],
@@ -106,7 +109,8 @@ const InteractiveBackground = () => {
                 return;
             }
 
-            const rect = canvas.getBoundingClientRect();
+            const rect = state.canvasRect;
+            if (!rect) return;
             const localX = x - rect.left;
             const localY = y - rect.top;
 
@@ -134,6 +138,7 @@ const InteractiveBackground = () => {
             canvas.style.width = `${state.width}px`;
             canvas.style.height = `${state.height}px`;
             ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+            state.canvasRect = canvas.getBoundingClientRect();
             updateMouseFromClient();
         };
 
@@ -154,8 +159,12 @@ const InteractiveBackground = () => {
         };
 
         const handleResize = () => {
-            setCanvasSize();
-            createParticles();
+            if (resizeFrameId) return;
+            resizeFrameId = requestAnimationFrame(() => {
+                setCanvasSize();
+                createParticles();
+                resizeFrameId = 0;
+            });
         };
 
         const handlePointerMove = (event) => {
@@ -173,10 +182,21 @@ const InteractiveBackground = () => {
 
         const handleVisibility = () => {
             isHidden = document.hidden;
+            if (isHidden && animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = 0;
+            } else {
+                scheduleFrame();
+            }
         };
 
         const handleScroll = () => {
-            updateMouseFromClient();
+            if (positionFrameId) return;
+            positionFrameId = requestAnimationFrame(() => {
+                state.canvasRect = canvas.getBoundingClientRect();
+                updateMouseFromClient();
+                positionFrameId = 0;
+            });
         };
 
         const buildGrid = () => {
@@ -353,27 +373,33 @@ const InteractiveBackground = () => {
 
         const isRunning = () => isInView && !isHidden;
 
-        const animate = (timestamp) => {
-            if (isDestroyed) {
-                return;
-            }
-
-            if (!isRunning()) {
+        function scheduleFrame() {
+            if (!isDestroyed && isRunning() && !animationFrameId) {
                 animationFrameId = requestAnimationFrame(animate);
-                return;
             }
+        }
+
+        function animate(timestamp) {
+            animationFrameId = 0;
+            if (isDestroyed || !isRunning()) return;
 
             if (timestamp - lastFrameTs >= state.frameInterval) {
                 lastFrameTs = timestamp;
                 draw(timestamp);
             }
 
-            animationFrameId = requestAnimationFrame(animate);
-        };
+            scheduleFrame();
+        }
 
         const observer = new IntersectionObserver(
             ([entry]) => {
                 isInView = Boolean(entry?.isIntersecting);
+                if (!isInView && animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = 0;
+                } else {
+                    scheduleFrame();
+                }
             },
             { threshold: 0.05 }
         );
@@ -387,12 +413,14 @@ const InteractiveBackground = () => {
         window.addEventListener('pointermove', handlePointerMove, { passive: true });
         window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
         document.addEventListener('visibilitychange', handleVisibility);
-        animationFrameId = requestAnimationFrame(animate);
+        scheduleFrame();
 
         return () => {
             isDestroyed = true;
             observer.disconnect();
             cancelAnimationFrame(animationFrameId);
+            cancelAnimationFrame(resizeFrameId);
+            cancelAnimationFrame(positionFrameId);
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('pointermove', handlePointerMove);

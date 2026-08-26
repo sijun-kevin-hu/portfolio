@@ -6,6 +6,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useInViewOnce } from '../hooks/useInViewOnce';
 import ProjectFilterBar from './ProjectFilterBar';
 import ProjectVisual from './ProjectVisual';
+import TechIconTooltip from './TechIconTooltip';
 
 const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
     const spotlightRef = useRef(null);
@@ -66,15 +67,16 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                         </p>
 
                         <div className="flex flex-wrap gap-2.5 pt-1">
-                            {project.tech_img.map((TechIcon, i) => (
-                                <div
-                                    key={i}
-                                    className="h-11 w-11 rounded-lg border border-white/10 bg-[#111729]/70 flex items-center justify-center hover:border-cyan-300/45 hover:bg-cyan-400/10 transition-all duration-300"
-                                    title={project.technologies[i] || 'Tech Stack'}
-                                >
-                                    <TechIcon className="w-5 h-5 text-gray-300" />
-                                </div>
-                            ))}
+                            {project.tech_img.map((TechIcon, i) => {
+                                const label = project.technologies[i] || 'Technology';
+                                return (
+                                    <TechIconTooltip
+                                        key={`${label}-${i}`}
+                                        icon={TechIcon}
+                                        label={label}
+                                    />
+                                );
+                            })}
                         </div>
 
                         <div className="flex flex-wrap gap-3 pt-2">
@@ -85,7 +87,7 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                                     rel="noopener noreferrer"
                                     className="button-sheen inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold bg-white text-black hover:bg-cyan-100 shadow-[0_8px_24px_rgba(255,255,255,0.18)]"
                                 >
-                                    <img src={githubImg} alt="GitHub" className="w-5 h-5" />
+                                    <img src={githubImg} alt="GitHub" width="20" height="20" className="w-5 h-5" />
                                     <span>View Code</span>
                                 </a>
                             )}
@@ -144,10 +146,10 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="h-9 w-9 rounded-lg border border-white/10 bg-[#121829]/80 flex items-center justify-center hover:bg-white hover:text-black transition-all"
+                            className="h-9 w-9 rounded-lg border border-white/10 bg-[#121829]/80 flex items-center justify-center hover:bg-white hover:text-black transition-[color,background-color,border-color,transform] duration-200 active:scale-[0.94]"
                             aria-label={`${project.title} source code`}
                         >
-                            <img src={githubImg} alt="GitHub" className="w-4 h-4 opacity-80" />
+                            <img src={githubImg} alt="GitHub" width="16" height="16" className="w-4 h-4 opacity-80" />
                         </a>
                     )}
                     {project.liveSite && (
@@ -155,7 +157,7 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
                             href={project.liveSite}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="h-9 w-9 rounded-lg border border-cyan-300/30 bg-cyan-400/10 text-cyan-200 flex items-center justify-center hover:bg-cyan-300 hover:text-[#051022] transition-all"
+                            className="h-9 w-9 rounded-lg border border-cyan-300/30 bg-cyan-400/10 text-cyan-200 flex items-center justify-center hover:bg-cyan-300 hover:text-[#051022] transition-[color,background-color,border-color,transform] duration-200 active:scale-[0.94]"
                             aria-label={`${project.title} live site`}
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,11 +188,17 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
             </div>
 
             <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-white/10">
-                {project.tech_img.slice(0, 4).map((TechIcon, index) => (
-                    <div key={index} className="h-8 w-8 rounded-md border border-white/10 bg-[#111729]/80 flex items-center justify-center">
-                        <TechIcon className="w-4 h-4 text-gray-300" />
-                    </div>
-                ))}
+                {project.tech_img.slice(0, 4).map((TechIcon, index) => {
+                    const label = project.technologies[index] || 'Technology';
+                    return (
+                        <TechIconTooltip
+                            key={`${label}-${index}`}
+                            icon={TechIcon}
+                            label={label}
+                            compact
+                        />
+                    );
+                })}
                 {project.tech_img.length > 4 && (
                     <span className="text-xs text-gray-500">+{project.tech_img.length - 4}</span>
                 )}

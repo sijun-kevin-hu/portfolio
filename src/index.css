@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,6 +11,7 @@
   --color-deep-bg: #0a0a0f;
   --ease-crisp: cubic-bezier(0.2, 0.88, 0.23, 1);
   --ease-smooth: cubic-bezier(0.16, 0.84, 0.44, 1);
+  --dur-fast: 180ms;
   --dur-base: 320ms;
   --dur-slow: 540ms;
 }
@@ -47,6 +46,12 @@ a,
 button,
 [role='button'] {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+:where(a, button, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid rgba(103, 232, 249, 0.95);
+  outline-offset: 3px;
 }
 
 ::-webkit-scrollbar {
@@ -187,13 +192,18 @@ html {
 .button-sheen {
   position: relative;
   overflow: hidden;
+  transition:
+    color var(--dur-fast) var(--ease-crisp),
+    background-color var(--dur-fast) var(--ease-crisp),
+    border-color var(--dur-fast) var(--ease-crisp),
+    transform var(--dur-fast) var(--ease-crisp);
 }
 
 .button-sheen::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -140%;
+  left: 0;
   width: 120%;
   height: 100%;
   background: linear-gradient(
@@ -202,11 +212,105 @@ html {
     rgba(255, 255, 255, 0.18) 45%,
     transparent 100%
   );
-  transition: left var(--dur-slow) var(--ease-crisp);
+  pointer-events: none;
+  transform: translate3d(-120%, 0, 0);
+  transition: transform var(--dur-slow) var(--ease-crisp);
 }
 
 .button-sheen:hover::after {
-  left: 120%;
+  transform: translate3d(120%, 0, 0);
+}
+
+.tech-tooltip {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.625rem;
+  background: rgba(17, 23, 41, 0.82);
+  color: rgb(209, 213, 219);
+  cursor: help;
+  transition:
+    color var(--dur-fast) var(--ease-crisp),
+    background-color var(--dur-fast) var(--ease-crisp),
+    border-color var(--dur-fast) var(--ease-crisp),
+    transform var(--dur-fast) var(--ease-crisp);
+}
+
+.tech-tooltip > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.tech-tooltip-compact {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+}
+
+.tech-tooltip-compact > svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.tech-tooltip:hover,
+.tech-tooltip:focus-visible {
+  z-index: 20;
+  color: rgb(207, 250, 254);
+  border-color: rgba(103, 232, 249, 0.52);
+  background: rgba(8, 46, 62, 0.94);
+  transform: translate3d(0, -2px, 0);
+}
+
+.tech-tooltip-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.65rem);
+  width: max-content;
+  max-width: 12rem;
+  padding: 0.38rem 0.55rem;
+  border: 1px solid rgba(103, 232, 249, 0.24);
+  border-radius: 0.45rem;
+  background: rgba(5, 10, 20, 0.98);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  color: rgb(236, 254, 255);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-50%, 0.4rem, 0) scale(0.96);
+  transform-origin: 50% 100%;
+  transition:
+    opacity var(--dur-fast) var(--ease-crisp),
+    transform var(--dur-fast) var(--ease-crisp);
+}
+
+.tech-tooltip-label::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-right: 1px solid rgba(103, 232, 249, 0.24);
+  border-bottom: 1px solid rgba(103, 232, 249, 0.24);
+  background: rgba(5, 10, 20, 0.98);
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
+}
+
+.tech-tooltip:hover .tech-tooltip-label,
+.tech-tooltip:focus-visible .tech-tooltip-label {
+  opacity: 1;
+  transform: translate3d(-50%, 0, 0) scale(1);
 }
 
 .ambient-scan {
@@ -432,6 +536,12 @@ p,
   will-change: transform;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .marquee-shell:hover .marquee-scroll {
+    animation-play-state: paused;
+  }
+}
+
 @keyframes marqueeScroll {
   from { transform: translateX(0); }
   to { transform: translateX(-33.333%); }
@@ -472,8 +582,8 @@ p,
 
 /* Staggered intro (replaces framer-motion itemVariants) */
 @keyframes introUp {
-  from { opacity: 0; transform: translateY(26px); filter: blur(8px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: 0; transform: translate3d(0, 26px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 .anim-intro-up {
   opacity: 0;
@@ -545,13 +655,16 @@ p,
 
 /* Mobile menu reveal */
 .mobile-menu-enter {
-  clip-path: circle(0% at 100% 0%);
   opacity: 0;
-  transition: clip-path 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transform: translate3d(0, -0.75rem, 0) scale(0.985);
+  transform-origin: 100% 0;
+  transition:
+    opacity var(--dur-base) var(--ease-crisp),
+    transform var(--dur-base) var(--ease-crisp);
 }
 .mobile-menu-enter-active {
-  clip-path: circle(150% at 100% 0%);
   opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {

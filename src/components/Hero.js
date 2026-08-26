@@ -28,7 +28,7 @@ const Hero = () => {
         const content = contentRef.current;
         if (!container || !content) return undefined;
 
-        let ticking = false;
+        let frameId = 0;
         const update = () => {
             const rect = container.getBoundingClientRect();
             const progress = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height)));
@@ -36,20 +36,27 @@ const Hero = () => {
             const opacity = progress < 0.7 ? 1 : 1 - ((progress - 0.7) / 0.3) * 0.2;
             content.style.transform = `translate3d(0, ${y}px, 0)`;
             content.style.opacity = String(opacity);
-            ticking = false;
+            frameId = 0;
         };
         const onScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(update);
-                ticking = true;
+            if (!frameId) {
+                frameId = window.requestAnimationFrame(update);
             }
         };
         update();
         window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            if (frameId) window.cancelAnimationFrame(frameId);
+        };
     }, [reducedMotion]);
 
     useEffect(() => {
+        if (reducedMotion) {
+            setDisplayedText(words[0]);
+            return undefined;
+        }
+
         const currentWord = words[wordIndex];
         const timeout = setTimeout(() => {
             const nextText = isDeleting
@@ -75,7 +82,7 @@ const Hero = () => {
         }, typingSpeed);
 
         return () => clearTimeout(timeout);
-    }, [displayedText, isDeleting, typingSpeed, wordIndex, words]);
+    }, [displayedText, isDeleting, reducedMotion, typingSpeed, wordIndex, words]);
 
     // Staggered delay helper
     const introDelay = (i) => (shouldAnimateIntro ? { animationDelay: `${120 + i * 80}ms` } : undefined);
@@ -194,7 +201,7 @@ const Hero = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <img src={social.logo} alt={social.alt} className="w-6 h-6 opacity-90 grayscale hover:grayscale-0 transition-all duration-300" />
+                                    <img src={social.logo} alt={social.alt} width="24" height="24" className="w-6 h-6 opacity-90 grayscale hover:grayscale-0 transition-[filter,opacity] duration-300" />
                                 </a>
                             ))}
                         </div>
@@ -204,7 +211,7 @@ const Hero = () => {
 
             <div className="absolute inset-x-0 bottom-8 z-20 flex justify-center pointer-events-none">
                 <button
-                    className={`pointer-events-auto flex flex-col items-center gap-2 text-cyan-200/85 hover:text-white transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.96] ${reducedMotion ? '' : 'anim-bounce-y'}`}
+                    className={`pointer-events-auto flex flex-col items-center gap-2 text-cyan-200/85 hover:text-white transition-[color,transform] duration-200 hover:-translate-y-0.5 active:scale-[0.96] ${reducedMotion ? '' : 'anim-bounce-y'}`}
                     onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
                 >
                     <span className="text-[10px] font-mono tracking-[0.24em] uppercase">Scroll</span>

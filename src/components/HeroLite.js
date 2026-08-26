@@ -90,7 +90,7 @@ const HeroLite = () => (
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={social.logo} alt={social.alt} className="w-6 h-6 opacity-90" />
+                <img src={social.logo} alt={social.alt} width="24" height="24" className="w-6 h-6 opacity-90" />
               </a>
             ))}
           </div>
