@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
+import ProjectFilterBar from './ProjectFilterBar';
 import ProjectVisual from './ProjectVisual';
 
 const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
@@ -162,24 +163,18 @@ const ProjectsLite = () => {
   const [filter, setFilter] = useState('All');
   const [showAll, setShowAll] = useState(false);
 
-  const categories = useMemo(() => {
-    const uniqueCategories = new Set(projects.map((project) => project.category));
-    const preferredOrder = ['AI/ML', 'Full-Stack', 'Mobile'];
-    return ['All', ...preferredOrder.filter((category) => uniqueCategories.has(category))];
-  }, []);
-
   const filteredProjects = useMemo(
     () => projects.filter((project) => (filter === 'All' ? true : project.category === filter)),
     [filter]
   );
 
   const featuredProjects = useMemo(
-    () => filteredProjects.filter((project) => project.featured),
-    [filteredProjects]
+    () => projects.filter((project) => project.featured),
+    []
   );
   const otherProjects = useMemo(
-    () => filteredProjects.filter((project) => !project.featured),
-    [filteredProjects]
+    () => projects.filter((project) => !project.featured),
+    []
   );
 
   const otherPreviewCount = 2;
@@ -187,9 +182,10 @@ const ProjectsLite = () => {
     ? otherProjects
     : otherProjects.slice(0, otherPreviewCount);
 
-  useEffect(() => {
+  const handleFilterChange = (nextFilter) => {
+    setFilter(nextFilter);
     setShowAll(false);
-  }, [filter]);
+  };
 
   return (
     <section
@@ -206,80 +202,78 @@ const ProjectsLite = () => {
         <div className="text-center mb-16 sm:mb-20">
           <h2 className="text-cyan-300 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase mb-4">Selected Works</h2>
           <h2 id="projects-heading" className="display-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            Featured
+            {filter === 'All' ? 'Featured' : filter}
             {' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-white to-purple-300">
               Projects
             </span>
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-            A curated collection of projects spanning AI systems, web apps, and mobile products.
+            {filter === 'All'
+              ? 'A curated collection of projects spanning AI systems, web apps, and mobile products.'
+              : `Showing every ${filter} project in the collection.`}
           </p>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                aria-label={`Filter projects by ${category}`}
-                onClick={() => setFilter(category)}
-                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide border transition-all duration-300 ${
-                  filter === category
-                    ? 'bg-cyan-300 text-[#041122] border-cyan-200 shadow-[0_0_24px_rgba(0,243,255,0.28)]'
-                    : 'bg-[#101728]/70 text-gray-300 border-white/10 hover:border-cyan-300/35 hover:text-white'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <ProjectFilterBar activeFilter={filter} onFilterChange={handleFilterChange} />
         </div>
 
-        <div className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
-          {featuredProjects.map((project, index) => (
-            <FeaturedProjectCardLite key={project.title} project={project} index={index} />
-          ))}
-
-          {featuredProjects.length === 0 && (
-            <p className="text-center text-gray-500 py-14 font-mono text-sm tracking-[0.12em] uppercase">
-              {'// No featured projects found in this category'}
-            </p>
-          )}
-
-        </div>
-
-        {otherProjects.length > 0 && (
-          <div>
-            <div className="flex items-center gap-6 mb-9">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">More Projects</h3>
-              <div className="h-px bg-gradient-to-r from-white/20 to-transparent flex-grow" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visibleOtherProjects.map((project) => (
-                <SmallProjectCardLite key={project.title} project={project} />
+        {filter === 'All' ? (
+          <>
+            <div className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
+              {featuredProjects.map((project, index) => (
+                <FeaturedProjectCardLite key={project.title} project={project} index={index} />
               ))}
             </div>
 
-            {otherProjects.length > otherPreviewCount && (
-              <div className="text-center mt-12">
-                <button
-                  type="button"
-                  onClick={() => setShowAll((prev) => !prev)}
-                  className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a]"
-                >
-                  <span>{showAll ? 'Show Less' : 'View More Projects'}</span>
-                  <svg
-                    className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
+            {otherProjects.length > 0 && (
+              <div>
+                <div className="flex items-center gap-6 mb-9">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">More Projects</h3>
+                  <div className="h-px bg-gradient-to-r from-white/20 to-transparent flex-grow" />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {visibleOtherProjects.map((project) => (
+                    <SmallProjectCardLite key={project.title} project={project} />
+                  ))}
+                </div>
+
+                {otherProjects.length > otherPreviewCount && (
+                  <div className="text-center mt-12">
+                    <button
+                      type="button"
+                      onClick={() => setShowAll((prev) => !prev)}
+                      className="button-sheen inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-[#11192c]/80 text-white hover:border-cyan-300/40 hover:bg-[#13203a]"
+                    >
+                      <span>{showAll ? 'Show Less' : 'View More Projects'}</span>
+                      <svg
+                        className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
               </div>
             )}
+          </>
+        ) : (
+          <div key={filter} className="anim-fade-in">
+            <p
+              className="mb-8 text-center font-mono text-xs sm:text-sm tracking-[0.14em] uppercase text-cyan-200"
+              role="status"
+              aria-live="polite"
+            >
+              {filteredProjects.length} {filter} {filteredProjects.length === 1 ? 'project' : 'projects'}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProjects.map((project) => (
+                <SmallProjectCardLite key={project.title} project={project} />
+              ))}
+            </div>
           </div>
         )}
 

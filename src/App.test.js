@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import App from './App';
 import { projects } from './data/projects';
 
@@ -98,4 +98,21 @@ test('keeps a focused four-project featured collection without a secondary revea
     'AdaLens',
   ]);
   expect(featuredProjects.every((project) => project.visual?.src && project.visual?.alt)).toBe(true);
+});
+
+test('shows category filters as a unified project view', async () => {
+  render(<App />);
+
+  const projectsSection = await screen.findByRole('region', { name: /Featured Projects/i });
+  const mobileFilter = within(projectsSection).getByRole('button', { name: /Filter projects by Mobile/i });
+
+  fireEvent.click(mobileFilter);
+
+  expect(mobileFilter).toHaveAttribute('aria-pressed', 'true');
+  expect(within(projectsSection).getByRole('heading', { name: /Mobile Projects/i })).toBeInTheDocument();
+  expect(within(projectsSection).getByRole('status')).toHaveTextContent('2 Mobile projects');
+  expect(within(projectsSection).getByRole('heading', { name: 'Spotistats' })).toBeInTheDocument();
+  expect(within(projectsSection).getByRole('heading', { name: 'Course Scheduler' })).toBeInTheDocument();
+  expect(within(projectsSection).queryByText(/No featured projects found/i)).not.toBeInTheDocument();
+  expect(within(projectsSection).queryByRole('heading', { name: /More Projects/i })).not.toBeInTheDocument();
 });
