@@ -4,6 +4,7 @@ import githubImg from '../images/github.png';
 import { MOBILE_MEDIA_QUERY } from '../constants';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useInViewOnce } from '../hooks/useInViewOnce';
+import ProjectVisual from './ProjectVisual';
 
 const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
     const spotlightRef = useRef(null);
@@ -45,7 +46,7 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                 </div>
 
                 <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-12 items-center">
-                    <div className="lg:col-span-7 space-y-6">
+                    <div className="lg:col-span-6 space-y-6">
                         <div className="flex flex-wrap items-center gap-3">
                             <span className={`px-4 py-1.5 rounded-full text-xs sm:text-sm border font-semibold tracking-wide ${getTagTone(project.category)}`}>
                                 {project.category}
@@ -111,35 +112,8 @@ const FeaturedProjectCard = React.memo(({ project, index, liteMode }) => {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-5 h-full min-h-[320px] sm:min-h-[360px] relative overflow-hidden rounded-2xl border border-white/10 bg-[#0b1020]">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,243,255,0.16),transparent_42%),radial-gradient(circle_at_80%_80%,rgba(188,19,254,0.16),transparent_42%),linear-gradient(160deg,#121a30,#0a0f1c)]" />
-                        <div className="absolute inset-0 grid-overlay-tight opacity-30" />
-                        {!liteMode && (
-                            <div className="absolute -inset-12 bg-gradient-to-r from-transparent via-cyan-300/15 to-transparent anim-shimmer-slide" />
-                        )}
-
-                        <div className="absolute inset-5 rounded-xl border border-white/10 bg-[#0a1122]/90 shadow-2xl overflow-hidden flex flex-col items-center justify-center gap-5 p-6">
-                            <p className="text-[10px] font-mono tracking-[0.28em] uppercase text-cyan-200/55 relative z-10">
-                                {project.category}
-                            </p>
-                            <div className="relative z-10 grid grid-cols-3 gap-2.5">
-                                {project.tech_img.slice(0, 6).map((TechIcon, i) => (
-                                    <div
-                                        key={i}
-                                        className="h-12 w-12 rounded-xl border border-white/10 bg-[#0c1525]/80 flex items-center justify-center"
-                                    >
-                                        <TechIcon className="w-6 h-6 text-gray-300" />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="relative z-10 text-center">
-                                <p className="text-[10px] font-mono text-gray-500 tracking-[0.16em] uppercase mb-1">Stack</p>
-                                <p className="text-white font-semibold text-sm">{project.title}</p>
-                            </div>
-                            <div className="absolute bottom-3 right-4 text-[5rem] font-bold text-white/[0.04] leading-none select-none pointer-events-none">
-                                {String(index + 1).padStart(2, '0')}
-                            </div>
-                        </div>
+                    <div className="lg:col-span-6">
+                        <ProjectVisual project={project} />
                     </div>
                 </div>
             </div>

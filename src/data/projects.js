@@ -41,6 +41,14 @@ export const projects = [
         github: 'https://github.com/sijun-kevin-hu/break-my-house',
         liveSite: 'https://break-my-house.vercel.app',
         category: "Full-Stack",
+        visual: {
+            src: '/project-visuals/break-my-house.jpg',
+            alt: 'Break My House interactive 3D home insurance game with a cutaway house and prevention controls',
+            label: 'Interactive 3D Game',
+            width: 1440,
+            height: 900,
+            position: 'center center'
+        },
         featured: true
     },
     {
@@ -61,6 +69,14 @@ export const projects = [
         github: 'https://github.com/sijun-kevin-hu/clash_predict',
         liveSite: 'https://clashpredict.streamlit.app',
         category: "AI/ML",
+        visual: {
+            src: '/project-visuals/clash-predictor.jpg',
+            alt: 'Clash Royale Matchup Predictor interface with player tag inputs and prediction controls',
+            label: 'Live ML Predictor',
+            width: 1280,
+            height: 720,
+            position: 'center top'
+        },
         featured: true
     },
     {
@@ -71,6 +87,14 @@ export const projects = [
         github: 'https://github.com/sijun-kevin-hu/tap-detail-app',
         liveSite: 'https://tapdetail.com',
         category: "Full-Stack",
+        visual: {
+            src: '/project-visuals/tap-detail.jpg',
+            alt: 'Tap Detail business dashboard showing revenue, completed jobs, clients, and the daily schedule',
+            label: 'Product Dashboard',
+            width: 1280,
+            height: 720,
+            position: 'center center'
+        },
         featured: true
     },
     {
@@ -119,6 +143,14 @@ export const projects = [
         github: 'https://github.com/sijun-kevin-hu/AdaLens',
         liveSite: 'https://chromewebstore.google.com/detail/adalens/kjiefilplldbhlgandhkdpemmnceldod',
         category: "AI/ML",
+        visual: {
+            src: '/project-visuals/adalens.png',
+            alt: 'AdaLens accessibility test page comparing an image with existing alt text and one requiring AI-generated alt text',
+            label: 'Chrome Extension',
+            width: 1280,
+            height: 800,
+            position: 'center center'
+        },
         featured: true
     },
     {

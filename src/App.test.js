@@ -86,10 +86,13 @@ test('matches the navigation to the page flow and keeps the hero action focused'
 });
 
 test('keeps a focused four-project featured collection without a secondary reveal', () => {
-  expect(projects.filter((project) => project.featured).map((project) => project.title)).toEqual([
+  const featuredProjects = projects.filter((project) => project.featured);
+
+  expect(featuredProjects.map((project) => project.title)).toEqual([
     'Break My House',
     'Clash Royale Matchup Predictor',
     'Tap Detail',
     'AdaLens',
   ]);
+  expect(featuredProjects.every((project) => project.visual?.src && project.visual?.alt)).toBe(true);
 });

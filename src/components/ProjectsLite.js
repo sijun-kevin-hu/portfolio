@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
+import ProjectVisual from './ProjectVisual';
 
 const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
   <span
@@ -42,6 +43,8 @@ const FeaturedProjectCardLite = ({ project, index }) => (
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
             {project.description}
           </p>
+
+          <ProjectVisual project={project} />
 
           <div className="flex flex-wrap gap-3 pt-2">
             {project.github && (
