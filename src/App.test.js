@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import App from './App';
 import { projects } from './data/projects';
+import { technicalFrameworks, technicalLanguages, technicalTools } from './data/techStack';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -59,7 +60,7 @@ test('keeps navigation targets mounted and orders proof before supporting contex
 
   const projectsSection = screen.getByRole('region', { name: /Featured Projects/i });
   const aboutSection = screen.getByRole('region', { name: /About Me/i });
-  const skillsSection = screen.getByRole('region', { name: /Tech Stack/i });
+  const skillsSection = screen.getByRole('region', { name: /How I Build/i });
   const contactSection = screen.getByRole('region', { name: /Ready to start a project/i });
 
   expect(projectsSection).toBeInTheDocument();
@@ -115,4 +116,29 @@ test('shows category filters as a unified project view', async () => {
   expect(within(projectsSection).getByRole('heading', { name: 'Course Scheduler' })).toBeInTheDocument();
   expect(within(projectsSection).queryByText(/No featured projects found/i)).not.toBeInTheDocument();
   expect(within(projectsSection).queryByRole('heading', { name: /More Projects/i })).not.toBeInTheDocument();
+});
+
+test('presents skills by capability without dropping the existing stack', async () => {
+  render(<App />);
+
+  const skillsSection = await screen.findByRole('region', { name: /How I Build/i });
+  const aiCard = within(skillsSection).getByRole('article', { name: /AI \/ ML Systems/i });
+  const fullStackCard = within(skillsSection).getByRole('article', { name: /Full-Stack Products/i });
+  const toolkit = within(skillsSection).getByRole('region', { name: /Engineering Toolkit/i });
+  const additionalExperience = within(skillsSection).getByRole('region', { name: /Additional Experience/i });
+  const existingSkills = [...technicalLanguages, ...technicalFrameworks, ...technicalTools];
+
+  expect(within(fullStackCard).getByText('C#')).toBeInTheDocument();
+  expect(within(fullStackCard).getByText('SQL')).toBeInTheDocument();
+  expect(within(fullStackCard).getByText('Angular')).toBeInTheDocument();
+  expect(within(aiCard).queryByText('SQL')).not.toBeInTheDocument();
+  expect(within(toolkit).getByText('Firebase')).toBeInTheDocument();
+  expect(within(additionalExperience).getByText('Express')).toBeInTheDocument();
+  expect(within(additionalExperience).getByText('Flask')).toBeInTheDocument();
+  existingSkills.forEach(({ name }) => {
+    expect(within(skillsSection).getByText(name)).toBeInTheDocument();
+  });
+
+  expect(within(skillsSection).queryByRole('button', { name: /Filter skills/i })).not.toBeInTheDocument();
+  expect(within(skillsSection).queryByText(/Sys\.Ver|Status: Online/i)).not.toBeInTheDocument();
 });
