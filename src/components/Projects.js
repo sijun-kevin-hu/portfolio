@@ -146,10 +146,10 @@ const SmallProjectCard = React.memo(({ project, liteMode }) => {
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="h-9 w-9 rounded-lg border border-white/10 bg-[#121829]/80 flex items-center justify-center hover:bg-white hover:text-black transition-[color,background-color,border-color,transform] duration-200 active:scale-[0.94]"
+                            className="github-icon-button h-9 w-9 rounded-lg border flex items-center justify-center transition-[color,background-color,border-color,transform] duration-200 active:scale-[0.94]"
                             aria-label={`${project.title} source code`}
                         >
-                            <img src={githubImg} alt="GitHub" width="16" height="16" className="w-4 h-4 opacity-80" />
+                            <img src={githubImg} alt="GitHub" width="16" height="16" className="w-4 h-4" />
                         </a>
                     )}
                     {project.liveSite && (

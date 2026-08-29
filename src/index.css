@@ -189,6 +189,27 @@ html {
   opacity: var(--surface-glow-hover, 1);
 }
 
+.github-icon-button {
+  border-color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 22px rgba(255, 255, 255, 0.12);
+}
+
+.github-icon-button:hover {
+  border-color: rgba(165, 243, 252, 0.9);
+  background: rgb(207, 250, 254);
+}
+
+.github-social-icon {
+  opacity: 0.9;
+  filter: brightness(0) invert(1);
+}
+
+a:is(:hover, :focus-visible) .github-social-icon {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(91%) sepia(40%) saturate(1076%) hue-rotate(151deg) brightness(103%) contrast(99%);
+}
+
 .button-sheen {
   position: relative;
   overflow: hidden;

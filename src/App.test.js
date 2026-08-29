@@ -86,7 +86,13 @@ test('matches the navigation to the page flow and keeps the hero action focused'
   ));
 
   expect(navLinks.map((link) => link.textContent.trim())).toEqual(['Projects', 'About', 'Skills']);
-  expect(screen.getByRole('link', { name: /Download Resume/i })).toBeInTheDocument();
+  const resumeLink = screen.getByRole('link', { name: /View Resume/i });
+  expect(resumeLink).toHaveAttribute('href', '/resume.pdf');
+  expect(resumeLink).toHaveAttribute('target', '_blank');
+  expect(resumeLink).not.toHaveAttribute('download');
+  const downloadLink = screen.getByRole('link', { name: /Download PDF/i });
+  expect(downloadLink).toHaveAttribute('href', '/resume.pdf');
+  expect(downloadLink).toHaveAttribute('download', 'kevin-hu-resume.pdf');
   expect(screen.queryByRole('link', { name: /View Projects/i })).not.toBeInTheDocument();
 });
 

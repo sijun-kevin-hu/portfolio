@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import codeLogo from '../images/code-icon.png';
 import { NAV_LINKS } from '../constants';
+import { scrollToSection } from '../utils/navigation';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,19 +45,7 @@ const Navbar = () => {
     };
 
     const handleNavClick = (e, href) => {
-        e.preventDefault();
-        const targetId = href.substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-            const navbarHeight = window.innerWidth >= 1024 ? 80 : 64;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
+        scrollToSection(e, href);
 
         if (isMenuOpen) {
             closeMenu();
@@ -65,7 +54,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav aria-label="Primary navigation" className={`fixed top-0 w-full z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
+            <nav data-site-navbar aria-label="Primary navigation" className={`fixed top-0 w-full z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
                 scrolled
                     ? 'bg-[#070b15]/95 backdrop-blur-md shadow-lg border-b border-white/8'
                     : 'bg-transparent'

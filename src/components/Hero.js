@@ -170,15 +170,29 @@ const Hero = () => {
                         AI/ML engineer & full-stack builder. Crafting <span className="text-white font-medium">intelligent solutions</span> and <span className="text-white font-medium">immersive experiences</span> for the web of tomorrow.
                     </p>
 
-                    <div className={introClass} style={introDelay(3)}>
+                    <div
+                        className={`flex flex-col sm:flex-row items-center justify-center gap-3 ${introClass}`}
+                        style={introDelay(3)}
+                    >
+                        <a
+                            href="/resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="button-sheen relative inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)] transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98]"
+                        >
+                            View Resume
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h4a2 2 0 012 2v4m0-6l-9 9m5-2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h9" />
+                            </svg>
+                        </a>
                         <a
                             href="/resume.pdf"
                             download="kevin-hu-resume.pdf"
-                            className="button-sheen relative inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)] transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98]"
+                            className="inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-4 font-medium tracking-wide text-gray-200 transition-[color,background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-cyan-300/45 hover:bg-cyan-400/[0.08] hover:text-white active:scale-[0.98]"
                         >
-                            Download Resume
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            Download PDF
+                            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
                             </svg>
                         </a>
                     </div>
@@ -201,7 +215,7 @@ const Hero = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <img src={social.logo} alt={social.alt} width="24" height="24" className="w-6 h-6 opacity-90 grayscale hover:grayscale-0 transition-[filter,opacity] duration-300" />
+                                    <img src={social.logo} alt={social.alt} width="24" height="24" className={`w-6 h-6 transition-[filter,opacity] duration-300 ${social.alt === 'GitHub' ? 'github-social-icon' : 'opacity-90 grayscale hover:grayscale-0'}`} />
                                 </a>
                             ))}
                         </div>

@@ -1,10 +1,11 @@
 import { CONTACT_INFO } from '../constants';
+import { scrollToSection } from '../utils/navigation';
 
 const FOOTER_LINKS = [
   { label: 'Projects', href: '#projects' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Resume', href: '/resume.pdf', download: true },
+  { label: 'Resume', href: '/resume.pdf', external: true },
 ];
 
 const Footer = () => (
@@ -24,11 +25,13 @@ const Footer = () => (
 
         <nav aria-label="Footer navigation">
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            {FOOTER_LINKS.map(({ label, href, download }) => (
+            {FOOTER_LINKS.map(({ label, href, external }) => (
               <li key={label}>
                 <a
                   href={href}
-                  download={download || undefined}
+                  onClick={external ? undefined : (event) => scrollToSection(event, href)}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
                   className="text-sm text-gray-400 hover:text-cyan-200 transition-colors"
                 >
                   {label}

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import codeLogo from '../images/code-icon.png';
 import { NAV_LINKS } from '../constants';
+import { scrollToSection } from '../utils/navigation';
 
 const NavbarLite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav aria-label="Primary navigation" className="fixed top-0 w-full z-50 border-b border-white/8 bg-[#070b15]/95 backdrop-blur-md">
+    <nav data-site-navbar aria-label="Primary navigation" className="fixed top-0 w-full z-50 border-b border-white/8 bg-[#070b15]/95 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <a href="/" className="flex items-center gap-2">
@@ -21,6 +22,7 @@ const NavbarLite = () => {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(event) => scrollToSection(event, link.href)}
                 className="text-gray-300 hover:text-cyan-300 px-2 py-1 text-sm font-medium transition-colors"
               >
                 {link.label}
@@ -55,7 +57,10 @@ const NavbarLite = () => {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(event) => {
+                  scrollToSection(event, link.href);
+                  setIsMenuOpen(false);
+                }}
                 className="block rounded-md px-3 py-2 text-gray-200 hover:bg-cyan-500/10 hover:text-cyan-200 transition-colors"
               >
                 {link.label}

@@ -62,15 +62,26 @@ const HeroLite = () => (
           for the web.
         </p>
 
-        <div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button-sheen relative inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)]"
+          >
+            View Resume
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h4a2 2 0 0 1 2 2v4m0-6-9 9m5-2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h9" />
+            </svg>
+          </a>
           <a
             href="/resume.pdf"
             download="kevin-hu-resume.pdf"
-            className="button-sheen relative inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)]"
+            className="inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-4 font-medium tracking-wide text-gray-200 hover:border-cyan-300/45 hover:bg-cyan-400/[0.08] hover:text-white transition-colors"
           >
-            Download Resume
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0-3-3m3 3 3-3m2 8H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z" />
+            Download PDF
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
             </svg>
           </a>
         </div>
@@ -90,7 +101,7 @@ const HeroLite = () => (
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={social.logo} alt={social.alt} width="24" height="24" className="w-6 h-6 opacity-90" />
+                <img src={social.logo} alt={social.alt} width="24" height="24" className={`w-6 h-6 transition-[filter,opacity] duration-300 ${social.alt === 'GitHub' ? 'github-social-icon' : 'opacity-90'}`} />
               </a>
             ))}
           </div>
