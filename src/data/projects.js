@@ -32,7 +32,61 @@ export function getTagTone(category) {
     return 'bg-blue-500/12 text-blue-200 border-blue-300/35';
 }
 
+export const esportsProjects = [
+    {
+        title: 'GT Esports Hackathon',
+        role: 'Software Architect',
+        seasonTheme: '2026 season theme · TechHack Valley',
+        description: 'Architected the product and technical direction, translating the event vision into a buildable system that the developer team implemented.',
+        technologies: ['React', 'TypeScript', 'Vite'],
+        github: 'https://github.com/gt-esports/gtesports-hackathon-site',
+        liveSite: 'https://techhack.gatechesports.com',
+        visual: '/project-visuals/gt-esports-hackathon-mountains.png',
+        visualAlt: 'Pixel-art mountain landscape from the GT Esports Hackathon website',
+        logo: '/project-visuals/gt-esports-hackathon-logo.png',
+        featured: true,
+    },
+    {
+        title: 'GT Esports Main Website',
+        role: 'Technical Lead + Developer',
+        description: 'Led and contributed to the organization-wide redesign, then began the backend work needed to make site content easier to manage.',
+        technologies: ['React', 'TypeScript', 'Supabase'],
+        github: 'https://github.com/gt-esports/gtesports-website',
+        liveSite: 'https://www.gatechesports.com',
+        visual: '/project-visuals/gt-esports-main.jpg',
+        visualAlt: 'GT Esports main website landing imagery',
+    },
+    {
+        title: 'GameFest',
+        role: 'Technical Lead + Developer',
+        description: 'Served as technical lead and contributed to a platform overhaul for GT Esports’ annual gaming festival, spanning the public experience and event operations.',
+        technologies: ['React', 'TypeScript', 'Supabase'],
+        github: 'https://github.com/gt-esports/gamefest',
+        liveSite: 'https://gamefest.gatechesports.com',
+        visual: '/project-visuals/gamefest.jpg',
+        visualAlt: 'GameFest event website artwork',
+    },
+];
+
 export const projects = [
+    {
+        title: "Drive Intelligence",
+        description: "A driving intelligence platform that turns trip data into clear performance insights and useful feedback for safer, more informed decisions behind the wheel.",
+        tech_img: [IconNext, IconTypeScript, IconTailwind],
+        technologies: ["Next.js", "TypeScript", "Tailwind"],
+        github: 'https://github.com/sijun-kevin-hu/drive_intelligence',
+        category: "Full-Stack",
+        featured: true
+    },
+    {
+        title: "Safe to Spend",
+        description: "A privacy-first mobile budgeting app that turns balances, recurring obligations, and upcoming plans into one practical answer: what is actually safe to spend today.",
+        tech_img: [IconReact, IconTypeScript],
+        technologies: ["React Native", "TypeScript", "Supabase"],
+        github: 'https://github.com/sijun-kevin-hu/safe-to-spend',
+        category: "Mobile",
+        featured: true
+    },
     {
         title: "Break My House",
         description: "Insurance is easier to understand when the roof is caving in. Break My House turns home-insurance risk into an interactive 3D strategy game where players trigger five disasters, buy protections with a $50,000 reserve, and see how each decision changes the damage, payout, and odds of staying solvent.",
@@ -49,7 +103,7 @@ export const projects = [
             height: 900,
             position: 'center center'
         },
-        featured: true
+        featured: false
     },
     {
         title: "Financial Regression Pipeline",
@@ -57,12 +111,12 @@ export const projects = [
         tech_img: [IconPython, IconPandas, IconNumpy, IconSklearn],
         technologies: ["Python", "Pandas", "NumPy", "scikit-learn"],
         github: null,
-        repoNote: 'Georgia Tech internal repo — code samples available on request',
+        repoNote: 'Georgia Tech private repository — source code cannot be shared publicly.',
         category: "AI/ML",
         featured: false
     },
     {
-        title: "Clash Royale Matchup Predictor",
+        title: "Clash Predict",
         description: "Bringing data science to the arena. This ML pipeline crawls live Clash Royale data and turns decks, card levels, and trophy gaps into explainable win probabilities through an Optuna-tuned XGBoost model and interactive Streamlit dashboard.",
         tech_img: [IconPython, IconPandas, IconSklearn, IconStreamlit],
         technologies: ["Python", "Pandas", "scikit-learn", "Clash Royale API"],
@@ -151,7 +205,7 @@ export const projects = [
             height: 800,
             position: 'center center'
         },
-        featured: true
+        featured: false
     },
     {
         title: "Book Club",

@@ -3,6 +3,8 @@ import { projects, getTagTone } from '../data/projects';
 import githubImg from '../images/github.png';
 import ProjectFilterBar from './ProjectFilterBar';
 import ProjectVisual from './ProjectVisual';
+import EsportsBento from './EsportsBento';
+import { useClampedText } from '../hooks/useClampedText';
 
 const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
   <span
@@ -19,6 +21,8 @@ const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
   </span>
 );
 
+// Retained for filtered-layout parity with the earlier project presentation.
+// eslint-disable-next-line no-unused-vars
 const FeaturedProjectCardLite = ({ project, index }) => (
   <article className="relative group">
     <div className="panel-surface relative rounded-[2rem] p-6 md:p-10 lg:p-12">
@@ -89,7 +93,7 @@ const FeaturedProjectCardLite = ({ project, index }) => (
 
 const SmallProjectCardLite = ({ project }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const shouldTruncate = project.description.length > 135;
+  const { textRef, isClamped } = useClampedText(isExpanded);
 
   return (
     <article className="group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full">
@@ -128,10 +132,10 @@ const SmallProjectCardLite = ({ project }) => {
       <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 tracking-tight">{project.title}</h3>
 
       <div className="mb-5 flex-grow">
-        <p className={`text-sm text-gray-300 leading-relaxed ${!isExpanded ? 'line-clamp-4' : ''}`}>
+        <p ref={textRef} className={`text-sm text-gray-300 leading-relaxed ${!isExpanded ? 'line-clamp-4' : ''}`}>
           {project.description}
         </p>
-        {shouldTruncate && (
+        {(isClamped || isExpanded) && (
           <button
             type="button"
             onClick={() => setIsExpanded((prev) => !prev)}
@@ -139,6 +143,12 @@ const SmallProjectCardLite = ({ project }) => {
           >
             {isExpanded ? 'Show Less' : 'Read More'}
           </button>
+        )}
+        {project.repoNote && (
+          <p className="mt-4 inline-flex items-start gap-2 rounded-lg border border-amber-400/25 bg-amber-500/10 px-3 py-2 text-xs leading-relaxed text-amber-200">
+            <span aria-hidden="true">🔒</span>
+            <span>{project.repoNote}</span>
+          </p>
         )}
       </div>
 
@@ -168,16 +178,15 @@ const ProjectsLite = () => {
     [filter]
   );
 
-  const featuredProjects = useMemo(
-    () => projects.filter((project) => project.featured),
-    []
-  );
   const otherProjects = useMemo(
-    () => projects.filter((project) => !project.featured),
+    () => [
+      ...projects.filter((project) => project.featured),
+      ...projects.filter((project) => !project.featured),
+    ],
     []
   );
 
-  const otherPreviewCount = 2;
+  const otherPreviewCount = 4;
   const visibleOtherProjects = showAll
     ? otherProjects
     : otherProjects.slice(0, otherPreviewCount);
@@ -210,7 +219,7 @@ const ProjectsLite = () => {
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
             {filter === 'All'
-              ? 'A curated collection of projects spanning AI systems, web apps, and mobile products.'
+              ? 'Products I have architected, led, and built across community platforms, AI systems, web apps, and mobile.'
               : `Showing every ${filter} project in the collection.`}
           </p>
 
@@ -219,16 +228,12 @@ const ProjectsLite = () => {
 
         {filter === 'All' ? (
           <>
-            <div className="space-y-8 sm:space-y-10 mb-24 sm:mb-28">
-              {featuredProjects.map((project, index) => (
-                <FeaturedProjectCardLite key={project.title} project={project} index={index} />
-              ))}
-            </div>
+            <EsportsBento />
 
             {otherProjects.length > 0 && (
               <div>
                 <div className="flex items-center gap-6 mb-9">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">More Projects</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Other Projects</h3>
                   <div className="h-px bg-gradient-to-r from-white/20 to-transparent flex-grow" />
                 </div>
 

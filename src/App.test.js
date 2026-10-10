@@ -100,12 +100,12 @@ test('keeps a focused four-project featured collection without a secondary revea
   const featuredProjects = projects.filter((project) => project.featured);
 
   expect(featuredProjects.map((project) => project.title)).toEqual([
-    'Break My House',
-    'Clash Royale Matchup Predictor',
+    'Drive Intelligence',
+    'Safe to Spend',
+    'Clash Predict',
     'Tap Detail',
-    'AdaLens',
   ]);
-  expect(featuredProjects.every((project) => project.visual?.src && project.visual?.alt)).toBe(true);
+  expect(featuredProjects).toHaveLength(4);
 });
 
 test('shows category filters as a unified project view', async () => {
@@ -118,7 +118,8 @@ test('shows category filters as a unified project view', async () => {
 
   expect(mobileFilter).toHaveAttribute('aria-pressed', 'true');
   expect(within(projectsSection).getByRole('heading', { name: /Mobile Projects/i })).toBeInTheDocument();
-  expect(within(projectsSection).getByRole('status')).toHaveTextContent('2 Mobile projects');
+  expect(within(projectsSection).getByRole('status')).toHaveTextContent('3 Mobile projects');
+  expect(within(projectsSection).getByRole('heading', { name: 'Safe to Spend' })).toBeInTheDocument();
   expect(within(projectsSection).getByRole('heading', { name: 'Spotistats' })).toBeInTheDocument();
   expect(within(projectsSection).getByRole('heading', { name: 'Course Scheduler' })).toBeInTheDocument();
   expect(within(projectsSection).queryByText(/No featured projects found/i)).not.toBeInTheDocument();
