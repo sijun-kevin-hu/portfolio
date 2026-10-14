@@ -14,6 +14,9 @@ import {
     IconReact,
     IconSklearn,
     IconStreamlit,
+    IconSupabase,
+    IconGoogleDrive,
+    IconGemini,
     IconTailwind,
     IconThreejs,
     IconTypeScript,
@@ -71,9 +74,9 @@ export const esportsProjects = [
 export const projects = [
     {
         title: "Drive Intelligence",
-        description: "A driving intelligence platform that turns trip data into clear performance insights and useful feedback for safer, more informed decisions behind the wheel.",
-        tech_img: [IconNext, IconTypeScript, IconTailwind],
-        technologies: ["Next.js", "TypeScript", "Tailwind"],
+        description: "A Google Drive workspace governance tool shaped by 10+ user interviews. Built hybrid semantic and keyword search with Gemini embeddings and Supabase pgvector, plus naming checks and an approval queue for AI-proposed file organization changes.",
+        tech_img: [IconNext, IconTypeScript, IconSupabase, IconGemini, IconGoogleDrive, IconTailwind],
+        technologies: ["Next.js", "TypeScript", "Supabase / pgvector", "Gemini API", "Google Drive API", "Tailwind"],
         github: 'https://github.com/sijun-kevin-hu/drive_intelligence',
         category: "Full-Stack",
         featured: true

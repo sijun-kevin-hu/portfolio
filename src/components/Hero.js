@@ -1,8 +1,8 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef } from 'react';
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
 import gmailLogo from '../images/gmail-logo.png';
-import { CONTACT_INFO, CAROUSEL_PHRASES, MOBILE_MEDIA_QUERY } from '../constants';
+import { CONTACT_INFO, HERO_CONTENT, MOBILE_MEDIA_QUERY } from '../constants';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
 const InteractiveBackground = lazy(() => import('./InteractiveBackground'));
@@ -11,12 +11,7 @@ const prefersReducedMotionQuery = '(prefers-reduced-motion: reduce)';
 
 const Hero = () => {
     const reducedMotion = useMediaQuery(prefersReducedMotionQuery);
-    const [displayedText, setDisplayedText] = useState('');
-    const [wordIndex, setWordIndex] = useState(0);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [typingSpeed, setTypingSpeed] = useState(100);
     const useLiteVisuals = useMediaQuery(MOBILE_MEDIA_QUERY);
-    const words = CAROUSEL_PHRASES.words;
     const containerRef = useRef(null);
     const contentRef = useRef(null);
     const shouldAnimateIntro = !useLiteVisuals && !reducedMotion;
@@ -51,39 +46,6 @@ const Hero = () => {
         };
     }, [reducedMotion]);
 
-    useEffect(() => {
-        if (reducedMotion) {
-            setDisplayedText(words[0]);
-            return undefined;
-        }
-
-        const currentWord = words[wordIndex];
-        const timeout = setTimeout(() => {
-            const nextText = isDeleting
-                ? currentWord.slice(0, displayedText.length - 1)
-                : currentWord.slice(0, displayedText.length + 1);
-
-            setDisplayedText(nextText);
-
-            if (!isDeleting && nextText === currentWord) {
-                setIsDeleting(true);
-                setTypingSpeed(1700);
-                return;
-            }
-
-            if (isDeleting && nextText === '') {
-                setIsDeleting(false);
-                setWordIndex((prev) => (prev + 1) % words.length);
-                setTypingSpeed(120);
-                return;
-            }
-
-            setTypingSpeed(isDeleting ? 60 : 95);
-        }, typingSpeed);
-
-        return () => clearTimeout(timeout);
-    }, [displayedText, isDeleting, reducedMotion, typingSpeed, wordIndex, words]);
-
     // Staggered delay helper
     const introDelay = (i) => (shouldAnimateIntro ? { animationDelay: `${120 + i * 80}ms` } : undefined);
     const introClass = shouldAnimateIntro ? 'anim-intro-up' : '';
@@ -116,17 +78,10 @@ const Hero = () => {
                 <div className="text-center space-y-10">
                     <div className={`space-y-6 ${introClass}`} style={introDelay(0)}>
                         <div className={`flex flex-col sm:flex-row items-center justify-center gap-2.5 ${introClass}`} style={introDelay(1)}>
-                            <span className="inline-flex items-center rounded-full border border-cyan-300/45 bg-[linear-gradient(100deg,rgba(19,60,78,0.44)_0%,rgba(8,18,34,0.84)_52%,rgba(8,16,29,0.96)_100%)] px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.16),0_12px_34px_rgba(4,14,26,0.52)] backdrop-blur-md whitespace-nowrap">
-                                AI/ML ENGINEER
+                            <span className="inline-flex items-center rounded-full border border-cyan-300/45 bg-[linear-gradient(100deg,rgba(19,60,78,0.44)_0%,rgba(8,18,34,0.84)_52%,rgba(8,16,29,0.96)_100%)] px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.16),0_12px_34px_rgba(4,14,26,0.52)] backdrop-blur-md flex-wrap justify-center">
+                                SOFTWARE ENGINEER
                                 <span className="mx-2 sm:mx-4 text-cyan-300/90">•</span>
-                                FULL-STACK BUILDER
-                            </span>
-                            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/[0.08] text-green-300 text-[10px] sm:text-xs font-mono tracking-[0.14em] uppercase whitespace-nowrap">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-                                </span>
-                                Available
+                                FULL-STACK DEVELOPER
                             </span>
                         </div>
 
@@ -152,22 +107,16 @@ const Hero = () => {
                             </span>
                         </h1>
 
-                        <div className="min-h-[4rem] sm:min-h-[5rem] flex items-center justify-center overflow-hidden w-full">
-                            <div className="flex flex-col sm:flex-row items-center sm:items-baseline justify-center text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
-                                <span className="mb-2 sm:mb-0 sm:mr-3">I am a</span>
-                                <span className="text-cyan-300 font-semibold inline-flex items-center text-center sm:text-left justify-center sm:justify-start min-w-[280px] sm:min-w-[370px]">
-                                    <span>{displayedText}</span>
-                                    <span className="blink-cursor ml-1" />
-                                </span>
-                            </div>
-                        </div>
+                        <p className="text-base sm:text-xl text-gray-300">
+                            {HERO_CONTENT.education}
+                        </p>
                     </div>
 
                     <p
                         className={`text-base sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed ${introClass}`}
                         style={introDelay(2)}
                     >
-                        AI/ML engineer & full-stack builder. Crafting <span className="text-white font-medium">intelligent solutions</span> and <span className="text-white font-medium">immersive experiences</span> for the web of tomorrow.
+                        {HERO_CONTENT.description}
                     </p>
 
                     <div

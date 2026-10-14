@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
 import NavbarLite from './components/NavbarLite';
 import HeroLite from './components/HeroLite';
-import Marquee from './components/Marquee';
+import Affiliations from './components/Affiliations';
 import ContactCTA from './components/ContactCTA';
 import { MOBILE_MEDIA_QUERY } from './constants';
 import { useMediaQuery } from './hooks/useMediaQuery';
@@ -102,7 +102,7 @@ function App() {
           <Suspense fallback={<HeroLite />}>
             <HeroComponent />
           </Suspense>
-          <Marquee />
+          <Affiliations />
           <div className="section-divider" aria-hidden="true" />
 
           <Suspense fallback={sectionFallback}>

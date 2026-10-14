@@ -1,7 +1,7 @@
 import linkedInLogo from '../images/linkedin-logo.png';
 import githubLogo from '../images/github-logo.png';
 import gmailLogo from '../images/gmail-logo.png';
-import { CONTACT_INFO } from '../constants';
+import { CONTACT_INFO, HERO_CONTENT } from '../constants';
 
 const HeroLite = () => (
   <section className="hero-lite relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -18,17 +18,10 @@ const HeroLite = () => (
       <div className="space-y-8">
         <div className="space-y-5">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
-            <span className="hero-lite-pill inline-flex items-center rounded-full border border-cyan-300/40 bg-[#0b1427]/80 px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.15),0_12px_34px_rgba(4,14,26,0.5)] backdrop-blur-md whitespace-nowrap">
-              AI/ML ENGINEER
+            <span className="hero-lite-pill inline-flex items-center rounded-full border border-cyan-300/40 bg-[#0b1427]/80 px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.15),0_12px_34px_rgba(4,14,26,0.5)] backdrop-blur-md flex-wrap justify-center">
+              SOFTWARE ENGINEER
               <span className="mx-2 sm:mx-4 text-cyan-300/90">•</span>
-              FULL-STACK BUILDER
-            </span>
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/[0.08] text-green-300 text-[10px] sm:text-xs font-mono tracking-[0.14em] uppercase whitespace-nowrap">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-              </span>
-              Available
+              FULL-STACK DEVELOPER
             </span>
           </div>
 
@@ -39,27 +32,13 @@ const HeroLite = () => (
             </span>
           </h1>
 
-          <p className="text-xl sm:text-3xl md:text-4xl text-gray-300 font-light tracking-tight">
-            I am a
-            {' '}
-            <span className="hero-lite-rotator text-cyan-200 font-semibold">
-              <span>Software Engineer.</span>
-              <span>Product Builder.</span>
-              <span>AI/ML Creator.</span>
-            </span>
+          <p className="text-base sm:text-xl text-gray-300">
+            {HERO_CONTENT.education}
           </p>
         </div>
 
         <p className="text-base sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed hero-lite-copy">
-          AI/ML engineer & full-stack builder. Crafting
-          {' '}
-          <span className="text-white font-medium">intelligent solutions</span>
-          {' '}
-          and
-          {' '}
-          <span className="text-white font-medium">immersive experiences</span>
-          {' '}
-          for the web.
+          {HERO_CONTENT.description}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

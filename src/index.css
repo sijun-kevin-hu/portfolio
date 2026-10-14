@@ -777,3 +777,104 @@ p,
     scroll-behavior: auto !important;
   }
 }
+
+/* Quiet, spacious organization strip; original brand colors appear on interaction. */
+.affiliations {
+  position: relative;
+  padding: 58px 0 24px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  background: rgba(5,6,12,.55);
+}
+.affiliations h2 {
+  margin: 0 24px 32px;
+  text-align: center;
+  color: #a8b3c7;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.affiliations-viewport {
+  overflow-x: auto;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+.affiliations-viewport::-webkit-scrollbar { display: none; }
+.affiliations-track { display: flex; width: 100%; }
+.affiliations-group {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.affiliations-group li { flex: 1 0 280px; }
+.affiliation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 180px;
+  margin: 4px 12px;
+  border-radius: 8px;
+}
+.affiliation img {
+  width: 220px;
+  height: 86px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0) invert(.8);
+  opacity: .6;
+  transition: filter 300ms ease, opacity 300ms ease, transform 300ms ease;
+}
+.affiliation-gt-esports-full img { width: 156px; height: 156px; }
+.affiliation:hover img, .affiliation:focus-visible img {
+  filter: grayscale(0) brightness(1);
+  opacity: 1;
+  transform: translateY(-3px);
+}
+.affiliations-controls { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.affiliations-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  color: #a8b3c7;
+  font-size: 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+.affiliations-controls button:hover { color: white; border-color: #465267; }
+.affiliation:focus-visible, .affiliations-controls button:focus-visible { outline: 2px solid #a5f3fc; outline-offset: 2px; }
+@media (max-width: 600px) {
+  .affiliations { padding-top: 40px; }
+  .affiliations-group li { flex-basis: 240px; }
+  .affiliation img { width: 190px; }
+  .affiliation-gt-esports-full img { width: 156px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .affiliations-viewport { overflow: visible; mask-image: none; }
+  .affiliations-group { flex: 1; flex-wrap: wrap; }
+  .affiliations-group li { flex: 1 0 240px; }
+  .affiliations-copy { display: none; }
+  .affiliation img { transition: none; }
+}
+
+.affiliation .esports-lockup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  filter: grayscale(1) brightness(0) invert(.8);
+  opacity: .6;
+  transition: filter 300ms ease, opacity 300ms ease;
+}
+.affiliation .esports-lockup img { width: 64px; height: 64px; filter: none; opacity: 1; transform: none; }
+.esports-wordmark { display: flex; flex-direction: column; gap: 5px; white-space: nowrap; }
+.esports-wordmark strong { color: #b3a369; font-size: 16px; letter-spacing: .06em; }
+.esports-wordmark > span { color: white; font-size: 9px; letter-spacing: .13em; }
+.affiliation:hover .esports-lockup, .affiliation:focus-visible .esports-lockup { filter: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .affiliation .esports-lockup { transition: none; } }

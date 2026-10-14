@@ -1,0 +1,5 @@
+- tyler-technologies.png: https://www.tylertech.com/Portals/0/NavBar-Logo.png
+- gt-esports-full.png: https://gatechesports.com/assets/gt-esports-logo-I9VHGs18.png
+- state-farm.svg: https://upload.wikimedia.org/wikipedia/commons/9/9a/State_Farm_logo.svg (https://commons.wikimedia.org/wiki/File:State_Farm_logo.svg)
+- georgia-tech.svg: https://brand.gatech.edu/modules/contrib/gt_tools/images/gt-logo.svg (official white artwork rendered in Georgia Tech gold, #B3A369).
+- bdbi.webp: https://gtbigdatabigimpact.com/bdbi-logo.webp

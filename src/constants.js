@@ -7,8 +7,9 @@ export const CONTACT_INFO = {
     github: "https://github.com/sijun-kevin-hu",
 };
 
-export const CAROUSEL_PHRASES = {
-    words: ['Software Engineer.', 'Product-Minded Builder.', 'Full-Stack Developer.', 'AI/ML-Focused Learner.', 'Cloud-Oriented Engineer.', 'Clean Code Advocate.'],
+export const HERO_CONTENT = {
+    education: 'Georgia Tech CS · December 2026',
+    description: 'I build full-stack products, from responsive interfaces and APIs to authentication, databases, and deployment.',
 };
 
 export const NAV_LINKS = [

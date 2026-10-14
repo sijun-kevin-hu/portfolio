@@ -21,6 +21,8 @@ export {
   SiGit as IconGit,
   SiFirebase as IconFirebase,
   SiSupabase as IconSupabase,
+  SiGoogledrive as IconGoogleDrive,
+  SiGooglegemini as IconGemini,
   SiDocker as IconDocker,
   SiAndroid as IconAndroid,
   SiPandas as IconPandas,

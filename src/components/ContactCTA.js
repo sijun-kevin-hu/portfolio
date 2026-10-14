@@ -16,12 +16,6 @@ const ContactCTA = () => (
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-2.5 mb-5 rounded-full border border-emerald-300/20 bg-emerald-400/[0.07] px-3.5 py-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.75)]" aria-hidden="true" />
-              <span className="text-emerald-200 font-mono text-[10px] sm:text-xs tracking-[0.16em] uppercase">
-                Open to opportunities
-              </span>
-            </div>
 
             <h2
               id="contact-heading"
@@ -31,7 +25,7 @@ const ContactCTA = () => (
             </h2>
 
             <p className="text-gray-300 mt-6 max-w-2xl text-base sm:text-lg leading-relaxed break-normal [hyphens:none]">
-              I&apos;m looking for software engineering and AI/ML opportunities where I can help turn ambitious ideas into reliable, thoughtful products.
+              Always happy to connect with other builders. Reach out to talk software, share ideas, or compare notes on what you&apos;re building.
             </p>
           </div>
 

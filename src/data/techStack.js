@@ -76,19 +76,19 @@ const selectSkills = (names) => names.map((name) => skillsByName.get(name)).filt
 
 export const capabilityGroups = [
     {
+        id: 'full-stack',
+        label: 'Full-Stack Products',
+        description: 'I turn product ideas into responsive applications across interfaces, APIs, authentication, data, and deployment.',
+        skills: selectSkills(['React', 'Angular', 'C#', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript', 'SQL', 'TailwindCSS']),
+        evidence: ['GT Esports', 'Tap Detail', 'Drive Intelligence'],
+        accent: 'cyan'
+    },
+    {
         id: 'ai-ml',
         label: 'AI / ML Systems',
         description: 'I build end-to-end machine-learning features—from data preparation and model evaluation to explainable, product-facing inference.',
         skills: selectSkills(['Python', 'Pandas', 'NumPy', 'scikit-learn', 'Streamlit']),
         evidence: ['Clash Predictor', 'AdaLens', 'Financial Regression Pipeline'],
-        accent: 'cyan'
-    },
-    {
-        id: 'full-stack',
-        label: 'Full-Stack Products',
-        description: 'I turn product ideas into responsive applications across interfaces, APIs, authentication, data, and deployment.',
-        skills: selectSkills(['React', 'Angular', 'C#', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript', 'SQL', 'TailwindCSS']),
-        evidence: ['Tap Detail', 'Break My House', 'Infinite Story Universe'],
         accent: 'purple'
     }
 ];

@@ -1,9 +1,8 @@
 const TICKER_ITEMS = [
-  'Open to Opportunities',
   'Atlanta, GA',
   "GT CS '26",
-  'AI/ML Engineer',
-  'Full-Stack Builder',
+  'Software Engineer',
+  'Full-Stack Developer',
   'React',
   'Python',
   'Cloud-Native',
