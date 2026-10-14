@@ -74,7 +74,7 @@ export default function Affiliations() {
       <div className="affiliations-viewport" ref={viewport} onTouchStart={() => setPaused(true)}
         onFocus={() => setFocused(true)}
         onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
-        <div className="affiliations-track">
+        <div className="affiliations-track" style={{ '--affiliation-count': affiliations.length }}>
           {[false, true].map((duplicate) => (
             <ul key={String(duplicate)} ref={duplicate ? undefined : group}
               className={`affiliations-group${duplicate ? ' affiliations-copy' : ''}`}

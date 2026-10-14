@@ -90,10 +90,8 @@ test('matches the navigation to the page flow and keeps the hero action focused'
   expect(resumeLink).toHaveAttribute('href', '/resume.pdf');
   expect(resumeLink).toHaveAttribute('target', '_blank');
   expect(resumeLink).not.toHaveAttribute('download');
-  const downloadLink = screen.getByRole('link', { name: /Download PDF/i });
-  expect(downloadLink).toHaveAttribute('href', '/resume.pdf');
-  expect(downloadLink).toHaveAttribute('download', 'kevin-hu-resume.pdf');
-  expect(screen.queryByRole('link', { name: /View Projects/i })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /View Projects/i })).toHaveAttribute('href', '#projects');
+  expect(screen.queryByRole('link', { name: /Download PDF/i })).not.toBeInTheDocument();
 });
 
 test('keeps a focused four-project featured collection without a secondary reveal', () => {

@@ -15,7 +15,7 @@ const HeroLite = () => (
     </div>
 
     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 text-center">
-      <div className="space-y-8">
+      <div className="hero-entrance space-y-8">
         <div className="space-y-5">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
             <span className="hero-lite-pill inline-flex items-center rounded-full border border-cyan-300/40 bg-[#0b1427]/80 px-4 py-2 sm:px-8 sm:py-3 text-[0.58rem] sm:text-sm md:text-base font-mono uppercase tracking-[0.1em] sm:tracking-[0.22em] text-cyan-100 shadow-[0_0_0_1px_rgba(34,211,238,0.15),0_12px_34px_rgba(4,14,26,0.5)] backdrop-blur-md flex-wrap justify-center">
@@ -43,24 +43,22 @@ const HeroLite = () => (
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#projects"
             className="button-sheen relative inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)]"
           >
-            View Resume
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h4a2 2 0 0 1 2 2v4m0-6-9 9m5-2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h9" />
+            View Projects
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m-6-6 6 6 6-6" />
             </svg>
           </a>
           <a
             href="/resume.pdf"
-            download="kevin-hu-resume.pdf"
+            target="_blank" rel="noopener noreferrer"
             className="inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-4 font-medium tracking-wide text-gray-200 hover:border-cyan-300/45 hover:bg-cyan-400/[0.08] hover:text-white transition-colors"
           >
-            Download PDF
+            View Resume
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 4h6m0 0v6m0-6L10 14M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
             </svg>
           </a>
         </div>

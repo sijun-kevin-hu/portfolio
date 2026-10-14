@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInViewOnce } from '../hooks/useInViewOnce';
 import { esportsProjects } from '../data/projects';
 
 const ExternalArrow = () => (
@@ -7,8 +8,10 @@ const ExternalArrow = () => (
   </svg>
 );
 
-const EsportsCard = ({ project }) => (
-  <article className={`esports-card group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1220] ${project.featured ? 'esports-card-featured' : ''}`}>
+const EsportsCard = ({ project, index }) => {
+  const [revealRef, revealed] = useInViewOnce({ amount: 0.1 });
+  return (
+  <article ref={revealRef} style={{ '--reveal-delay': `${index * 70}ms` }} className={`project-feedback ${revealed ? 'project-reveal' : ''} esports-card group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0c1220] ${project.featured ? 'esports-card-featured' : ''}`}>
     <img
       src={project.visual}
       alt={project.visualAlt}
@@ -78,7 +81,8 @@ const EsportsCard = ({ project }) => (
       </div>
     </div>
   </article>
-);
+  );
+};
 
 const EsportsBento = () => (
   <section className="mb-24 sm:mb-28" aria-labelledby="gt-esports-heading">
@@ -95,7 +99,7 @@ const EsportsBento = () => (
     </div>
 
     <div className="esports-bento-grid">
-      {esportsProjects.map((project) => <EsportsCard key={project.title} project={project} />)}
+      {esportsProjects.map((project, index) => <EsportsCard index={index} key={project.title} project={project} />)}
     </div>
   </section>
 );

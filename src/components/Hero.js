@@ -124,24 +124,22 @@ const Hero = () => {
                         style={introDelay(3)}
                     >
                         <a
-                            href="/resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="#projects"
                             className="button-sheen relative inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold tracking-wide text-black bg-white hover:bg-cyan-100 shadow-[0_12px_36px_rgba(255,255,255,0.2)] transition-transform duration-200 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98]"
                         >
-                            View Resume
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h4a2 2 0 012 2v4m0-6l-9 9m5-2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h9" />
+                            View Projects
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m-6-6 6 6 6-6" />
                             </svg>
                         </a>
                         <a
                             href="/resume.pdf"
-                            download="kevin-hu-resume.pdf"
+                            target="_blank" rel="noopener noreferrer"
                             className="inline-flex w-full max-w-[18rem] sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-6 py-4 font-medium tracking-wide text-gray-200 transition-[color,background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-cyan-300/45 hover:bg-cyan-400/[0.08] hover:text-white active:scale-[0.98]"
                         >
-                            Download PDF
+                            View Resume
                             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 4h6m0 0v6m0-6L10 14M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
                             </svg>
                         </a>
                     </div>

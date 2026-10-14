@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { projects, getTagTone } from '../data/projects';
+import { projects, getTagTone, spotlightProjects } from '../data/projects';
 import githubImg from '../images/github.png';
 import { MOBILE_MEDIA_QUERY } from '../constants';
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -9,6 +9,7 @@ import ProjectFilterBar from './ProjectFilterBar';
 import ProjectVisual from './ProjectVisual';
 import TechIconTooltip from './TechIconTooltip';
 import EsportsBento from './EsportsBento';
+import FeaturedProducts from './FeaturedProducts';
 
 // Retained for filtered-layout parity with the earlier project presentation.
 // eslint-disable-next-line no-unused-vars
@@ -229,7 +230,7 @@ const Projects = () => {
     ), [filter]);
 
     const otherProjects = useMemo(() => [
-        ...projects.filter((project) => project.featured),
+        ...projects.filter((project) => project.featured && !spotlightProjects.includes(project)),
         ...projects.filter((project) => !project.featured),
     ], []);
     const otherPreviewCount = liteMode ? 4 : 6;
@@ -275,7 +276,8 @@ const Projects = () => {
 
                 {filter === 'All' ? (
                     <>
-                        <EsportsBento />
+                        <FeaturedProducts />
+            <EsportsBento />
 
                         {otherProjects.length > 0 && (
                             <div

@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
-import { projects, getTagTone } from '../data/projects';
+import { projects, getTagTone, spotlightProjects } from '../data/projects';
 import githubImg from '../images/github.png';
 import ProjectFilterBar from './ProjectFilterBar';
 import ProjectVisual from './ProjectVisual';
 import EsportsBento from './EsportsBento';
+import FeaturedProducts from './FeaturedProducts';
+import { useInViewOnce } from '../hooks/useInViewOnce';
 import { useClampedText } from '../hooks/useClampedText';
 
 const TechBadgeLite = ({ icon: TechIcon, label, compact = false }) => (
@@ -91,12 +93,13 @@ const FeaturedProjectCardLite = ({ project, index }) => (
   </article>
 );
 
-const SmallProjectCardLite = ({ project }) => {
+const SmallProjectCardLite = ({ project, index = 0 }) => {
+  const [revealRef, revealed] = useInViewOnce({ amount: 0.1 });
   const [isExpanded, setIsExpanded] = useState(false);
   const { textRef, isClamped } = useClampedText(isExpanded);
 
   return (
-    <article className="group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full">
+    <article ref={revealRef} style={{ '--reveal-delay': `${(index % 3) * 70}ms` }} className={`project-feedback ${revealed ? 'project-reveal' : ''} group relative panel-surface rounded-2xl p-6 sm:p-7 flex flex-col h-full`}>
       <div className="relative z-10 flex justify-between items-start gap-3 mb-5">
         <span className={`px-3 py-1 rounded-full text-[11px] border font-semibold tracking-wide ${getTagTone(project.category)}`}>
           {project.category}
@@ -180,7 +183,7 @@ const ProjectsLite = () => {
 
   const otherProjects = useMemo(
     () => [
-      ...projects.filter((project) => project.featured),
+      ...projects.filter((project) => project.featured && !spotlightProjects.includes(project)),
       ...projects.filter((project) => !project.featured),
     ],
     []
@@ -228,6 +231,7 @@ const ProjectsLite = () => {
 
         {filter === 'All' ? (
           <>
+            <FeaturedProducts />
             <EsportsBento />
 
             {otherProjects.length > 0 && (
@@ -238,8 +242,8 @@ const ProjectsLite = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {visibleOtherProjects.map((project) => (
-                    <SmallProjectCardLite key={project.title} project={project} />
+                  {visibleOtherProjects.map((project, index) => (
+                    <SmallProjectCardLite key={project.title} index={index} project={project} />
                   ))}
                 </div>
 
@@ -275,8 +279,8 @@ const ProjectsLite = () => {
               {filteredProjects.length} {filter} {filteredProjects.length === 1 ? 'project' : 'projects'}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProjects.map((project) => (
-                <SmallProjectCardLite key={project.title} project={project} />
+              {filteredProjects.map((project, index) => (
+                <SmallProjectCardLite key={project.title} index={index} project={project} />
               ))}
             </div>
           </div>

@@ -40,7 +40,7 @@ export const esportsProjects = [
         title: 'GT Esports Hackathon',
         role: 'Software Architect',
         seasonTheme: '2026 season theme · TechHack Valley',
-        description: 'Architected the product and technical direction, translating the event vision into a buildable system that the developer team implemented.',
+        description: 'Defined the product and technical direction for the TechHack Valley event website, turning the event vision into an implementation plan for the development team. Owned architecture and direction; the team built the site.',
         technologies: ['React', 'TypeScript', 'Vite'],
         github: 'https://github.com/gt-esports/gtesports-hackathon-site',
         liveSite: 'https://techhack.gatechesports.com',
@@ -52,7 +52,7 @@ export const esportsProjects = [
     {
         title: 'GT Esports Main Website',
         role: 'Technical Lead + Developer',
-        description: 'Led and contributed to the organization-wide redesign, then began the backend work needed to make site content easier to manage.',
+        description: 'Led and contributed to the redesign of Georgia Tech Esports’ main website, creating a central home for the organization’s teams, events, and community.',
         technologies: ['React', 'TypeScript', 'Supabase'],
         github: 'https://github.com/gt-esports/gtesports-website',
         liveSite: 'https://www.gatechesports.com',
@@ -62,7 +62,7 @@ export const esportsProjects = [
     {
         title: 'GameFest',
         role: 'Technical Lead + Developer',
-        description: 'Served as technical lead and contributed to a platform overhaul for GT Esports’ annual gaming festival, spanning the public experience and event operations.',
+        description: 'Served as technical lead and developer for GameFest, helping overhaul the platform behind Georgia Tech Esports’ annual gaming festival.',
         technologies: ['React', 'TypeScript', 'Supabase'],
         github: 'https://github.com/gt-esports/gamefest',
         liveSite: 'https://gamefest.gatechesports.com',
@@ -72,6 +72,15 @@ export const esportsProjects = [
 ];
 
 export const projects = [
+    {
+        title: 'StingerDelay',
+        description: 'A BDBI project working toward predicting Georgia Tech shuttle delays. Contributed TransLoc API data collection, preprocessing, and exploratory data analysis to prepare transit data for modeling. Feature engineering and model training are upcoming.',
+        tech_img: [IconPython, IconPandas],
+        technologies: ['Python', 'Pandas'],
+        github: 'https://github.com/gt-big-data/stinger-delay',
+        category: 'AI/ML',
+        featured: false,
+    },
     {
         title: "Drive Intelligence",
         description: "A Google Drive workspace governance tool shaped by 10+ user interviews. Built hybrid semantic and keyword search with Gemini embeddings and Supabase pgvector, plus naming checks and an approval queue for AI-proposed file organization changes.",
@@ -266,3 +275,7 @@ export const projects = [
         featured: false
     }
 ];
+
+export const spotlightProjects = ['Drive Intelligence', 'Tap Detail'].map(
+    (title) => projects.find((project) => project.title === title)
+);
