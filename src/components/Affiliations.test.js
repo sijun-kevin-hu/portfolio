@@ -42,3 +42,34 @@ test('Play resumes even while its button retains focus and hover', () => {
   advance();
   expect(strip.scrollLeft).toBeGreaterThan(0);
 });
+
+test('does not remeasure layout on each animation frame', () => {
+  render(<Affiliations />);
+  const calls = HTMLElement.prototype.getBoundingClientRect.mock.calls.length;
+  advance();
+  advance();
+  expect(HTMLElement.prototype.getBoundingClientRect).toHaveBeenCalledTimes(calls);
+});
+
+test('stops animation work when the carousel leaves the viewport', () => {
+  let notify;
+  const original = window.IntersectionObserver;
+  window.IntersectionObserver = jest.fn((callback) => {
+    notify = callback;
+    return { observe: jest.fn(), disconnect: jest.fn() };
+  });
+  try {
+    const { container } = render(<Affiliations />);
+    const strip = container.querySelector('.affiliations-viewport');
+    advance();
+    act(() => notify([{ isIntersecting: false }]));
+    const position = strip.scrollLeft;
+    advance();
+    expect(strip.scrollLeft).toBe(position);
+    act(() => notify([{ isIntersecting: true }]));
+    advance();
+    expect(strip.scrollLeft).toBeGreaterThan(position);
+  } finally {
+    window.IntersectionObserver = original;
+  }
+});

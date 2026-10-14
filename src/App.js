@@ -6,6 +6,7 @@ import ContactCTA from './components/ContactCTA';
 import { MOBILE_MEDIA_QUERY } from './constants';
 import { useMediaQuery } from './hooks/useMediaQuery';
 import './index.css';
+import { prefersLightweightRendering } from './utils/rendering';
 
 const NavbarDesktop = lazy(() => import('./components/Navbar'));
 const HeroDesktop = lazy(() => import('./components/Hero'));
@@ -19,7 +20,8 @@ const FooterDesktop = lazy(() => import('./components/Footer'));
 const FooterLite = lazy(() => import('./components/FooterLite'));
 
 function App() {
-  const useLiteVisuals = useMediaQuery(MOBILE_MEDIA_QUERY);
+  const mobile = useMediaQuery(MOBILE_MEDIA_QUERY);
+  const useLiteVisuals = mobile || prefersLightweightRendering();
   const [shouldLoadDesktopExperience, setShouldLoadDesktopExperience] = useState(false);
 
   useEffect(() => {
@@ -71,7 +73,7 @@ function App() {
   const FooterComponent = useLiteVisuals ? FooterLite : FooterDesktop;
 
   return (
-    <div className="min-h-screen bg-[#05060c] text-white overflow-x-hidden" style={{
+    <div className={`min-h-screen bg-[#05060c] text-white overflow-x-hidden ${useLiteVisuals ? 'lightweight-rendering' : ''}`} style={{
       minHeight: '100dvh'
     }}>
 
@@ -90,7 +92,7 @@ function App() {
           }`}
         />
         <div className={`absolute inset-0 grid-overlay-tight ${useLiteVisuals ? 'opacity-[0.1]' : 'opacity-[0.16]'}`} />
-        {!useLiteVisuals && <div className="ambient-scan opacity-60" />}
+
         <div className="absolute inset-0 grain-overlay" aria-hidden="true" />
       </div>
 

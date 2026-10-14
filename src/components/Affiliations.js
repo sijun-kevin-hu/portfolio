@@ -15,14 +15,36 @@ export default function Affiliations() {
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   const [paused, setPaused] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [pageVisible, setPageVisible] = useState(() => !document.hidden);
+  const groupWidth = useRef(0);
 
   useEffect(() => {
-    if (reducedMotion || paused || focused) return undefined;
+    const measure = () => { groupWidth.current = group.current.getBoundingClientRect().width; };
+    measure();
+    const resize = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    resize?.observe(group.current);
+    window.addEventListener('resize', measure, { passive: true });
+    const observer = typeof IntersectionObserver === 'function'
+      ? new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting)) : null;
+    observer?.observe(viewport.current);
+    const visibility = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', visibility);
+    return () => {
+      resize?.disconnect();
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+      document.removeEventListener('visibilitychange', visibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion || paused || focused || !visible || !pageVisible) return undefined;
     let frame;
     let lastTime;
     let position = viewport.current.scrollLeft;
     const tick = (time) => {
-      const width = group.current.getBoundingClientRect().width;
+      const width = groupWidth.current;
       if (lastTime !== undefined && width > 0) {
         // Keep fractional pixels and cap elapsed time after a background tab resumes.
         position = (position + Math.min(time - lastTime, 64) * 0.025) % width;
@@ -33,11 +55,11 @@ export default function Affiliations() {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [reducedMotion, paused, focused]);
+  }, [reducedMotion, paused, focused, visible, pageVisible]);
 
   const step = (direction) => {
     setPaused(true);
-    const width = group.current.getBoundingClientRect().width;
+    const width = groupWidth.current;
     const distance = width / affiliations.length;
     const current = viewport.current.scrollLeft;
     // The duplicate group gives manual navigation the same seamless wrap as autoplay.

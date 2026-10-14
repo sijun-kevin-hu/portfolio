@@ -170,7 +170,7 @@ html {
     rgba(12, 16, 27, 0.88) 45%,
     rgba(9, 11, 19, 0.96) 100%
   );
-  backdrop-filter: blur(14px);
+  /* The nearly opaque gradient already provides separation without a live backdrop blur. */
 }
 
 .panel-surface::before {
@@ -878,3 +878,15 @@ p,
 .esports-wordmark > span { color: white; font-size: 9px; letter-spacing: .13em; }
 .affiliation:hover .esports-lockup, .affiliation:focus-visible .esports-lockup { filter: none; opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .affiliation .esports-lockup { transition: none; } }
+
+/* Safari/mobile keep the palette without large moving blur surfaces. */
+.lightweight-rendering .hero-lite-orb,
+.lightweight-rendering .hero-lite-ring,
+.lightweight-rendering .hero-lite-pill::after { display: none; }
+.lightweight-rendering .grain-overlay { display: none; }
+.lightweight-rendering [class*="backdrop-blur"] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.lightweight-rendering [data-site-navbar] { background: #070b15; }
+.lightweight-rendering .section-divider::before { filter: none; }
