@@ -266,6 +266,16 @@ export const projects = [
         featured: false
     },
     {
+        title: "Oriental Restaurant Website",
+        description: "A family-owned Lawrenceburg restaurant needed a welcoming online home. This responsive site brings its story, daily buffet, menu, and visitor information together in one easy-to-browse place.",
+        tech_img: [IconNext, IconTypeScript],
+        technologies: ["Next.js", "TypeScript"],
+        github: 'https://github.com/sijun-kevin-hu/oriental_restaurant',
+        category: "Full-Stack",
+        liveSite: 'https://www.tnorientalrestaurant.com',
+        featured: false
+    },
+    {
         title: "Portfolio Website",
         description: "Yes, this project is a little recursive. I built this portfolio with React and Tailwind to showcase my work through a fast, responsive interface with polished motion, accessible interactions, and just enough personality.",
         tech_img: [IconReact, IconJavaScript, IconTailwind, IconCss, IconHtml],
