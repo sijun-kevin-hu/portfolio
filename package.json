@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node scripts/prerender.cjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src",
@@ -45,6 +45,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "7.28.5",
+    "@babel/preset-env": "7.28.5",
+    "@babel/preset-react": "7.28.5",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",

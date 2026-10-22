@@ -19,9 +19,9 @@ const ProjectsLite = lazy(() => import('./components/ProjectsLite'));
 const FooterDesktop = lazy(() => import('./components/Footer'));
 const FooterLite = lazy(() => import('./components/FooterLite'));
 
-function App() {
+function App({ staticRendering = false }) {
   const mobile = useMediaQuery(MOBILE_MEDIA_QUERY);
-  const useLiteVisuals = mobile || prefersLightweightRendering();
+  const useLiteVisuals = staticRendering || mobile || prefersLightweightRendering();
   const [shouldLoadDesktopExperience, setShouldLoadDesktopExperience] = useState(false);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function App() {
 
           <Suspense fallback={sectionFallback}>
             <div className="section-shell">
-              <ProjectsComponent />
+              <ProjectsComponent showAllInitially={staticRendering} />
             </div>
           </Suspense>
 

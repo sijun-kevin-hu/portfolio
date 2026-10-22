@@ -16,7 +16,7 @@ export default function Affiliations() {
   const [paused, setPaused] = useState(false);
   const [focused, setFocused] = useState(false);
   const [visible, setVisible] = useState(true);
-  const [pageVisible, setPageVisible] = useState(() => !document.hidden);
+  const [pageVisible, setPageVisible] = useState(() => typeof document === 'undefined' || !document.hidden);
   const groupWidth = useRef(0);
 
   useEffect(() => {

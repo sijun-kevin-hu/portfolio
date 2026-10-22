@@ -93,9 +93,9 @@ const FeaturedProjectCardLite = ({ project, index }) => (
   </article>
 );
 
-const SmallProjectCardLite = ({ project, index = 0 }) => {
+const SmallProjectCardLite = ({ project, index = 0, expandedInitially = false }) => {
   const [revealRef, revealed] = useInViewOnce({ amount: 0.1 });
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(expandedInitially);
   const { textRef, isClamped } = useClampedText(isExpanded);
 
   return (
@@ -172,9 +172,9 @@ const SmallProjectCardLite = ({ project, index = 0 }) => {
   );
 };
 
-const ProjectsLite = () => {
+const ProjectsLite = ({ showAllInitially = false }) => {
   const [filter, setFilter] = useState('All');
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(showAllInitially);
 
   const filteredProjects = useMemo(
     () => projects.filter((project) => (filter === 'All' ? true : project.category === filter)),
@@ -243,7 +243,7 @@ const ProjectsLite = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {visibleOtherProjects.map((project, index) => (
-                    <SmallProjectCardLite key={project.title} index={index} project={project} />
+                    <SmallProjectCardLite key={project.title} index={index} project={project} expandedInitially={showAllInitially} />
                   ))}
                 </div>
 

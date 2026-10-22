@@ -1,4 +1,33 @@
-# Getting Started with Create React App
+# Kevin Hu's Portfolio
+
+## Crawlable production builds
+
+Run `npm run build` and deploy the resulting `build/` directory. The build first
+bundles React, then `scripts/prerender.cjs` renders the lightweight presentation
+into `build/index.html`, including every project, the biography, skills, and
+contact links. Visitors and crawlers receive the same complete HTML without
+needing JavaScript. React replaces that snapshot with the responsive interactive
+app when JavaScript loads; this is a static snapshot with client mounting, not
+hydration or request-time server rendering.
+
+The script uses the existing React components and data in `src/data/`, so changes
+are included automatically on the next build. It also generates ProfilePage,
+Person, and project structured data from that content. `npm start` remains a
+client-rendered development server and does not include the production snapshot.
+
+`public/robots.txt` permits crawling and advertises `public/sitemap.xml`. The
+sitemap lists the canonical homepage; section fragments are not separate pages.
+Keep the canonical domain in these files and the prerender script consistent if
+the site's domain changes.
+
+After deploying, submit `https://sijunkevinhu.com/sitemap.xml` to Google Search
+Console and Bing Webmaster Tools, and inspect the homepage's indexed HTML.
+Link to the canonical domain from the public GitHub and LinkedIn profiles.
+Crawler access makes content eligible for discovery, but does not guarantee
+indexing, ranking, or inclusion in AI answers. Search access and model-training
+permission are separate controls; no training policy is changed here.
+
+## Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -1,3 +1,5 @@
-# https://www.robotstxt.org/robotstxt.html
+# Public portfolio content is available to search and AI crawlers.
 User-agent: *
 Disallow:
+
+Sitemap: https://sijunkevinhu.com/sitemap.xml
