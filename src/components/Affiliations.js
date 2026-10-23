@@ -84,7 +84,9 @@ export default function Affiliations() {
                   <a href={item.href} target="_blank" rel="noopener noreferrer"
                     tabIndex={duplicate ? -1 : 0} aria-label={item.name}
                     onFocus={(event) => {
-                      if (reducedMotion) return;
+                      // Pointer focus happens before click: moving the link here can
+                      // put a different logo under the pointer before release.
+                      if (reducedMotion || !event.currentTarget.matches(':focus-visible')) return;
                       const itemLeft = event.currentTarget.parentElement.getBoundingClientRect().left;
                       const viewportLeft = viewport.current.getBoundingClientRect().left;
                       viewport.current.scrollTo({ left: viewport.current.scrollLeft + itemLeft - viewportLeft, behavior: 'instant' });

@@ -14,6 +14,35 @@ afterEach(() => {
 
 const advance = () => act(() => jest.advanceTimersByTime(160));
 
+test.each([0, 1])('pointer focus does not reposition logo group %i before a click', (groupIndex) => {
+  const { container } = render(<Affiliations />);
+  const strip = container.querySelector('.affiliations-viewport');
+  const link = container.querySelectorAll('.affiliations-group')[groupIndex].querySelectorAll('a')[2];
+  strip.scrollLeft = 350;
+  strip.scrollTo = jest.fn();
+  jest.spyOn(link, 'matches').mockReturnValue(false);
+  fireEvent.focus(link);
+  expect(strip.scrollTo).not.toHaveBeenCalled();
+  expect(strip.scrollLeft).toBe(350);
+  advance();
+  expect(strip.scrollLeft).toBe(350);
+});
+
+test('keyboard focus still brings the focused logo into view', () => {
+  const { container } = render(<Affiliations />);
+  const strip = container.querySelector('.affiliations-viewport');
+  const link = screen.getByRole('link', { name: 'Tyler Technologies' });
+  strip.scrollLeft = 350;
+  strip.scrollTo = jest.fn();
+  jest.spyOn(link, 'matches').mockReturnValue(true);
+  HTMLElement.prototype.getBoundingClientRect.mockImplementation(function () {
+    return { width: 1200, left: this === link.parentElement ? 400 : 0 };
+  });
+  fireEvent.focus(link);
+  expect(link.matches).toHaveBeenCalledWith(':focus-visible');
+  expect(strip.scrollTo).toHaveBeenCalledWith({ left: 750, behavior: 'instant' });
+});
+
 test('hovering the logo strip keeps automatic scrolling running', () => {
   const { container } = render(<Affiliations />);
   const strip = container.querySelector('.affiliations-viewport');
